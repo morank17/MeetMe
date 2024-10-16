@@ -10,6 +10,22 @@ import Messages
 
 class MessagesViewController: MSMessagesAppViewController {
     
+    @IBOutlet weak var label: UILabel!
+    @IBAction func HelloWorldbutton(_ sender: Any) {
+        label.text = "HELLO WORLD!"
+        
+        // Appearance of Message
+        let layout = MSMessageTemplateLayout()
+        layout.caption = "HELLO WORLD!"
+        
+        // Create message
+        let message = MSMessage()
+        message.layout = layout
+        
+        activeConversation?.insert(message, completionHandler: nil)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
