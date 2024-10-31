@@ -53,12 +53,32 @@ struct CreateAccountView: View {
             // create account button
             Button(action: {
                 createAccount()
+//                fetchCSRFToken { csrfToken in
+//                    if let token = csrfToken {
+//                        createAccount(with: token)
+//                    } else {
+//                        print("Failed to retrieve CSRF token")
+//                    }
+//                }
             }) {
                 Text("Create Account")
             }
         }
     }
     
+//    func fetchCSRFToken(completion: @escaping (String?) -> Void) {
+//        guard let url = URL(string: "http://127.0.0.1:8000/") else { return }
+//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+//            if let httpResponse = response as? HTTPURLResponse,
+//               let csrfToken = httpResponse.value(forHTTPHeaderField: "X-CSRF-Token") {  // Adjust key if necessary
+//                completion(csrfToken)
+//            } else {
+//                completion(nil)
+//            }
+//        }
+//        task.resume()
+//    }
+//    
     // helper function called by create account button
     func createAccount() {
         guard !username.isEmpty, !password1.isEmpty, !email.isEmpty, !password2.isEmpty else {
@@ -67,19 +87,15 @@ struct CreateAccountView: View {
         }
         
         // Call to API to create user account
-        let url = URL(string: "127.0.0.1:8000/users/register")!
+        let url = URL(string: "http://127.0.0.1:8000/users/register")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue(
             "application/x-www-form-urlencoded",
             forHTTPHeaderField: "Content-Type")
         
-        let user = User(uname: username, email: email, password1: password1, password2: password2)
-        guard let body = try? JSONEncoder().encode(user) else {
-            errorMessage = "Failed to encode user data."
-            return
-        }
-        request.httpBody = body // set content of request to newly defined body
+        let bodyString = "uname=\(username)&email=\(email)&password1=\(password1)&password2=\(password2)"
+        request.httpBody = bodyString.data(using: .utf8)
         
         // initiate asynch network request to the API
         URLSession.shared.dataTask(with: request) { data, response, error in
