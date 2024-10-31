@@ -1,21 +1,21 @@
-# Project Name
+# Wav
 
 ![Team Photo](Insert a Team Photo URL here)
 [*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
 
-TODO: short project description, some sample screenshots or mockups
+Frontend for apple app which suggests times for a group of people to meet based on their calendars. We other calendar systems. The end goal is an iMessage extension, as we think that fits with the user flow better
 
 ## Architecture
 
-TODO:  descriptions of code organization and tools and libraries used
+Frontend in Swift
 
 ## Setup
 
-TODO: how to get the project dev environment up and running, npm install etc
+Currently running on xcode simulator
 
 ## Deployment
 
-TODO: how to deploy the project
+tbd
 
 ## Authors
 
