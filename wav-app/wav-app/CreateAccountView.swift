@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct User: Codable {
-    let username: String
-    let password: String
+    let uname: String
+    let email: String
+    let password1: String
+    let password2: String
 }
 
 struct CreateAccountView: View {
@@ -20,7 +22,9 @@ struct CreateAccountView: View {
     
     // user input state variables
     @State private var username: String = ""
-    @State private var password: String = ""
+    @State private var email: String = ""
+    @State private var password1: String = ""
+    @State private var password2: String = ""
     @State private var errorMessage: String?  // Display error messages to help user
     
     var body: some View {
@@ -32,7 +36,11 @@ struct CreateAccountView: View {
             // user input fields
             TextField("Username", text: $username)
                 .padding()
-            SecureField("Password", text: $password)
+            TextField("Email", text: $email)
+                .padding()
+            SecureField("Password1", text: $password1)
+                .padding()
+            SecureField("Password2", text: $password2)
                 .padding()
             
             // display error message if there is one
@@ -44,7 +52,7 @@ struct CreateAccountView: View {
             
             // create account button
             Button(action: {
-                
+                createAccount()
             }) {
                 Text("Create Account")
             }
@@ -53,18 +61,20 @@ struct CreateAccountView: View {
     
     // helper function called by create account button
     func createAccount() {
-        guard !username.isEmpty, !password.isEmpty else {
-            errorMessage = "Both Fields Are Required"
+        guard !username.isEmpty, !password1.isEmpty, !email.isEmpty, !password2.isEmpty else {
+            errorMessage = "All Fields Are Required"
             return
         }
         
         // Call to API to create user account
-        let url = URL(string: "https://example.com/api/createAccount")!
+        let url = URL(string: "127.0.0.1:8000/users/register")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(
+            "application/x-www-form-urlencoded",
+            forHTTPHeaderField: "Content-Type")
         
-        let user = User(username: username, password: password)
+        let user = User(uname: username, email: email, password1: password1, password2: password2)
         guard let body = try? JSONEncoder().encode(user) else {
             errorMessage = "Failed to encode user data."
             return
