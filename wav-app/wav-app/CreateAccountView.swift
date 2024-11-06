@@ -87,7 +87,7 @@ struct CreateAccountView: View {
         }
         
         // Call to API to create user account
-        let url = URL(string: "http://127.0.0.1:8000/users/register")!
+        let url = URL(string: "https://musketeers-django.onrender.com/api/register")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue(
@@ -98,8 +98,7 @@ struct CreateAccountView: View {
         request.httpBody = bodyString.data(using: .utf8)
         
         // initiate asynch network request to the API
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            DispatchQueue.main.async {
+        URLSession.shared.dataTask(with: request) { data, response, error in DispatchQueue.main.async {
                 // check connection to API
                 if let error = error {
                     errorMessage = "Error: \(error.localizedDescription)"
