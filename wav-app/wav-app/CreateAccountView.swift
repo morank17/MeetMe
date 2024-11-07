@@ -104,8 +104,21 @@ struct CreateAccountView: View {
                     errorMessage = "Error: \(error.localizedDescription)"
                     return
                 }
+            
+                // print statements for testing
+//                if let httpResponse = response as? HTTPURLResponse {
+//                    print("Response status code: \(httpResponse.statusCode)")
+//                }
+//            
+//                if let data = data {
+//                    // Convert data to a string for debugging
+//                    if let jsonString = String(data: data, encoding: .utf8) {
+//                        print("Received data: \(jsonString)")
+//                    }
+//                }
+            
                 // check for valid API response indicating a new user profile was made
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 {
                     hasAccount.toggle() // change boolean to true so that the user stays logged in the next time they open the app
                 } else {
                     errorMessage = "Failed to create account. Please try again."
