@@ -120,6 +120,21 @@ struct CreateAccountView: View {
                 // check for valid API response indicating a new user profile was made
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 {
                     hasAccount.toggle() // change boolean to true so that the user stays logged in the next time they open the app
+                    // decode JSON response and save user token in Keychain
+                    if let data = data {
+                        do {
+                            // Decode JSON
+                            if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                               let token = jsonObject["token"] as? String {
+                                // Save the token
+                                AuthViewModel.saveToken(token: token)
+                            } else {
+                                self.errorMessage = "Token not found in response"
+                            }
+                        } catch {
+                            self.errorMessage = "Failed to parse JSON: \(error.localizedDescription)"
+                        }
+                    }
                 } else {
                     errorMessage = "Failed to create account. Please try again."
                 }
