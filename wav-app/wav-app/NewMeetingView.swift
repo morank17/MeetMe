@@ -7,65 +7,6 @@
 
 import SwiftUI
 
-class InviteViewModel: ObservableObject {
-    @Published var usernameInput: String = ""
-    @Published var addedUsernames: [String] = []
-    @Published var errorMessage: String?
-
-    // Function to query backend for username existence
-    func submitUsername() {
-        // check that username input is nonempty
-        guard !usernameInput.isEmpty else { return }
-        
-        // Reset the error message
-        errorMessage = nil
-        
-        let url = URL(string: "http://127.0.0.1:8000/users/register")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue(
-            "application/x-www-form-urlencoded",
-            forHTTPHeaderField: "Content-Type")
-        
-        let bodyString = "uname=\(usernameInput)"
-        request.httpBody = bodyString.data(using: .utf8)
-        
-        // initiate asynch network request to the API
-        URLSession.shared.dataTask(with: request) { data, response, error in DispatchQueue.main.async {
-                // check connectivity to API
-                if let error = error {
-                    self.errorMessage = "Error: \(error.localizedDescription)"
-                    return
-                }
-                
-                // check valid response
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                    // check if result is true
-                    if let data = data, let result = String(data: data, encoding: .utf8), result == "true" {
-                        
-                        // Add username to the added list
-                        if !self.addedUsernames.contains(self.usernameInput) {
-                            self.addedUsernames.append(self.usernameInput)
-                        }
-                        // reset usernameInput
-                        self.usernameInput = ""
-                    } else {
-                        // Display error if user does not exist
-                        self.errorMessage = "User does not exist"
-                    }
-                } else {
-                    self.errorMessage = "Failed to check user. Please try again."
-                }
-            }
-        }
-    }
-    
-    // Function to remove a username from the addedUsernames array
-    func removeUser(_ username: String) {
-        addedUsernames.removeAll { $0 == username }
-    }
-}
-
 struct NewMeetingView: View {
     @State private var selectedDate = Date()
     @State private var timeIntervalStart = Date()
@@ -73,7 +14,7 @@ struct NewMeetingView: View {
     @State private var meetingDurationHrs = 0
     @State private var meetingDurationMins = 0
     
-    @ObservedObject private var viewModel = InviteViewModel()
+    @ObservedObject private var viewModel = NewMeetingViewModel()
 
 
     var body: some View {
@@ -211,11 +152,24 @@ struct NewMeetingView: View {
                     .padding(.top, 16)
                 }
                 .padding(.top, 8)
-                
-                // allow optional attendees
-                
+                                
                 
                 // submit button
+                Button(action: {
+                    viewModel.submitNewMeeting(
+                        selectedDate: selectedDate,
+                        timeIntervalStart: timeIntervalStart,
+                        timeIntervalEnd: timeIntervalEnd,
+                        meetingDurationHrs: meetingDurationHrs,
+                        meetingDurationMins: meetingDurationMins)
+                })
+                {Text("Submit Meeting")
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
             }
         }
     }
