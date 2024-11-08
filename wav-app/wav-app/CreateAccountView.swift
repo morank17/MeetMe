@@ -106,16 +106,16 @@ struct CreateAccountView: View {
                 }
             
                 // print statements for testing
-//                if let httpResponse = response as? HTTPURLResponse {
-//                    print("Response status code: \(httpResponse.statusCode)")
-//                }
-//            
-//                if let data = data {
-//                    // Convert data to a string for debugging
-//                    if let jsonString = String(data: data, encoding: .utf8) {
-//                        print("Received data: \(jsonString)")
-//                    }
-//                }
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("Response status code: \(httpResponse.statusCode)")
+                }
+            
+                if let data = data {
+                    // Convert data to a string for debugging
+                    if let jsonString = String(data: data, encoding: .utf8) {
+                        print("Received data: \(jsonString)")
+                    }
+                }
             
                 // check for valid API response indicating a new user profile was made
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 {
