@@ -30,26 +30,45 @@ class NewMeetingViewModel: ObservableObject {
                 self.errorMessage = "Error: \(error.localizedDescription)"
                 return
             }
-            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Response status code: \(httpResponse.statusCode)")
+            }
+
+            if let data = data {
+                // Convert data to a string for debugging
+                if let jsonString = String(data: data, encoding: .utf8) {
+                    print("Received data: \(jsonString)")
+                }
+            }
             // check valid response
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 // check if result is true
-                if let data = data, let result = String(data: data, encoding: .utf8), result == "true" {
-                    
-                    // Add username to the added list
-                    if !self.addedUsernames.contains(self.usernameInput) {
-                        self.addedUsernames.append(self.usernameInput)
+                
+                if let data = data {
+                    do {
+                        // Decode JSON
+                        if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                           let result = jsonObject["success"] as? Bool {
+                            print("Received data: \(result)")
+                            // Add username to the added list
+                            if result == true {
+                                if !self.addedUsernames.contains(self.usernameInput) {
+                                    self.addedUsernames.append(self.usernameInput)
+                                }
+                                // reset usernameInput
+                                self.usernameInput = ""
+                            } else {
+                                self.errorMessage = "User does not exist"
+                            }
+                        }
+                    } catch {
+                        self.errorMessage = "Failed to parse JSON: \(error.localizedDescription)"
                     }
-                    // reset usernameInput
-                    self.usernameInput = ""
-                } else {
-                    // Display error if user does not exist
-                    self.errorMessage = "User does not exist"
                 }
             } else {
                 self.errorMessage = "Failed to check user. Please try again."
             }
-        }}
+        }}.resume()
     }
     
     // Function to remove a username from the addedUsernames array
