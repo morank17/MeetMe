@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-class NewMeetingViewModel: ObservableObject {
+class NewMeetingViewModel: ObservableObject { // use an observable object so that the UI automatically rerenders when the @Published vars change
     @Published var usernameInput: String = ""
     @Published var addedUsernames: [String] = []
     @Published var errorMessage: String?
@@ -84,6 +84,7 @@ class NewMeetingViewModel: ObservableObject {
         meetingDurationHrs: Int,
         meetingDurationMins: Int
     ) {
+        // catch edge cases
         guard !addedUsernames.isEmpty else {
             errorMessage = "Please add at least one attendee."
             return
@@ -101,16 +102,37 @@ class NewMeetingViewModel: ObservableObject {
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        let startTime = formatter.string(from: timeIntervalStart)
-        let endTime = formatter.string(from: timeIntervalEnd)
-        let durationMinutes = meetingDurationHrs * 60 + meetingDurationMins
-        let attendees = addedUsernames.joined(separator: ",")
+        // reformat meeting parameters to match backend specs
+        let dayFormatter = DateFormatter()
+        dayFormatter.dateFormat = "yyyy-MM-dd"
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
         
-        let bodyString = "date=\(formatter.string(from: selectedDate))&start_time=\(startTime)&end_time=\(endTime)&duration=\(durationMinutes)&attendees=\(attendees)"
-        request.httpBody = bodyString.data(using: .utf8)
+        let dates = [dayFormatter.string(from: selectedDate)]
+        let timeRanges = [(timeFormatter.string(from: timeIntervalStart), timeFormatter.string(from: timeIntervalEnd))]
+        let minMtgMinutes = meetingDurationHrs * 60 + meetingDurationMins
+        let unameList = addedUsernames
         
+        print(dates, timeRanges, minMtgMinutes, unameList)
+        
+        // create request body
+        let requestBody: [String: Any] = [
+            "dates": dates,
+            "time_ranges": timeRanges,
+            "uname_list": unameList,
+            "min_mtg_minutes": minMtgMinutes
+        ]
+        
+        // convert to JSON
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+            request.httpBody = jsonData
+        } catch {
+            errorMessage = "Failed to encode request body."
+            return
+        }
+        
+        // make API call
         URLSession.shared.dataTask(with: request) { data, response, error in DispatchQueue.main.async {
                 if let error = error {
                     self.errorMessage = "Error: \(error.localizedDescription)"
@@ -118,6 +140,8 @@ class NewMeetingViewModel: ObservableObject {
                 }
                 
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                    // maybe success popup, navigate back to home page
+                    // reset related state variables
                     self.usernameInput = ""
                     self.addedUsernames = []
                 } else {

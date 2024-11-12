@@ -13,6 +13,7 @@ struct NewMeetingView: View {
     @State private var timeIntervalEnd = Date()
     @State private var meetingDurationHrs = 0
     @State private var meetingDurationMins = 0
+    @State private var timeRangeErrorMessage: String?
     
     @ObservedObject private var viewModel = NewMeetingViewModel()
 
@@ -45,6 +46,13 @@ struct NewMeetingView: View {
                                 .labelsHidden()
                                 .datePickerStyle(WheelDatePickerStyle())
                                 .scaleEffect(0.8)
+                                .onChange(of: timeIntervalStart) { oldValue, newValue in
+                                    if newValue >= timeIntervalEnd {
+                                        timeRangeErrorMessage = "Start time must be before the end time."
+                                    } else {
+                                        timeRangeErrorMessage = nil
+                                    }
+                                }
                         }
                         // frame in zstack cuts off datepicker elements so they can fit side by side
                         .frame(width: 160, height: 200)
@@ -61,13 +69,25 @@ struct NewMeetingView: View {
                                 .labelsHidden()
                                 .datePickerStyle(WheelDatePickerStyle())
                                 .scaleEffect(0.8)
+                                .onChange(of: timeIntervalEnd) { oldValue, newValue in
+                                    if timeIntervalStart >= newValue {
+                                        timeRangeErrorMessage = "Start time must be before the end time."
+                                    } else {
+                                        timeRangeErrorMessage = nil
+                                    }
+                                }
                         }
                         .frame(width: 160, height: 200)
                         .clipped()
                     }
                     
                 }
-                
+                if let timeRangeErrorMessage = timeRangeErrorMessage {
+                    Text(timeRangeErrorMessage)
+                        .foregroundColor(.red)
+                        .font(.caption)
+                        .padding(.top, 4)
+                }
                 // pick duration of meeting
                 Text("Select Meeting Duration")
                     .font(.headline)
@@ -154,7 +174,7 @@ struct NewMeetingView: View {
                 .padding(.top, 8)
                                 
                 
-                // submit button
+                // submit button (don't need to pass added Usernames because they're already stored in the ViewModel
                 Button(action: {
                     viewModel.submitNewMeeting(
                         selectedDate: selectedDate,
