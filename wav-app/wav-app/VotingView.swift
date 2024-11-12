@@ -1,3 +1,10 @@
+//
+//  VotingView.swift
+//  wav-app
+//
+//  Created by Nikola Dimitrijevic on 11/2/24.
+//
+
 import SwiftUI
 
 struct VotingView: View {

@@ -1,3 +1,10 @@
+//
+//  HomeView.swift
+//  wav-app
+//
+//  Created by Nikola Dimitrijevic on 10/30/24.
+//
+
 import SwiftUI
 
 // Define a struct for Meeting that conforms to Identifiable and Hashable
