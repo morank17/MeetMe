@@ -39,7 +39,7 @@ struct HomeView: View {
                 .navigationTitle("Home")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: SettingsPlaceholderView()) {
+                        NavigationLink(destination: SettingsView()) {
                             Text("Settings")
                                 .font(.custom("JetBrainsMono-Regular", size: 16))
                                 .foregroundColor(.white)
@@ -52,9 +52,7 @@ struct HomeView: View {
     
     // "Send a Wayv" button with blue gradient and glow effect
     private func sendWayvButton() -> some View {
-        Button(action: {
-            // Action for sending a Wayv
-        }) {
+        NavigationLink(destination: NewMeetingView()) {
             Text("Send a WAYV")
                 .font(.custom("JetBrainsMono-Regular", size: 20))
                 .foregroundColor(.white)
