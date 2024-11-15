@@ -45,6 +45,7 @@ struct PollResultsView: View {
                 .font(.custom("JetBrainsMono-Regular", size: 16))
                 .foregroundColor(.white))
         }
+        .navigationBarBackButtonHidden(true) // Hide the default back button
     }
 }
 

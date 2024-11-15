@@ -19,7 +19,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         // Reset the error message
         errorMessage = nil
         
-        let url = URL(string: "https://musketeers-django.onrender.com/api/checkuname?uname=\(usernameInput)")!
+        let url = URL(string: "https://musketeers-django.onrender.com/api/users/checkuname?uname=\(usernameInput)")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
@@ -97,7 +97,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         
         errorMessage = nil
         
-        let url = URL(string: "https://your-api-endpoint.com/api/new-meeting")!
+        let url = URL(string: "https://musketeers-django.onrender.com/api/meetings/setup")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")

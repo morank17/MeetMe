@@ -14,7 +14,7 @@ struct wav_appApp: App {
     var body: some Scene {
         WindowGroup {
             if hasAccount {
-                HomeView() // Show the home view
+                ConnectCalendarView() // Show the home view
             } else {
                 CreateAccountView() // Show view to create an account
             }

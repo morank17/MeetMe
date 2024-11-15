@@ -49,7 +49,7 @@ struct CreateAccountView: View {
                     .foregroundColor(.red)
                     .padding()
             }
-            
+                        
             // create account button
             Button(action: {
                 createAccount()
@@ -63,6 +63,15 @@ struct CreateAccountView: View {
             }) {
                 Text("Create Account")
             }
+            .padding(.vertical, 1)
+            .foregroundColor(.white)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(
+                LinearGradient(gradient: Gradient(colors: [Color.cyan, Color.blue]), startPoint: .leading, endPoint: .trailing)
+            )
+            .cornerRadius(30)
+            .padding(.horizontal, 60)
         }
     }
     
@@ -87,7 +96,7 @@ struct CreateAccountView: View {
         }
         
         // Call to API to create user account
-        let url = URL(string: "https://musketeers-django.onrender.com/api/register")!
+        let url = URL(string: "https://musketeers-django.onrender.com/api/users/register")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue(

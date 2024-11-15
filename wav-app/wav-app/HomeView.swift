@@ -76,24 +76,28 @@ struct HomeView: View {
     
     // Meeting row view with blue gradient background and glow effect
     private func meetingRow(meeting: Meeting) -> some View {
-        HStack {
-            Text(meeting.date)
-                .font(.custom("JetBrainsMono-Regular", size: 16))
-                .foregroundColor(.white)
-                .bold()
-            
-            Text(meeting.time)
-                .font(.custom("JetBrainsMono-Regular", size: 16))
-                .foregroundColor(.white)
-            
-            Spacer()
-            
-            Button(action: {
-                // Action for copying meeting details
-            }) {
-                Image(systemName: "doc.on.doc.fill")
-                    .foregroundColor(.white)
-            }
+        NavigationLink(
+                destination: destinationView(for: meeting.status) // Dynamically select destination
+            ) {
+                HStack {
+                    Text(meeting.date)
+                        .font(.custom("JetBrainsMono-Regular", size: 16))
+                        .foregroundColor(.white)
+                        .bold()
+                    
+                    Text(meeting.time)
+                        .font(.custom("JetBrainsMono-Regular", size: 16))
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        // Action for copying meeting details
+                    }) {
+                        Image(systemName: "doc.on.doc.fill")
+                            .foregroundColor(.white)
+                    }
+                }
         }
         .padding()
         .background(
@@ -107,12 +111,20 @@ struct HomeView: View {
                 .shadow(color: Color.cyan.opacity(0.3), radius: 8, x: 0, y: 0)
         )
     }
+    func destinationView(for status: String) -> some View {
+        switch status {
+        case "Voting Active":
+            return AnyView(VotingView())
+        case "Voting Done":
+            return AnyView(VotingDoneView())
+        default:
+            return AnyView(Text("Unknown Status").foregroundColor(.white))
+        }
+    }
     
     // Sample data function with status categories for Meet Queue
     func getMeetings() -> [Meeting] {
         return [
-            Meeting(date: "7/9", time: "30 min left", status: "Waiting for Attendees"),
-            Meeting(date: "3/3", time: "2 hrs 15 min left", status: "Waiting for Attendees"),
             Meeting(date: "7/9", time: "30 min left", status: "Voting Active"),
             Meeting(date: "3/3", time: "2 hrs 15 min left", status: "Voting Active"),
             Meeting(date: "10/14", time: "3:00PM - 4:00PM", status: "Voting Done"),
