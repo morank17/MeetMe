@@ -10,13 +10,13 @@ import SwiftUI
 @main
 struct wav_appApp: App {
     // initialize hasAccount boolean to false when the user first opens the app
-    @AppStorage("hasAccount") var hasAccount: Bool = false
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     var body: some Scene {
         WindowGroup {
-            if hasAccount {
-                ConnectCalendarView() // Show the home view
+            if isLoggedIn {
+                HomeView() // Show the home view
             } else {
-                CreateAccountView() // Show view to create an account
+                OnboardingView() // Show view to create an account
             }
         }
     }

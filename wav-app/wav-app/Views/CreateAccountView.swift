@@ -15,79 +15,67 @@ struct User: Codable {
 }
 
 struct CreateAccountView: View {
-    // this boolean will persist across app launches
-    @AppStorage("hasAccount") var hasAccount: Bool = false
+    @Binding var showLogin: Bool
 
-    @Environment(\.presentationMode) var presentationMode // ensures that we navigate to the home page after successful account creation
     
     // user input state variables
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password1: String = ""
     @State private var password2: String = ""
-    @State private var errorMessage: String?  // Display error messages to help user
+    @State private var errorMessage: String?  // Display error messages
+    @State private var navigateToCalendar = false
     
     var body: some View {
-        VStack {
-            Text("Create Account")
-                .font(.title)
-                .padding()
-            
-            // user input fields
-            TextField("Username", text: $username)
-                .padding()
-            TextField("Email", text: $email)
-                .padding()
-            SecureField("Password1", text: $password1)
-                .padding()
-            SecureField("Password2", text: $password2)
-                .padding()
-            
-            // display error message if there is one
-            if let error = errorMessage {
-                Text(error)
-                    .foregroundColor(.red)
-                    .padding()
-            }
-                        
-            // create account button
-            Button(action: {
-                createAccount()
-//                fetchCSRFToken { csrfToken in
-//                    if let token = csrfToken {
-//                        createAccount(with: token)
-//                    } else {
-//                        print("Failed to retrieve CSRF token")
-//                    }
-//                }
-            }) {
+        NavigationStack {
+            VStack {
                 Text("Create Account")
+                    .font(.title)
+                    .padding()
+                
+                // user input fields
+                TextField("Username", text: $username)
+                    .padding()
+                TextField("Email", text: $email)
+                    .padding()
+                SecureField("Password1", text: $password1)
+                    .padding()
+                SecureField("Password2", text: $password2)
+                    .padding()
+                
+                // display error message if there is one
+                if let error = errorMessage {
+                    Text(error)
+                        .foregroundColor(.red)
+                        .padding()
+                }
+                
+                // create account button
+                Button(action: {
+                    createAccount()
+                }) {
+                    Text("Create Account")
+                }
+                .padding(.vertical, 1)
+                .foregroundColor(.white)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(
+                    AppColors.blueGradient
+                )
+                .cornerRadius(30)
+                .padding(.horizontal, 60)
+                
+                Button("Already have an account? Log in.") {
+                    showLogin.toggle()
+                }
+                .navigationDestination(isPresented: $navigateToCalendar) {
+                    ConnectCalendarView()
+                }
             }
-            .padding(.vertical, 1)
-            .foregroundColor(.white)
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(
-                LinearGradient(gradient: Gradient(colors: [Color.cyan, Color.blue]), startPoint: .leading, endPoint: .trailing)
-            )
-            .cornerRadius(30)
-            .padding(.horizontal, 60)
         }
     }
     
-//    func fetchCSRFToken(completion: @escaping (String?) -> Void) {
-//        guard let url = URL(string: "http://127.0.0.1:8000/") else { return }
-//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-//            if let httpResponse = response as? HTTPURLResponse,
-//               let csrfToken = httpResponse.value(forHTTPHeaderField: "X-CSRF-Token") {  // Adjust key if necessary
-//                completion(csrfToken)
-//            } else {
-//                completion(nil)
-//            }
-//        }
-//        task.resume()
-//    }
-//    
     // helper function called by create account button
     func createAccount() {
         guard !username.isEmpty, !password1.isEmpty, !email.isEmpty, !password2.isEmpty else {
@@ -128,7 +116,7 @@ struct CreateAccountView: View {
             
                 // check for valid API response indicating a new user profile was made
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 {
-                    hasAccount.toggle() // change boolean to true so that the user stays logged in the next time they open the app
+
                     // decode JSON response and save user token in Keychain
                     if let data = data {
                         do {
@@ -137,6 +125,7 @@ struct CreateAccountView: View {
                                let token = jsonObject["token"] as? String {
                                 // Save the token
                                 AuthViewModel.saveToken(token: token)
+                                navigateToCalendar = true
                             } else {
                                 self.errorMessage = "Token not found in response"
                             }
@@ -153,5 +142,5 @@ struct CreateAccountView: View {
 }
 
 #Preview {
-    CreateAccountView()
+    CreateAccountView(showLogin: .constant(true))
 }
