@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct VotingView: View {
+    @State private var selectedMeetingID: UUID? = nil
+    @State private var isNavigating = false
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -27,16 +30,16 @@ struct VotingView: View {
                             MeetingSection(date: "Monday 10/14", times: [
                                 MeetingTimeSlot(time: "3:00 PM - 4:00 PM", votes: 2),
                                 MeetingTimeSlot(time: "6:00 PM - 7:00 PM", votes: 4)
-                            ])
+                            ], selectedMeetingID: $selectedMeetingID)
                             
                             MeetingSection(date: "Wednesday 10/16", times: [
                                 MeetingTimeSlot(time: "4:15 PM - 5:15 PM", votes: 0),
                                 MeetingTimeSlot(time: "7:00 PM - 8:00 PM", votes: 1)
-                            ])
+                            ], selectedMeetingID: $selectedMeetingID)
                             
                             MeetingSection(date: "Sunday 10/20", times: [
                                 MeetingTimeSlot(time: "8:00 PM - 9:00 PM", votes: 3)
-                            ])
+                            ], selectedMeetingID: $selectedMeetingID)
                         }
                         .frame(width: UIScreen.main.bounds.width * 0.8) // Narrowed to 80% width
                     }
@@ -73,19 +76,19 @@ struct VotingView: View {
     
     // Submit button with blue gradient
     private func submitButton() -> some View {
-        Button(action: {
-            // Action for Submit
-        }) {
-            Text("SUBMIT")
-                .font(.custom("JetBrainsMono-Regular", size: 16))
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(
-                    LinearGradient(gradient: Gradient(colors: [Color.cyan, Color.blue]), startPoint: .leading, endPoint: .trailing)
-                )
-                .cornerRadius(10)
-                .shadow(color: Color.cyan.opacity(0.7), radius: 5, x: 0, y: 0) // Glow effect
+        Button(action: {}) {
+            NavigationLink(destination: PollResultsView()) {
+                Text("SUBMIT")
+                    .font(.custom("JetBrainsMono-Regular", size: 16))
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        AppColors.blueGradient
+                    )
+                    .cornerRadius(10)
+                    .shadow(color: Color.cyan.opacity(0.7), radius: 5, x: 0, y: 0) // Glow effect
+            }
         }
     }
     
@@ -109,6 +112,7 @@ struct VotingView: View {
 struct MeetingSection: View {
     var date: String
     var times: [MeetingTimeSlot]
+    @Binding var selectedMeetingID: UUID?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -124,31 +128,38 @@ struct MeetingSection: View {
     
     // Individual time slot with a vote indicator
     private func timeSlotView(timeSlot: MeetingTimeSlot) -> some View {
-        HStack {
-            Text(timeSlot.time)
-                .font(.custom("JetBrainsMono-Regular", size: 16))
-                .foregroundColor(.white)
-            
-            Spacer()
-            
-            Text("\(timeSlot.votes)")
-                .font(.custom("JetBrainsMono-Regular", size: 14))
-                .foregroundColor(.white)
-                .padding(8)
-                .background(Color.cyan.opacity(0.8))
-                .clipShape(Circle())
-                .shadow(color: Color.cyan.opacity(0.7), radius: 5, x: 0, y: 0) // Glow effect
+        Button(action: {
+            selectedMeetingID = timeSlot.id
+        }) {
+            HStack {
+                Text(timeSlot.time)
+                    .font(.custom("JetBrainsMono-Regular", size: 16))
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                Text("\(timeSlot.votes)")
+                    .font(.custom("JetBrainsMono-Regular", size: 14))
+                    .foregroundColor(.white)
+                    .padding(8)
+                    .background(Color.cyan.opacity(0.8))
+                    .clipShape(Circle())
+                    .shadow(color: Color.cyan.opacity(0.7), radius: 5, x: 0, y: 0) // Glow effect
+            }
+            .padding()
+            .frame(width: UIScreen.main.bounds.width * 0.8) // Set width to 80% of screen
+            .background(
+                selectedMeetingID == timeSlot.id ? AppColors.blueGradient : AppColors.gradientTypedBlack
+            )
+            .cornerRadius(20) // Rounded corners
+            .shadow(color: Color.cyan.opacity(0.5), radius: 5, x: 0, y: 0) // Glow effect for row
         }
-        .padding()
-        .frame(width: UIScreen.main.bounds.width * 0.8) // Set width to 80% of screen
-        .background(Color.black.opacity(0.6))
-        .cornerRadius(20) // Rounded corners
-        .shadow(color: Color.cyan.opacity(0.5), radius: 5, x: 0, y: 0) // Glow effect for row
     }
 }
 
 // Struct for individual meeting time slot
-struct MeetingTimeSlot: Hashable {
+struct MeetingTimeSlot: Hashable, Identifiable {
+    var id = UUID()
     var time: String
     var votes: Int
 }
