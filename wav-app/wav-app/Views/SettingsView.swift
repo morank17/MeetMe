@@ -18,9 +18,14 @@ extension Color {
 
 }
 
+
+
 //let gradient = Gradient(colors: Color.teal)
 
 struct SettingsView: View {
+    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = true // true statement gives default initialization value
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         
         ZStack{
@@ -61,27 +66,30 @@ struct SettingsView: View {
         logOutButton()
             .offset(y: 300)
             }
+
+        }
+    func logOutButton() -> some View {
+        Button(action: {
+            AuthViewModel.deleteToken()
+            isLoggedIn.toggle()
+        }) {
+            Text("Log Out")
+                .font(.custom("JetBrainsMono-Regular", size: 16))
+                .foregroundColor(.white)
+                .padding()
+                .frame(width: 350, height: 40)
+                .background(
+                    LinearGradient(gradient: Gradient(colors: [Color.cyan, Color.blue]), startPoint: .leading, endPoint: .trailing)
+                )
+                .cornerRadius(10)
+                .shadow(color: Color.cyan.opacity(0.7), radius: 5, x: 0, y: 0) // Glow effect
         }
     }
-
-
-
-private func logOutButton() -> some View {
-    Button(action: {
-        // Action for Submit
-    }) {
-        Text("Log Out")
-            .font(.custom("JetBrainsMono-Regular", size: 16))
-            .foregroundColor(.white)
-            .padding()
-            .frame(width: 350, height: 40)
-            .background(
-                LinearGradient(gradient: Gradient(colors: [Color.cyan, Color.blue]), startPoint: .leading, endPoint: .trailing)
-            )
-            .cornerRadius(10)
-            .shadow(color: Color.cyan.opacity(0.7), radius: 5, x: 0, y: 0) // Glow effect
     }
-}
+
+
+
+
 
 
 

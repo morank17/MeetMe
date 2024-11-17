@@ -8,34 +8,84 @@
 import SwiftUI
 
 struct ConnectCalendarView: View {
+    @Environment(\.presentationMode) var presentationMode // ensures that we navigate to the home page after successful account creation
+    
+    // this boolean will persist across app launches
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+
     @State private var loginMessage = "Not Logged In to Calendar"
     @State private var googleSignInURL: String = ""
     
     var body: some View {
-        VStack {
-            Button("Connect Google Calendar") {
-                Task {
-                    do {
-                        googleSignInURL = try await getGoogleSignInURL()
-                        startSignInWithGoogle()
-                    } catch {
-                        loginMessage = "Failed to get sign-in URL. Please try again."
-                        print("Error: \(error)")
+        VStack(spacing: 30) {
+            Text("Connect a Calendar Account")
+                .font(.title)
+                .padding()
+            HStack(spacing: 30) {
+                Button(action: {
+                    Task {
+                        do {
+                            googleSignInURL = try await getGoogleSignInURL()
+                            startSignInWithGoogle()
+                        } catch {
+                            loginMessage = "Failed to get sign-in URL. Please try again."
+                            print("Error: \(error)")
+                        }
+                    }
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.white)
+                            .frame(width: 100, height: 100)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.black, lineWidth: 2) // Proper border with rounded corners
+                            )
+                        Image("GoogleIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.red) // Adjust for Google colors
                     }
                 }
+                Button(action: {
+                    // connect to apple calendar
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.gray)
+                            .frame(width: 100, height: 100)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.black, lineWidth: 2) // Proper border with rounded corners
+                            )
+                        Image("AppleIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 45, height: 45)
+                            .foregroundColor(.red) // Adjust for Google colors
+                    }
+                }
+            }
+            
+            Button(action: {
+                isLoggedIn.toggle() // change boolean to true so that the user stays logged in the next time they open the app
+            }) {
+                Text("Continue")
             }
             .padding(.vertical, 1)
             .foregroundColor(.white)
             .padding()
             .frame(maxWidth: .infinity)
             .background(
-                LinearGradient(gradient: Gradient(colors: [Color.cyan, Color.blue]), startPoint: .leading, endPoint: .trailing)
+                AppColors.blueGradient
             )
             .cornerRadius(30)
             .padding(.horizontal, 60)
             
             Text(loginMessage)
                 .foregroundColor(.gray)
+                .padding(20)
         }
     }
     
