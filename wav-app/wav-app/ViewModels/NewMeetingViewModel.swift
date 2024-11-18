@@ -6,11 +6,27 @@
 //
 
 import SwiftUI
-class NewMeetingViewModel: ObservableObject { // use an observable object so that the UI automatically rerenders when the @Published vars change
+class NewMeetingViewModel: ObservableObject { // use an observable object so that the UI automatically rerenders when the Published vars change
     @Published var usernameInput: String = ""
     @Published var addedUsernames: [String] = []
+    @Published var filteredUsernames: [String] = ["Matthew", "Kevin"]
     @Published var errorMessage: String?
+    
+    
+    private var allUsernames: [String] = ["Matthew", "Mary", "Mark", "Jane", "John"]
 
+    
+    // function to return all users in app who match current search string
+    func filterUsers() {
+        print(usernameInput)
+        if usernameInput.isEmpty {
+            filteredUsernames = []
+        } else {
+            filteredUsernames = allUsernames.filter { $0.lowercased().contains(usernameInput.lowercased()) }
+        }
+        
+    }
+    
     // Function to query backend for username existence
     func submitUsername() {
         // check that username input is nonempty

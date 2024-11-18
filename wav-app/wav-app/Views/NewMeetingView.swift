@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct NewMeetingView: View {
+    @State private var title: String = ""
     @State private var selectedDate = Date()
     @State private var timeIntervalStart = Date()
     @State private var timeIntervalEnd = Date()
     @State private var meetingDurationHrs = 0
     @State private var meetingDurationMins = 0
     @State private var timeRangeErrorMessage: String?
+
     
     @ObservedObject private var viewModel = NewMeetingViewModel()
 
@@ -21,6 +23,15 @@ struct NewMeetingView: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack {
+                Spacer()
+                
+                Text("Set Meeting Title")
+                    .font(.headline)
+                
+                // meeting title
+                TextField("Title", text: $title).padding()
+
+                
                 // pick day for meeting
                 // might want to create some support to select multiple days
                 Text("Select a Date")
@@ -93,60 +104,35 @@ struct NewMeetingView: View {
                     .font(.headline)
                 HStack(spacing: 0) {
                     // Hours Picker
-                    VStack {
-                        Text("hrs")
-                        Picker("Hours", selection: $meetingDurationHrs) {
-                            ForEach(0..<24, id: \.self) { hour in
-                                Text("\(hour)")
-                                    .tag(hour)
-                            }
+                    Picker("Hours", selection: $meetingDurationHrs) {
+                        ForEach(0..<24, id: \.self) { hour in
+                            Text("\(hour)")
+                                .tag(hour)
                         }
-                        .pickerStyle(WheelPickerStyle())
-                        .frame(width: 100, height: 100)
-                        .clipped()
                     }
-                    VStack {
-                        Text("min")
-                        // Minutes Picker
-                        Picker("Minutes", selection: $meetingDurationMins) {
-                            ForEach(0..<60, id: \.self) { minute in
-                                Text("\(minute)")
-                                    .tag(minute)
-                            }
+                    .pickerStyle(WheelPickerStyle())
+                    .frame(width: 100, height: 100)
+                    .clipped()
+                    
+                    Text(":")
+                    
+                    // Minutes Picker
+                    Picker("Minutes", selection: $meetingDurationMins) {
+                        ForEach(Array(stride(from: 0, through: 55, by: 5)), id: \.self) { minute in
+                            Text("\(minute)")
+                                .tag(minute)
                         }
-                        .pickerStyle(WheelPickerStyle())
-                        .frame(width: 100, height: 100)
-                        .clipped()
                     }
+                    .pickerStyle(WheelPickerStyle())
+                    .frame(width: 100, height: 100)
+                    .clipped()
+                    
                 }
                 
                 // add attendees
                 Text("Add Attendees")
                     .font(.headline)
                 VStack(alignment: .leading, spacing: 10) {
-                    TextField("Enter username", text: $viewModel.usernameInput)
-                        .padding()
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(8)
-                    
-                    Button(action: {
-                        viewModel.submitUsername()
-                    }) {
-                        Text("Add User")
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    
-                    if let errorMessage = viewModel.errorMessage {
-                        Text(errorMessage)
-                            .foregroundColor(.red)
-                            .padding(.top, 8)
-                    }
-                    
-                    // Display added usernames
                     ScrollView(.horizontal) {
                         HStack(spacing: 8) {
                             ForEach(viewModel.addedUsernames, id: \.self) { username in
@@ -170,6 +156,28 @@ struct NewMeetingView: View {
                         }
                     }
                     .padding(.top, 16)
+                    HStack(spacing: 10) {
+                        TextField("Enter username", text: $viewModel.usernameInput)
+                            .padding()
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(8)
+                        
+                        Button(action: {
+                            viewModel.submitUsername()
+                        }) {
+                            Text("Add")
+                                .padding()
+                                .frame(width: 100)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                    }
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .padding(.top, 8)
+                    }
                 }
                 .padding(.top, 8)
                                 
@@ -191,6 +199,8 @@ struct NewMeetingView: View {
                         .cornerRadius(8)
                 }
             }
+            .padding(16)
+
         }
     }
 }
