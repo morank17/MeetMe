@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
-class NewMeetingViewModel: ObservableObject { // use an observable object so that the UI automatically rerenders when the @Published vars change
+class NewMeetingViewModel: ObservableObject { // use an observable object so that the UI automatically rerenders when the Published vars change
     @Published var usernameInput: String = ""
     @Published var addedUsernames: [String] = []
     @Published var errorMessage: String?
-
+    
     // Function to query backend for username existence
     func submitUsername() {
         // check that username input is nonempty
