@@ -14,7 +14,7 @@ struct wav_appApp: App {
     var body: some Scene {
         WindowGroup {
             if isLoggedIn {
-                TestView() // Show the home view
+                HomeView() // Show the home view
             } else {
                 OnboardingView() // Show view to create an account
             }
