@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-struct PollsResponse: Codable {
-    let success: Bool
-    let response: [Poll]
-}
-
 class HomeViewModel: ObservableObject {
     @Published var polls: [Poll] = []
         

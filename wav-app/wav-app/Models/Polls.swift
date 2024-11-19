@@ -5,7 +5,7 @@
 //  Created by Nicholas Middelberg on 11/19/24.
 //
 
-import SwiftUI
+import Foundation
 
 struct Poll: Identifiable, Hashable, Codable {
     var id: String { poll_id }
@@ -47,3 +47,45 @@ struct Poll: Identifiable, Hashable, Codable {
         return nil
     }
 }
+
+struct PollsResponse: Codable {
+    let success: Bool
+    let response: [Poll]
+}
+
+struct PollOption: Identifiable, Codable {
+    var id: String { poll_option_id }
+    let poll_option_id: String
+    let start_time: String
+    let end_time: String
+    let number_of_votes: Int
+    
+    // Reformat date from start_time
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        if let date = formatter.date(from: start_time) {
+            formatter.dateFormat = "EEEE, dd/MM/yy"
+            return formatter.string(from: date)
+        }
+        return "Invalid Date"
+    }
+    
+    // Reformat time interval of meeting
+    var formattedTime: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        if let start = formatter.date(from: start_time), let end = formatter.date(from: end_time) {
+            formatter.dateFormat = "h:mm a"
+            return "\(formatter.string(from: start)) - \(formatter.string(from: end))"
+        }
+        return "Invalid Time"
+    }
+}
+
+struct PollOptionResponse: Decodable {
+    let success: Bool
+    let response: [PollOption]
+}
+
+
