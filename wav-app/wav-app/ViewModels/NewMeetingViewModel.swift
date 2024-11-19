@@ -134,6 +134,8 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
             "min_mtg_minutes": minMtgMinutes
         ]
         
+        print(requestBody)
+        
         // convert to JSON
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])

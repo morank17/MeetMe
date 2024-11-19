@@ -7,15 +7,8 @@
 
 import SwiftUI
 
-// Define a struct for Meeting that conforms to Identifiable and Hashable
-struct Meeting: Identifiable, Hashable {
-    var id = UUID()
-    var date: String
-    var time: String
-    var status: String // New status property to group meetings
-}
-
 struct HomeView: View {
+    @StateObject private var viewModel = HomeViewModel() // ViewModel
     var body: some View {
         NavigationView {
             ZStack {
@@ -26,15 +19,15 @@ struct HomeView: View {
                     sendWayvButton()
                     
                     // Sections with titles and meeting rows
-                    ForEach(getGroupedMeetings().sorted(by: { $0.key < $1.key }), id: \.key) { section, meetings in
+                    ForEach(getGroupedPolls().sorted(by: { $0.key < $1.key }), id: \.key) { section, polls in
                         VStack(alignment: .leading, spacing: 10) {
                             Text(section)
                                 .font(.custom("JetBrainsMono-Regular", size: 18))
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                             
-                            ForEach(meetings) { meeting in
-                                meetingRow(meeting: meeting)
+                            ForEach(polls) { poll in
+                                pollRow(poll: poll)
                             }
                         }
                         .padding(.horizontal)
@@ -53,6 +46,10 @@ struct HomeView: View {
                         }
                     }
                 }
+            }
+            .onAppear {
+                // Load data when the view appears
+                viewModel.loadSampleData()
             }
         }
     }
@@ -75,29 +72,39 @@ struct HomeView: View {
     }
     
     // Meeting row view with blue gradient background and glow effect
-    private func meetingRow(meeting: Meeting) -> some View {
+    private func pollRow(poll: Poll) -> some View {
         NavigationLink(
-                destination: destinationView(for: meeting.status) // Dynamically select destination
-            ) {
-                HStack {
-                    Text(meeting.date)
-                        .font(.custom("JetBrainsMono-Regular", size: 16))
-                        .foregroundColor(.white)
-                        .bold()
-                    
-                    Text(meeting.time)
-                        .font(.custom("JetBrainsMono-Regular", size: 16))
-                        .foregroundColor(.white)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        // Action for copying meeting details
-                    }) {
-                        Image(systemName: "doc.on.doc.fill")
+            destination: destinationView(for: poll.is_closed, pollId: poll.poll_id) // Dynamically select destination
+        ) {
+            HStack {
+                Text(poll.title)
+                    .font(.custom("JetBrainsMono-Regular", size: 16))
+                    .foregroundColor(.white)
+                    .bold()
+                
+                if poll.is_closed {
+                    // Show the formatted date and time for closed polls
+                    if let date = poll.formattedDate, let time = poll.formattedTime {
+                        Text("\(date), \(time)")
+                            .font(.custom("JetBrainsMono-Regular", size: 16))
                             .foregroundColor(.white)
                     }
+                } else {
+                    // Show the voting fraction for open polls
+                    Text("\(poll.voteFraction) of users voted")
+                        .font(.custom("JetBrainsMono-Regular", size: 16))
+                        .foregroundColor(.white)
                 }
+                
+                Spacer()
+                
+                Button(action: {
+                    // Action for copying poll details (e.g., to clipboard)
+                }) {
+                    Image(systemName: "doc.on.doc.fill")
+                        .foregroundColor(.white)
+                }
+            }
         }
         .padding()
         .background(
@@ -111,31 +118,19 @@ struct HomeView: View {
                 .shadow(color: Color.cyan.opacity(0.3), radius: 8, x: 0, y: 0)
         )
     }
-    func destinationView(for status: String) -> some View {
-        switch status {
-        case "Voting Active":
-            return AnyView(VotingView())
-        case "Voting Done":
-            return AnyView(VotingDoneView())
-        default:
-            return AnyView(Text("Unknown Status").foregroundColor(.white))
+    
+    func destinationView(for isClosed: Bool, pollId: String) -> some View {
+        if isClosed {
+            return AnyView(VotingDoneView(pollId: pollId))
+        } else {
+            return AnyView(VotingView(pollId: pollId))
         }
     }
     
-    // Sample data function with status categories for Meet Queue
-    func getMeetings() -> [Meeting] {
-        return [
-            Meeting(date: "7/9", time: "30 min left", status: "Voting Active"),
-            Meeting(date: "3/3", time: "2 hrs 15 min left", status: "Voting Active"),
-            Meeting(date: "10/14", time: "3:00PM - 4:00PM", status: "Voting Done"),
-            Meeting(date: "10/19", time: "11:30AM - 1:00PM", status: "Voting Done")
-        ]
-    }
-    
     // Group meetings by their status
-    func getGroupedMeetings() -> [String: [Meeting]] {
-        let meetings = getMeetings()
-        return Dictionary(grouping: meetings, by: { $0.status })
+    func getGroupedPolls() -> [String: [Poll]] {
+        let polls = viewModel.polls
+        return Dictionary(grouping: polls, by: { $0.is_closed ? "Voting Done" : "Voting Active" })
     }
 }
 
