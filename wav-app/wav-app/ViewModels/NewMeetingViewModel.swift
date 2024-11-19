@@ -10,6 +10,8 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
     @Published var usernameInput: String = ""
     @Published var addedUsernames: [String] = []
     @Published var errorMessage: String?
+    @Published var showSuccessPopup: Bool = false
+
     
     // Function to query backend for username existence
     func submitUsername() {
@@ -78,6 +80,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
     
     // Submit a new meeting
     func submitNewMeeting(
+        title: String,
         selectedDate: Date,
         timeIntervalStart: Date,
         timeIntervalEnd: Date,
@@ -85,6 +88,11 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         meetingDurationMins: Int
     ) {
         // catch edge cases
+        guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            errorMessage = "Please add a meeting title."
+            return
+        }
+        
         guard !addedUsernames.isEmpty else {
             errorMessage = "Please add at least one attendee."
             return
@@ -109,14 +117,17 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         timeFormatter.dateFormat = "HH:mm"
         
         let dates = [dayFormatter.string(from: selectedDate)]
-        let timeRanges = [(timeFormatter.string(from: timeIntervalStart), timeFormatter.string(from: timeIntervalEnd))]
+        let timeRanges = [[timeFormatter.string(from: timeIntervalStart), timeFormatter.string(from: timeIntervalEnd)]]
         let minMtgMinutes = meetingDurationHrs * 60 + meetingDurationMins
         let unameList = addedUsernames
+        guard let token = AuthViewModel.retrieveToken() else { return }
         
-        print(dates, timeRanges, minMtgMinutes, unameList)
-        
+        print(title, dates, timeRanges, minMtgMinutes, unameList)
+
         // create request body
         let requestBody: [String: Any] = [
+            "token": token,
+            "title": title,
             "dates": dates,
             "time_ranges": timeRanges,
             "uname_list": unameList,
@@ -138,9 +149,21 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
                     self.errorMessage = "Error: \(error.localizedDescription)"
                     return
                 }
-                
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("Response status code: \(httpResponse.statusCode)")
+                }
+
+                if let data = data {
+                    // Convert data to a string for debugging
+                    if let jsonString = String(data: data, encoding: .utf8) {
+                        print("Received data: \(jsonString)")
+                    }
+                }
+            
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                     // maybe success popup, navigate back to home page
+                    self.showSuccessPopup = true
+                    
                     // reset related state variables
                     self.usernameInput = ""
                     self.addedUsernames = []
@@ -150,5 +173,6 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
             }
         }.resume()
     }
+    
 }
 

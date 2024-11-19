@@ -18,6 +18,7 @@ struct NewMeetingView: View {
 
     
     @ObservedObject private var viewModel = NewMeetingViewModel()
+    @Environment(\.presentationMode) var presentationMode
 
 
     var body: some View {
@@ -185,6 +186,7 @@ struct NewMeetingView: View {
                 // submit button (don't need to pass added Usernames because they're already stored in the ViewModel
                 Button(action: {
                     viewModel.submitNewMeeting(
+                        title: title,
                         selectedDate: selectedDate,
                         timeIntervalStart: timeIntervalStart,
                         timeIntervalEnd: timeIntervalEnd,
@@ -200,7 +202,18 @@ struct NewMeetingView: View {
                 }
             }
             .padding(16)
-
+        }
+        .onChange(of: viewModel.showSuccessPopup) {
+            if $0 { // $0 refers to the new value of `viewModel.showSuccessPopup`
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
+        .alert(isPresented: $viewModel.showSuccessPopup) {
+            Alert(
+                title: Text("Success"),
+                message: Text("🎉 Meeting created successfully!"),
+                dismissButton: .default(Text("Close"))
+            )
         }
     }
 }
