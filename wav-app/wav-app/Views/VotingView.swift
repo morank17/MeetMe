@@ -41,36 +41,23 @@ struct VotingView: View {
                                 MeetingTimeSlot(time: "8:00 PM - 9:00 PM", votes: 3)
                             ], selectedMeetingID: $selectedMeetingID)
                         }
-                        .frame(width: UIScreen.main.bounds.width * 0.8) // Narrowed to 80% width
+                        .frame(width: .infinity) // Narrowed to 80% width
                     }
                     
                     Spacer()
                     
                     // Label above Submit button
-                    Text("still waiting on Alice...")
-                        .font(.custom("JetBrainsMono-Regular", size: 14))
-                        .foregroundColor(.white.opacity(0.7))
                     
                     // Bottom buttons
                     HStack(spacing: 20) {
                         VStack(spacing: 5) {
                             submitButton()
-                            Text("Can't find a time?")
-                                .font(.custom("JetBrainsMono-Regular", size: 12))
-                                .foregroundColor(.white.opacity(0.7))
-                        }
-                        VStack(spacing: 5) {
-                            rejectButton()
                         }
                     }
                     .padding(.bottom, 20)
                 }
                 .padding(.horizontal, 20)
             }
-            .navigationBarTitle("Home", displayMode: .inline)
-            .navigationBarItems(trailing: Text("Settings")
-                .font(.custom("JetBrainsMono-Regular", size: 16))
-                .foregroundColor(.white))
         }
     }
     

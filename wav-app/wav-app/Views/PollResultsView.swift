@@ -40,10 +40,6 @@ struct PollResultsView: View {
                 }
                 .padding(.horizontal, 20)
             }
-            .navigationBarTitle("Home", displayMode: .inline)
-            .navigationBarItems(trailing: Text("Settings")
-                .font(.custom("JetBrainsMono-Regular", size: 16))
-                .foregroundColor(.white))
         }
         .navigationBarBackButtonHidden(true) // Hide the default back button
     }

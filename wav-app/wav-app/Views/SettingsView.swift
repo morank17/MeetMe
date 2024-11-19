@@ -32,12 +32,6 @@ struct SettingsView: View {
             Color.black
                 .ignoresSafeArea()
                 //.padding(.top, 60)
-            
-            HStack{
-                Spacer()
-                homeButton()
-                    .position(x: 330, y: 10)
-            }
 
         accountButton()
             .offset(y: -300)
