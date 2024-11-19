@@ -63,7 +63,7 @@ struct PollOption: Identifiable, Codable {
     // Reformat date from start_time
     var formattedDate: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         if let date = formatter.date(from: start_time) {
             formatter.dateFormat = "EEEE, dd/MM/yy"
             return formatter.string(from: date)
@@ -74,7 +74,7 @@ struct PollOption: Identifiable, Codable {
     // Reformat time interval of meeting
     var formattedTime: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         if let start = formatter.date(from: start_time), let end = formatter.date(from: end_time) {
             formatter.dateFormat = "h:mm a"
             return "\(formatter.string(from: start)) - \(formatter.string(from: end))"

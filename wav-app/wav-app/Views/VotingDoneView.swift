@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct VotingDoneView: View {
+    var pollId: String
     var body: some View {
         VStack(spacing: 20) {
                     // Title
@@ -85,5 +86,5 @@ struct VotingDoneView: View {
 }
 
 #Preview {
-    VotingDoneView()
+    VotingDoneView(pollId: "f4685efe-690a-4c8c-86d0-60dedfa3f7b9")
 }

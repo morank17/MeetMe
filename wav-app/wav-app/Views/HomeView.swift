@@ -74,7 +74,7 @@ struct HomeView: View {
     // Meeting row view with blue gradient background and glow effect
     private func pollRow(poll: Poll) -> some View {
         NavigationLink(
-            destination: destinationView(for: poll.is_closed) // Dynamically select destination
+            destination: destinationView(for: poll.is_closed, pollId: poll.poll_id) // Dynamically select destination
         ) {
             HStack {
                 Text(poll.title)
@@ -119,18 +119,18 @@ struct HomeView: View {
         )
     }
     
-    func destinationView(for isClosed: Bool) -> some View {
+    func destinationView(for isClosed: Bool, pollId: String) -> some View {
         if isClosed {
-            return AnyView(VotingDoneView())
+            return AnyView(VotingDoneView(pollId: pollId))
         } else {
-            return AnyView(VotingView())
+            return AnyView(VotingView(pollId: pollId))
         }
     }
     
     // Group meetings by their status
     func getGroupedPolls() -> [String: [Poll]] {
         let polls = viewModel.polls
-        return Dictionary(grouping: polls, by: { $0.is_closed ? "Closed" : "Open" })
+        return Dictionary(grouping: polls, by: { $0.is_closed ? "Voting Done" : "Voting Active" })
     }
 }
 
