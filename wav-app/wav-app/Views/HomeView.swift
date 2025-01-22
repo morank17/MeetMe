@@ -12,11 +12,9 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.black.edgesIgnoringSafeArea(.all) // Dark background color
+                Color(AppColors.backgroundGray).edgesIgnoringSafeArea(.all) // Dark background color
                 
                 VStack(spacing: 20) {
-                    // "Send a Wayv" button with blue gradient and glow
-                    sendWayvButton()
                     
                     // Sections with titles and meeting rows
                     ForEach(getGroupedPolls().sorted(by: { $0.key < $1.key }), id: \.key) { section, polls in
@@ -37,37 +35,11 @@ struct HomeView: View {
                 }
                 .padding(.top, 10)
                 .navigationTitle("Home")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: SettingsView()) {
-                            Text("Settings")
-                                .font(.custom("JetBrainsMono-Regular", size: 16))
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
             }
             .onAppear {
                 // Load data when the view appears
                 viewModel.loadSampleData()
             }
-        }
-    }
-    
-    // "Send a Wayv" button with blue gradient and glow effect
-    private func sendWayvButton() -> some View {
-        NavigationLink(destination: NewMeetingView()) {
-            Text("Send a WAYV")
-                .font(.custom("JetBrainsMono-Regular", size: 20))
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(
-                    LinearGradient(gradient: Gradient(colors: [Color.cyan, Color.blue]), startPoint: .leading, endPoint: .trailing)
-                )
-                .cornerRadius(20)
-                .padding(.horizontal, 40)
-                .shadow(color: Color.cyan.opacity(0.7), radius: 10, x: 0, y: 0) // Glow effect
         }
     }
     
