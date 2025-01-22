@@ -35,15 +35,6 @@ struct HomeView: View {
                 }
                 .padding(.top, 10)
                 .navigationTitle("Home")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: SettingsView()) {
-                            Text("Settings")
-                                .font(.custom("JetBrainsMono-Regular", size: 16))
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
             }
             .onAppear {
                 // Load data when the view appears
