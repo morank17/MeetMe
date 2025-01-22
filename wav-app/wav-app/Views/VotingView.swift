@@ -16,6 +16,7 @@ struct VotingView: View {
     
     var body: some View {
         NavigationView {
+            Color(AppColors.backgroundGray).edgesIgnoringSafeArea(.all) // Dark background color
             ZStack {
                 Color.black.edgesIgnoringSafeArea(.all) // Background color set to black
                 

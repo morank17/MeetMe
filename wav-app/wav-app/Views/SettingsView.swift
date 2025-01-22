@@ -29,9 +29,7 @@ struct SettingsView: View {
     var body: some View {
         
         ZStack{
-            Color.black
-                .ignoresSafeArea()
-                //.padding(.top, 60)
+            Color(AppColors.backgroundGray).edgesIgnoringSafeArea(.all) // Dark background color
 
         accountButton()
             .offset(y: -300)
