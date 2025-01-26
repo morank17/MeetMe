@@ -8,3 +8,4 @@
 **/xcshareddata/WorkspaceSettings.xcsettings
 *.xcuserstate
 *.xcuserdatad
+.DS_Store
