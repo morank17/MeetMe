@@ -19,8 +19,8 @@ struct AppColors {
         endPoint: .trailing
     )
     static let backgroundGray = Color(
-        red: 55 / 255.0,
-        green: 63 / 255.0,
-        blue: 65 / 255.0
+        red: 33 / 255.0,
+        green: 40 / 255.0,
+        blue: 50 / 255.0
     )
 }
