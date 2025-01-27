@@ -54,62 +54,22 @@ struct LoginView: View {
             return
         }
         
+        let bodyString = "uname=\(username)&password=\(password)" // URL-encoded string
+        let body = bodyString.data(using: .utf8)
+        
         // Call to API to create user account
-        let url = URL(string: "https://musketeers-django.onrender.com/api/users/login")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue(
-            "application/x-www-form-urlencoded",
-            forHTTPHeaderField: "Content-Type")
+        guard let url = URL(string: "https://musketeers-django.onrender.com/api/users/login") else {
+            print("Invalid URL")
+            return
+        }
         
-        print(username, password)
-        let bodyString = "uname=\(username)&password=\(password)"
-        request.httpBody = bodyString.data(using: .utf8)
-        
-        // initiate asynch network request to the API
-        URLSession.shared.dataTask(with: request) { data, response, error in DispatchQueue.main.async {
-                // check connection to API
-                if let error = error {
-                    errorMessage = "Error: \(error.localizedDescription)"
-                    return
-                }
-            
-                // print statements for testing
-                if let httpResponse = response as? HTTPURLResponse {
-                    print("Response status code: \(httpResponse.statusCode)")
-                }
-            
-                if let data = data {
-                    // Convert data to a string for debugging
-                    if let jsonString = String(data: data, encoding: .utf8) {
-                        print("Received data: \(jsonString)")
-                    }
-                }
-            
-                // check for valid API response indicating a new user profile was made
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-
-                    // decode JSON response and save user token in Keychain
-                    if let data = data {
-                        do {
-                            // Decode JSON
-                            if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                               let token = jsonObject["token"] as? String {
-                                // Save the token
-                                AuthViewModel.saveToken(token: token)
-                                isLoggedIn.toggle()
-                            } else {
-                                self.errorMessage = "Token not found in response"
-                            }
-                        } catch {
-                            self.errorMessage = "Failed to parse JSON: \(error.localizedDescription)"
-                        }
-                    }
-                } else {
-                    errorMessage = "Invalid Credentials. Please try again."
-                }
-            }
-        }.resume()
+        // Call APICall with a POST request
+        APICall.shared.loginRequest(
+            url: url,
+            method: "POST",
+            headers: ["Content-Type": "application/x-www-form-urlencoded"],
+            body: body // URL-encoded body
+        )
     }
 }
 
