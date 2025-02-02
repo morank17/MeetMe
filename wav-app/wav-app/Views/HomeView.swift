@@ -14,6 +14,7 @@ struct HomeView: View {
             
             NavigationView {
                 VStack {
+                    QuickJoinView()
                     VotingProgressCarousel()
                         .padding(.top, 10)
                     
@@ -26,6 +27,7 @@ struct HomeView: View {
         }
     }
 }
+
 // Preview
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
