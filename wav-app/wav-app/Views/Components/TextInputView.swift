@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AnimatedInputField: View {
+struct TextInputView: View {
     @Binding var text: String
     var placeholder: String
     var isSecure: Bool = false // For password fields
@@ -25,7 +25,7 @@ struct AnimatedInputField: View {
                 Text(placeholder)
                     .font(.caption)
                     .foregroundColor(isFocused ? .blue : .gray)
-                    .offset(y: isFocused || !text.isEmpty ? -35 : 0)
+                    .offset(x: 12, y: isFocused || !text.isEmpty ? -35 : 0)
                     .scaleEffect(isFocused || !text.isEmpty ? 1.0 : 1.2, anchor: .leading)
                     .animation(.easeInOut(duration: 0.2), value: isFocused || !text.isEmpty)
 
@@ -43,7 +43,7 @@ struct AnimatedInputField: View {
                 }
             }
             .padding(.horizontal, 8)
-            .frame(height: 44)
+            .frame(height: 58)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(isFocused ? Color.blue : Color.gray, lineWidth: 1)
@@ -62,9 +62,9 @@ struct AnimatedInputField: View {
 struct AnimatedInputField_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            AnimatedInputField(text: .constant(""), placeholder: "Username", defaultValue: "Nick")
+            TextInputView(text: .constant(""), placeholder: "Username", defaultValue: "Nick")
                 .padding()
-            AnimatedInputField(text: .constant(""), placeholder: "Password", isSecure: true)
+            TextInputView(text: .constant(""), placeholder: "Password", isSecure: true)
                 .padding()
         }
         .previewLayout(.sizeThatFits)
