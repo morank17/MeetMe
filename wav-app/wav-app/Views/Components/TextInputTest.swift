@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct LoginPage: View {
     @State private var username: String = ""
     @State private var password: String = ""
@@ -21,7 +19,7 @@ struct LoginPage: View {
                 .fontWeight(.bold)
 
             // Username Field
-            AnimatedInputField(
+            TextInputView(
                 text: $username,
                 placeholder: "Username",
                 keyboardType: .emailAddress,
@@ -29,7 +27,7 @@ struct LoginPage: View {
             )
 
             // Password Field
-            AnimatedInputField(
+            TextInputView(
                 text: $password,
                 placeholder: "Password",
                 isSecure: true

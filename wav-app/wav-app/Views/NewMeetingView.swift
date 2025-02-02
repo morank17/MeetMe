@@ -26,11 +26,14 @@ struct NewMeetingView: View {
             VStack {
                 Spacer()
                 
-                Text("Set Meeting Title")
+                Text("Pick a Title!")
                     .font(.headline)
                 
-                // meeting title
-                TextField("Title", text: $title).padding()
+                // Username Field
+                TextInputView(
+                    text: $title,
+                    placeholder: "Title"
+                )
 
                 
                 // pick day for meeting
