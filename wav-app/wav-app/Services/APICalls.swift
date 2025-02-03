@@ -60,4 +60,33 @@ class APICall {
             }
         }.resume()
     }
+    
+    static func request<T: Decodable>(
+            url: URL,
+            method: String = "GET",
+            headers: [String: String]? = nil,
+            body: Data? = nil,
+            responseType: T.Type
+        ) async throws -> T {
+            var request = URLRequest(url: url)
+            request.httpMethod = method
+            request.allHTTPHeaderFields = headers
+            request.httpBody = body
+
+            let (data, response) = try await URLSession.shared.data(for: request)
+
+            // Ensure valid HTTP response
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw APIError.invalidResponse
+            }
+            
+            // Check for HTTP status errors
+            guard (200...299).contains(httpResponse.statusCode) else {
+                throw APIError.httpError(statusCode: httpResponse.statusCode)
+            }
+
+            // Decode JSON response into expected model
+            return try JSONDecoder().decode(responseType, from: data)
+        }
 }
+

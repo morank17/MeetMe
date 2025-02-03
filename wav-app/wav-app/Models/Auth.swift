@@ -17,3 +17,11 @@ struct LoginPostRequest: Encodable {
     var uname: String
     var password: String
 }
+
+// API error handling (suggestion from chatGPT)
+enum APIError: Error {
+    case invalidResponse
+    case httpError(statusCode: Int)
+    case decodingError(Error)
+    case networkError(String)
+}
