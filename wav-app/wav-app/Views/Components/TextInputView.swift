@@ -50,6 +50,11 @@ struct TextInputView: View {
             )
             .animation(.easeInOut(duration: 0.2), value: isFocused)
         }
+        .onChange(of: text) { newValue in
+            withAnimation {
+                isFocused = !newValue.isEmpty
+            }
+        }
         .onChange(of: isFocused) { newFocus in
             if newFocus && text.isEmpty, let defaultValue = defaultValue {
                 text = defaultValue
