@@ -28,50 +28,106 @@ struct CreateAccountView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Text("Create Account")
-                    .font(.title)
-                    .padding()
+            ZStack{
                 
-                // user input fields
-                TextField("Username", text: $username)
-                    .padding()
-                TextField("Email", text: $email)
-                    .padding()
-                SecureField("Password1", text: $password1)
-                    .padding()
-                SecureField("Password2", text: $password2)
-                    .padding()
+                Color(AppColors.backgroundGray).edgesIgnoringSafeArea(.all)
                 
-                // display error message if there is one
-                if let error = errorMessage {
-                    Text(error)
-                        .foregroundColor(.red)
+                VStack {
+                    Text("Create Your Account!")
+                        .font(TextStyles.heading)
+                        .foregroundColor(Color.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical)
+                    
+                    // user input fields
+                    Text("Username")
+                        .foregroundColor(AppColors.textGray)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    TextField("", text: $username)
                         .padding()
+                        .frame(maxWidth: .infinity)  //fix this. not all the wat yo the edges
+                        .background(AppColors.textBlockGray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.bottom)
+                    
+                    Text("Email")
+                        .foregroundColor(AppColors.textGray)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    TextField("", text: $email)
+                        .padding()
+                        .frame(maxWidth: .infinity)  //fix this. not all the wat yo the edges
+                        .background(AppColors.textBlockGray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.bottom)
+                    
+                    Text("Password")
+                        .foregroundColor(AppColors.textGray)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    SecureField("", text: $password1)
+                        .padding()
+                        .frame(maxWidth: .infinity)  //fix this. not all the wat yo the edges
+                        .background(AppColors.textBlockGray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.bottom)
+                    
+                    
+                    Text("Confirm Password")
+                        .foregroundColor(AppColors.textGray)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    SecureField("Password2", text: $password2)
+                        .padding()
+                        .frame(maxWidth: .infinity)  //fix this. not all the wat yo the edges
+                        .background(AppColors.textBlockGray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.bottom)
+                    
+                    // display error message if there is one
+                    if let error = errorMessage {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .padding()
+                    }
+                    
+                    
+                    // create account button
+                    Button(action: {
+                        createAccount()
+                    }) {
+                        Text("Create Account")
+                    }
+                    .padding()
+                    .frame(width: 200, height: 75)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    
+                    
+                    HStack(spacing: 1) {
+                        
+                        Text("Already have an account?")
+                            .foregroundColor(Color.white)
+                            
+                        
+                        Button(" Log in") {
+                            showLogin.toggle()
+                        }
+                        .navigationDestination(isPresented: $navigateToCalendar) {
+                            ConnectCalendarView()
+                        }
+                        .padding()
+                        .padding(.horizontal, -15)
+                    }
+                    
                 }
-                
-                // create account button
-                Button(action: {
-                    createAccount()
-                }) {
-                    Text("Create Account")
-                }
-                .padding(.vertical, 1)
-                .foregroundColor(.white)
                 .padding()
-                .frame(maxWidth: .infinity)
-                .background(
-                    AppColors.blueGradient
-                )
-                .cornerRadius(30)
-                .padding(.horizontal, 60)
-                
-                Button("Already have an account? Log in.") {
-                    showLogin.toggle()
-                }
-                .navigationDestination(isPresented: $navigateToCalendar) {
-                    ConnectCalendarView()
-                }
             }
         }
     }

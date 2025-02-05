@@ -17,34 +17,80 @@ struct LoginView: View {
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
 
     var body: some View {
-        VStack {
+        
+        ZStack {
             
-            Text("Log In")
-                .font(.title)
+            Color(AppColors.backgroundGray).edgesIgnoringSafeArea(.all) // Dark background color
+            
+            VStack {
+                
+                Text("Welcome Back!")
+                    .font(TextStyles.heading)
+                    .padding(.vertical)
+                    .foregroundColor(Color.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("Username")
+                    .foregroundColor(AppColors.textGray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                
+                TextField("", text: $username)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(AppColors.textBlockGray)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .padding(.bottom)
+                
+                Text("Password")
+                    .foregroundColor(AppColors.textGray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                SecureField("", text: $password).padding()
+                    .frame(maxWidth: .infinity)
+                    .background(AppColors.textBlockGray)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                
+                if let error = errorMessage {
+                    Text(error).foregroundColor(.red).padding()
+                }
+                Spacer().frame(height: 100)
+                Button(action: logIn) {
+                    Text("Log In")
+                    
+                }
                 .padding()
-            
-            TextField("Username", text: $username).padding()
-            SecureField("Password", text: $password).padding()
-            
-            if let error = errorMessage {
-                Text(error).foregroundColor(.red).padding()
-            }
-            
-            Button(action: logIn) {
-                Text("Log In")
+                .frame(width: 200, height: 75)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                
+                HStack(spacing: 1) {
+                    
+                    Text("Don't have an account?")
+                        .foregroundColor(Color.white)
+                        
+                    
+                    Button(" Sign Up") {
+                        showLogin.toggle()
+                    }
+                    .padding()
+                    .padding(.horizontal, -15)
+                    
+                    
+                }
+                
+               
+                
+                Spacer()
+                    .frame(height: 100)
             }
             .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            
-            Button("Don't have an account? Create one.") {
-                showLogin.toggle()
-            }
-            .padding()
+
         }
-        .padding()
+        
     }
     
     func logIn() {

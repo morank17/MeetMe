@@ -23,4 +23,14 @@ struct AppColors {
         green: 40 / 255.0,
         blue: 50 / 255.0
     )
+    static let textGray = Color(
+        red: 156 / 255.0,
+        green: 156 / 255.0,
+        blue: 156 / 255.0
+    )
+    static let textBlockGray = Color(
+        red: 69 / 255.0,
+        green: 90 / 255.0,
+        blue: 100 / 255.0
+    )
 }
