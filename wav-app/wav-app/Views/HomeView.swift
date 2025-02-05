@@ -15,10 +15,11 @@ struct HomeView: View {
             NavigationView {
                 VStack {
                     QuickJoinView()
+                        .padding(.top, 20)
                     VotingProgressCarousel()
                         .padding(.top, 10)
-                    
-                    Spacer() // Forces VStack to expand
+                    PendingMeetingsCarousel()
+                        .padding(.top, 10)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity) // Ensures full-screen VStack
                 .background(AppColors.backgroundGray) // Ensures the VStack area has the same background
