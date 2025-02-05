@@ -53,12 +53,6 @@ struct VotingIconView: View {
                 .scaledToFit()
                 .frame(width: 50, height: 50)
                 .foregroundColor(details.is_closed ? .blue : .gray)
-            Image(systemName: "clock.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 50, height: 50)
-                .foregroundColor(.gray)
-
             Text(details.title)
                 .font(.caption)
                 .foregroundColor(.primary)
