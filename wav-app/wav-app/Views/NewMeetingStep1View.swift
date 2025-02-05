@@ -30,7 +30,6 @@ struct NewMeetingStep1View: View {
                 .foregroundStyle(AppColors.white)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            // Use SelectionButtonsView
             SelectionButtonsView(
                 options: ["15 min", "30 min", "1 hr", "2 hr"],
                 multiSelect: false,

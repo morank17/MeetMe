@@ -15,8 +15,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
     // State variables for second screen
     @Published var selectedEarliestDate: Date? = nil
     @Published var selectedLatestDate: Date? = nil
-    @Published var timeIntervalStart = Date()
-    @Published var timeIntervalEnd = Date()
+    @Published var timeIntervals: [(start: Date, end: Date)] = []
     
     // UI & Validation
     @Published var errorMessage: String?
@@ -41,6 +40,29 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         return dates
     }
     
+    // Adds a new time interval
+    func addTimeInterval(start: Date, end: Date) {
+        guard start < end else {
+            errorMessage = "Start time must be before end time."
+            return
+        }
+        timeIntervals.append((start, end))
+    }
+
+    // Removes a time interval at a given index
+    func removeTimeInterval(at index: Int) {
+        guard index >= 0 && index < timeIntervals.count else { return }
+        timeIntervals.remove(at: index)
+    }
+
+    // Formats time intervals for API submission
+    private var formattedTimeIntervals: [[String]] {
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+
+        return timeIntervals.map { [timeFormatter.string(from: $0.start), timeFormatter.string(from: $0.end)] }
+    }
+    
     // Submit a new meeting
     func submitNewMeeting() {
         // catch edge cases
@@ -50,10 +72,6 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         }
         guard meetingDurationHrs > 0 || meetingDurationMins > 0 else {
             errorMessage = "Meeting duration must be greater than 0."
-            return
-        }
-        guard timeIntervalStart < timeIntervalEnd else {
-            errorMessage = "Start time must be before end time."
             return
         }
         
