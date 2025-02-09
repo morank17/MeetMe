@@ -7,97 +7,69 @@
 
 import SwiftUI
 class NewMeetingViewModel: ObservableObject { // use an observable object so that the UI automatically rerenders when the Published vars change
-    @Published var usernameInput: String = ""
-    @Published var addedUsernames: [String] = []
+    // State variables for first screen
+    @Published var title: String = ""
+    @Published var meetingDurationHrs: Int = 0
+    @Published var meetingDurationMins: Int = 0
+
+    // State variables for second screen
+    @Published var selectedEarliestDate: Date? = nil
+    @Published var selectedLatestDate: Date? = nil
+    @Published var timeIntervals: [(start: Date, end: Date)] = []
+    
+    // UI & Validation
     @Published var errorMessage: String?
     @Published var showSuccessPopup: Bool = false
-
+    @Published var currentPage: Int = 0 // Tracks user progress in the flow
     
-    // Function to query backend for username existence
-    func submitUsername() {
-        // check that username input is nonempty
-        guard !usernameInput.isEmpty else { return }
-        
-        // Reset the error message
-        errorMessage = nil
-        
-        let url = URL(string: "https://musketeers-django.onrender.com/api/users/checkuname?uname=\(usernameInput)")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        // initiate asynch network request to the API
-        URLSession.shared.dataTask(with: request) { data, response, error in DispatchQueue.main.async {
-            // check connectivity to API
-            if let error = error {
-                self.errorMessage = "Error: \(error.localizedDescription)"
-                return
-            }
-            if let httpResponse = response as? HTTPURLResponse {
-                print("Response status code: \(httpResponse.statusCode)")
-            }
+    var dateRangeFormatted: [String] {
+        guard let startDate = selectedEarliestDate, let endDate = selectedLatestDate else {
+            return []
+        }
+        let calendar = Calendar.current
+        var dates: [String] = []
+        var currentDate = startDate
+        let dayFormatter = DateFormatter()
+        dayFormatter.dateFormat = "yyyy-MM-dd"
 
-            if let data = data {
-                // Convert data to a string for debugging
-                if let jsonString = String(data: data, encoding: .utf8) {
-                    print("Received data: \(jsonString)")
-                }
-            }
-            // check valid response
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                // check if result is true
-                
-                if let data = data {
-                    do {
-                        // Decode JSON
-                        if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                           let result = jsonObject["success"] as? Bool {
-                            print("Received data: \(result)")
-                            // Add username to the added list
-                            if result == true {
-                                if !self.addedUsernames.contains(self.usernameInput) {
-                                    self.addedUsernames.append(self.usernameInput)
-                                }
-                                // reset usernameInput
-                                self.usernameInput = ""
-                            } else {
-                                self.errorMessage = "User does not exist"
-                            }
-                        }
-                    } catch {
-                        self.errorMessage = "Failed to parse JSON: \(error.localizedDescription)"
-                    }
-                }
-            } else {
-                self.errorMessage = "Failed to check user. Please try again."
-            }
-        }}.resume()
+        while currentDate <= endDate {
+            dates.append(dayFormatter.string(from: currentDate))
+            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+        }
+        
+        return dates
     }
     
-    // Function to remove a username from the addedUsernames array
-    func removeUser(_ username: String) {
-        addedUsernames.removeAll { $0 == username }
+    // Adds a new time interval
+    func addTimeInterval(start: Date, end: Date) {
+        guard start < end else {
+            errorMessage = "Start time must be before end time."
+            return
+        }
+        timeIntervals.append((start, end))
+    }
+
+    // Removes a time interval at a given index
+    func removeTimeInterval(at index: Int) {
+        guard index >= 0 && index < timeIntervals.count else { return }
+        timeIntervals.remove(at: index)
+    }
+
+    // Formats time intervals for API submission
+    private var formattedTimeIntervals: [[String]] {
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+
+        return timeIntervals.map { [timeFormatter.string(from: $0.start), timeFormatter.string(from: $0.end)] }
     }
     
     // Submit a new meeting
-    func submitNewMeeting(
-        title: String,
-        selectedDate: Date,
-        timeIntervalStart: Date,
-        timeIntervalEnd: Date,
-        meetingDurationHrs: Int,
-        meetingDurationMins: Int
-    ) {
+    func submitNewMeeting() {
         // catch edge cases
         guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             errorMessage = "Please add a meeting title."
             return
         }
-        
-        guard !addedUsernames.isEmpty else {
-            errorMessage = "Please add at least one attendee."
-            return
-        }
-        
         guard meetingDurationHrs > 0 || meetingDurationMins > 0 else {
             errorMessage = "Meeting duration must be greater than 0."
             return
@@ -116,13 +88,12 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
         
-        let dates = [dayFormatter.string(from: selectedDate)]
+        let dates = dateRangeFormatted
         let timeRanges = [[timeFormatter.string(from: timeIntervalStart), timeFormatter.string(from: timeIntervalEnd)]]
         let minMtgMinutes = meetingDurationHrs * 60 + meetingDurationMins
-        let unameList = addedUsernames
         guard let token = AuthViewModel.retrieveToken() else { return }
         
-        print(title, dates, timeRanges, minMtgMinutes, unameList)
+        print(title, dates, timeRanges, minMtgMinutes)
 
         // create request body
         let requestBody: [String: Any] = [
@@ -130,7 +101,6 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
             "title": title,
             "dates": dates,
             "time_ranges": timeRanges,
-            "uname_list": unameList,
             "min_mtg_minutes": minMtgMinutes
         ]
         
@@ -167,8 +137,6 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
                     self.showSuccessPopup = true
                     
                     // reset related state variables
-                    self.usernameInput = ""
-                    self.addedUsernames = []
                 } else {
                     self.errorMessage = "Failed to create meeting. Please try again."
                 }

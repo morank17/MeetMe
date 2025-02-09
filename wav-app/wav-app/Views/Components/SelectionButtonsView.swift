@@ -11,24 +11,30 @@ struct SelectionButtonsView: View {
     let options: [String]
     let multiSelect: Bool
     
+    @Binding var selectedValue: String?
+
     @State private var selectedOptions: Set<String> = []
-    @State private var selectedOption: String? = nil
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 6) {
             ForEach(options, id: \.self) { option in
                 Button(action: {
                     handleSelection(option)
                 }) {
                     Text(option)
-                        .padding()
-                        .frame(minWidth: 60)
-                        .background(isSelected(option) ? Color.gray.opacity(0.5) : Color.gray.opacity(0.2))
-                        .foregroundColor(.black)
+                        .font(TextStyles.selectionlabel)
+                        .padding(.vertical, 15)
+                        .frame(minWidth: 67, maxWidth: .infinity)
+                        .frame(height: 43)
+                        .lineLimit(1)
+                        .background(isSelected(option) ? AppColors.highlightBlue : AppColors.white)
+                        .foregroundColor(AppColors.backgroundGray)
                         .cornerRadius(10)
                 }
             }
         }
+//        .padding(.horizontal, 16) // 16px margin on the sides
+
     }
     
     private func handleSelection(_ option: String) {
@@ -39,24 +45,11 @@ struct SelectionButtonsView: View {
                 selectedOptions.insert(option)
             }
         } else {
-            selectedOption = (selectedOption == option) ? nil : option
+            selectedValue = (selectedValue == option) ? nil : option
         }
     }
     
     private func isSelected(_ option: String) -> Bool {
-        return multiSelect ? selectedOptions.contains(option) : selectedOption == option
-    }
-}
-
-struct SelectionButtonsView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Text("Single Selection")
-            SelectionButtonsView(options: ["15 min", "30 min", "1 hr", "2 hr", "Custom"], multiSelect: false)
-            
-            Text("Multi Selection")
-            SelectionButtonsView(options: ["15 min", "30 min", "1 hr", "2 hr", "Custom"], multiSelect: true)
-        }
-        .padding()
+        return multiSelect ? selectedOptions.contains(option) : selectedValue == option
     }
 }
