@@ -12,8 +12,7 @@ struct SelectionButtonsView: View {
     let multiSelect: Bool
     
     @Binding var selectedValue: String?
-
-    @State private var selectedOptions: Set<String> = []
+    @Binding var selectedOptions: Set<String>
 
     var body: some View {
         HStack(spacing: 6) {

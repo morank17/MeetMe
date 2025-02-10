@@ -24,10 +24,10 @@ struct NewMeetingView: View {
             //custom dots for navigation at the bottom
             HStack {
                 Circle()
-                    .fill(currentPage == 0 ? AppColors.highlightBlue : AppColors.lightGray)
+                    .fill(currentPage == 0 ? AppColors.highlightBlue : AppColors.textGray)
                     .frame(width: 10, height: 10)
                 Circle()
-                    .fill(currentPage == 1 ? AppColors.highlightBlue : AppColors.lightGray)
+                    .fill(currentPage == 1 ? AppColors.highlightBlue : AppColors.textGray)
                     .frame(width: 10, height: 10)
             }
             .padding(.bottom, 20)
