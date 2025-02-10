@@ -25,6 +25,8 @@ struct NewMeetingStep1View: View {
                 placeholder: "Meeting Title"
             )
             
+            Spacer().frame(height: 41)
+            
             Text("How long to meet?")
                 .font(TextStyles.heading)
                 .foregroundStyle(AppColors.white)
@@ -33,8 +35,10 @@ struct NewMeetingStep1View: View {
             SelectionButtonsView(
                 options: ["15 min", "30 min", "1 hr", "2 hr"],
                 multiSelect: false,
-                selectedValue: $selectedDuration
+                selectedValue: $selectedDuration,
+                selectedOptions: .constant([])
             )
+            //updates viewmodel
             .onChange(of: selectedDuration) { _, newValue in
                 if let newValue = newValue {
                     switch newValue {
@@ -56,6 +60,8 @@ struct NewMeetingStep1View: View {
                 }
             }
             
+            Spacer().frame(height: 140)
+            
             Button(action: {
                 withAnimation {
                     currentPage = 1
@@ -63,13 +69,16 @@ struct NewMeetingStep1View: View {
             }) {
                 Text("Next")
                     .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
+                    .frame(maxWidth: 172)
+                    .background(AppColors.highlightBlue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }
             .padding(.top, 20)
         }
-        .padding()
+        .padding(.top, 90)
+        .padding(.leading, 16)
+        .padding(.trailing, 16)
+        .frame(maxHeight: .infinity, alignment: .top)
     }
 }

@@ -15,7 +15,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
     // State variables for second screen
     @Published var selectedEarliestDate: Date? = nil
     @Published var selectedLatestDate: Date? = nil
-    @Published var timeIntervals: [(start: Date, end: Date)] = []
+    @Published var selectedTimeSlots: Set<String> = []
     
     // UI & Validation
     @Published var errorMessage: String?
@@ -40,27 +40,40 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         return dates
     }
     
-    // Adds a new time interval
-    func addTimeInterval(start: Date, end: Date) {
-        guard start < end else {
-            errorMessage = "Start time must be before end time."
-            return
+    // merge time intervals in to continuous ones (basically leetcode problem)
+    func getMergedTimeRanges() -> [[String]] {
+        let timeSlotMapping: [String: (start: String, end: String)] = [
+            "7am-11am": ("07:00", "11:00"),
+            "11am-3pm": ("11:00", "15:00"),
+            "3pm-7pm": ("15:00", "19:00"),
+            "7pm-11pm": ("19:00", "23:00")
+        ]
+        
+        var intervals: [(String, String)] = selectedTimeSlots.compactMap { timeSlotMapping[$0] }
+        intervals.sort { $0.0 < $1.0 } // Sort intervals by start time
+        
+        var mergedIntervals: [[String]] = []
+        var currentInterval: (String, String)? = nil
+
+        for interval in intervals {
+            if let current = currentInterval {
+                // Merge consecutive intervals
+                if current.1 == interval.0 {
+                    currentInterval = (current.0, interval.1) // Extend the interval
+                } else {
+                    mergedIntervals.append([current.0, current.1])
+                    currentInterval = interval
+                }
+            } else {
+                currentInterval = interval
+            }
         }
-        timeIntervals.append((start, end))
-    }
-
-    // Removes a time interval at a given index
-    func removeTimeInterval(at index: Int) {
-        guard index >= 0 && index < timeIntervals.count else { return }
-        timeIntervals.remove(at: index)
-    }
-
-    // Formats time intervals for API submission
-    private var formattedTimeIntervals: [[String]] {
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "HH:mm"
-
-        return timeIntervals.map { [timeFormatter.string(from: $0.start), timeFormatter.string(from: $0.end)] }
+        
+        if let current = currentInterval {
+            mergedIntervals.append([current.0, current.1]) // Add the last merged interval
+        }
+        
+        return mergedIntervals
     }
     
     // Submit a new meeting
@@ -85,11 +98,9 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         // reformat meeting parameters to match backend specs
         let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = "yyyy-MM-dd"
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "HH:mm"
         
         let dates = dateRangeFormatted
-        let timeRanges = [[timeFormatter.string(from: timeIntervalStart), timeFormatter.string(from: timeIntervalEnd)]]
+        let timeRanges = getMergedTimeRanges()
         let minMtgMinutes = meetingDurationHrs * 60 + meetingDurationMins
         guard let token = AuthViewModel.retrieveToken() else { return }
         

@@ -22,32 +22,39 @@ struct TextInputView: View {
             ZStack(alignment: .leading) {
                 // Placeholder text
                 Text(placeholder)
-                    .font(.caption)
-                    .foregroundColor(isFocused ? .blue : .gray)
+                    .font(TextStyles.text)
+                    .foregroundColor(isFocused ? AppColors.highlightBlue : (!text.isEmpty ? Color.white : AppColors.textGray))
+                    .padding(.horizontal, 6)
+                    .background(isFocused || !text.isEmpty ? AppColors.backgroundGray : Color.clear) // Background highlight
                     .offset(x: 12, y: isFocused || !text.isEmpty ? -35 : 0)
-                    .scaleEffect(isFocused || !text.isEmpty ? 1.0 : 1.2, anchor: .leading)
-                    .animation(.easeInOut(duration: 0.2), value: isFocused || !text.isEmpty)
+                    .scaleEffect(isFocused || !text.isEmpty ? 0.8 : 1.0, anchor: .leading)
+                    .animation(.easeInOut(duration: 0.1), value: isFocused || !text.isEmpty)
+                    .zIndex(1)
 
                 // Input field
                 if isSecure {
                     SecureField("", text: $text)
                         .focused($isFocused)
                         .padding(.vertical, 8)
-                        .keyboardType(keyboardType)
+                        .offset(x: 12)
+                        .font(TextStyles.text)
+                        .foregroundColor(AppColors.white)
                 } else {
                     TextField("", text: $text)
                         .focused($isFocused)
                         .padding(.vertical, 8)
-                        .keyboardType(keyboardType)
+                        .offset(x: 12)
+                        .font(TextStyles.text)
+                        .foregroundColor(AppColors.white)
                 }
             }
             .padding(.horizontal, 8)
             .frame(height: 58)
-            .overlay(
+            .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(isFocused ? Color.blue : Color.gray, lineWidth: 1)
+                    .stroke(isFocused ? AppColors.highlightBlue : AppColors.white, lineWidth: 2)
             )
-            .animation(.easeInOut(duration: 0.2), value: isFocused)
+            .animation(.easeInOut(duration: 0.1), value: isFocused)
         }
         .onChange(of: text) { newValue in
             withAnimation {
@@ -59,18 +66,5 @@ struct TextInputView: View {
                 text = defaultValue
             }
         }
-    }
-}
-
-
-struct AnimatedInputField_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            TextInputView(text: .constant(""), placeholder: "Username", defaultValue: "Nick")
-                .padding()
-            TextInputView(text: .constant(""), placeholder: "Password", isSecure: true)
-                .padding()
-        }
-        .previewLayout(.sizeThatFits)
     }
 }
