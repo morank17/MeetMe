@@ -3,9 +3,10 @@
 //  wav-app
 //
 //  Created by Nicholas Middelberg on 11/14/24.
-//
+// Edited by Nikola Dimitrijevic Feb 6 25
 
 import SwiftUI
+import EventKit
 
 struct ConnectCalendarView: View {
     @Environment(\.presentationMode) var presentationMode // ensures that we navigate to the home page after successful account creation
@@ -50,10 +51,14 @@ struct ConnectCalendarView: View {
                 }
                 Button(action: {
                     // connect to apple calendar
+                    let fetcher = CalendarFetcher()
+                    Task {
+                        await fetcher.requestAndFetchEvents()
+                                        }
                 }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.gray)
+                            .fill(Color.white)
                             .frame(width: 100, height: 100)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
