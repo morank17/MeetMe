@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = true // true statement gives default initialization value
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack {
             Color(.black).edgesIgnoringSafeArea(.all) // Dark background
@@ -64,6 +66,9 @@ struct SettingsView: View {
     private func logOutButton() -> some View {
         Button(action: {
             // Log-out action
+            AuthViewModel.deleteToken()
+            isLoggedIn.toggle()
+            
         }) {
             Text("Log out")
                 .font(TextStyles.subheading)
