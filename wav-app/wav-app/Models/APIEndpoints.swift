@@ -17,6 +17,6 @@ struct APIEndpoints {
     
     // fetching all meetings that have not been set (not all participants have joined) based on user token stored from login).
     static func fetchPendingMeetings(token: String) -> String {
-        return "\(baseURL)"
+        return "\(baseURL)meetings?token=\(token)"
     }
 }

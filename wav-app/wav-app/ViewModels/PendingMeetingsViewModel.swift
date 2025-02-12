@@ -7,9 +7,12 @@
 
 import SwiftUI
 
+// Note: PendingMeeting is the same as JoinPeriodMeeting on Backend.
 class PendingMeetingsViewModel: ObservableObject {
-    @Published var meetings: [Meetings] = []
+    // JoinPeriodMeeting comes from ./Models/Meetings
+    @Published var pendingMeetings: [JoinPeriodMeeting] = []
     
+    // Get the pending meetings
     @MainActor
     func fetchPendingMeetings() async {
         guard let token = AuthViewModel.retrieveToken() else {
@@ -17,6 +20,7 @@ class PendingMeetingsViewModel: ObservableObject {
             return
         }
         
+        // fetchPendingMeetings defined in ./Models/APIEndpoints
         guard let url = URL(string: APIEndpoints.fetchPendingMeetings(token: token)) else {
             print("Invalid URL for fetchPendingMeetings")
             return
@@ -29,8 +33,8 @@ class PendingMeetingsViewModel: ObservableObject {
                 responseType: MeetingsResponse.self
             )
             if response.success {
-                print("Polls Loaded: \(response.response)")
-                self.meetings = response.response
+                print("Pending Meetings Loaded: \(response.response)")
+                self.pendingMeetings = response.response // assigning the response to the model JoinPeriodMeeting
             } else {
                 print("Failed to load polls")
             }
