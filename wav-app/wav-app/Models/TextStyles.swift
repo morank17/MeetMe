@@ -16,6 +16,10 @@ struct TextStyles {
         size: 24,
         weight: .semibold
     )
+    static let nonboldlarge = Font.system(
+        size: 20,
+        weight: .regular
+    )
     static let text = Font.system(
         size: 16,
         weight: .regular
@@ -32,4 +36,15 @@ struct TextStyles {
         size: 12,
         weight: .regular
     )
+}
+
+// Truncates string by character length
+extension String {
+    func truncated(to length: Int, trailing: String = "...") -> String {
+        if self.count > length {
+            return String(self.prefix(length)) + trailing
+        } else {
+            return self
+        }
+    }
 }
