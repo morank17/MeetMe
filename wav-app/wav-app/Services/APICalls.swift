@@ -67,7 +67,7 @@ class APICall {
             headers: [String: String]? = nil,
             body: Data? = nil,
             responseType: T.Type
-        ) async throws -> T {
+    ) async throws -> T {
             var request = URLRequest(url: url)
             request.httpMethod = method
             request.allHTTPHeaderFields = headers
@@ -88,5 +88,18 @@ class APICall {
             // Decode JSON response into expected model
             return try JSONDecoder().decode(responseType, from: data)
         }
+    
+    // Helper function that turns the strings for the poll into a JSON Body
+    static func createPollJSONBody(token: String, poll_option_id: String) -> Data? {
+        let pollOptionItem = PollVotePostJSON(token: token, poll_option_id: poll_option_id)
+        let encoder = JSONEncoder()
+        do {
+            let jsonData = try encoder.encode(pollOptionItem)
+            return jsonData
+        } catch {
+            print("Error encoding JSON: \(error)")
+            return nil
+        }
+    }
 }
 

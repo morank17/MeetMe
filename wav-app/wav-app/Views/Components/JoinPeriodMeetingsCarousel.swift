@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-struct PendingMeetingsCarousel: View {
+struct JoinPeriodMeetingsCarousel: View {
     @StateObject private var viewModel = PendingMeetingsViewModel()
     
     var body: some View {
@@ -20,13 +20,13 @@ struct PendingMeetingsCarousel: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack() {
-                    if viewModel.pendingMeetings.isEmpty {
+                    if viewModel.joinPeriodMeetings.isEmpty {
                         // Places 1 placeholder view icon
                         ForEach(0..<3, id: \.self) { _ in
                             PlaceholderPendingMeetingsTab()
                         }
                     } else {
-                        ForEach(viewModel.pendingMeetings) { meeting in
+                        ForEach(viewModel.joinPeriodMeetings) { meeting in
                             PendingMeetingsTab(details: meeting)
                         }
                     }
@@ -35,7 +35,7 @@ struct PendingMeetingsCarousel: View {
         }
         .onAppear {
             Task {
-                await viewModel.fetchPendingMeetings()
+                await viewModel.fetchJoinPeriodMeetings()
             }
         }
     }
@@ -100,7 +100,7 @@ struct PlaceholderPendingMeetingsTab: View {
 
 struct PendingMeetingsCarousel_Previews: PreviewProvider {
     static var previews: some View {
-        PendingMeetingsCarousel()
+        JoinPeriodMeetingsCarousel()
             .background(AppColors.backgroundGray)
     }
 }

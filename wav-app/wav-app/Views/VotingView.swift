@@ -61,7 +61,9 @@ struct VotingView: View {
                 .padding(.horizontal, 20)
             }
             .onAppear {
-                viewModel.loadPollOptions(for: pollId)
+                Task{
+                    await viewModel.loadPollOptions(for: pollId)
+                }
             }
         }
     }

@@ -18,7 +18,7 @@ struct HomeView: View {
                         .padding(.top, 20)
                     VotingProgressCarousel()
                         .padding(.top, 10)
-                    PendingMeetingsCarousel()
+                    JoinPeriodMeetingsCarousel()
                         .padding(.top, 10)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity) // Ensures full-screen VStack
