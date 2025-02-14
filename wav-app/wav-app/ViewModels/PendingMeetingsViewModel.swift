@@ -9,32 +9,64 @@ import SwiftUI
 
 // Note: PendingMeeting is the same as JoinPeriodMeeting on Backend.
 class PendingMeetingsViewModel: ObservableObject {
-    // JoinPeriodMeeting comes from ./Models/Meetings
-    @Published var pendingMeetings: [JoinPeriodMeeting] = []
+    // JoinPeriodMeeting & PollPeriodMeeting comes from ./Models/Meetings
+    @Published var joinPeriodMeetings: [JoinPeriodMeeting] = []
+    @Published var pollPeriodMeetings: [PollPeriodMeeting] = []
     
-    // Get the pending meetings
+    // Get the join period meetings
     @MainActor
-    func fetchPendingMeetings() async {
+    func fetchJoinPeriodMeetings() async {
         guard let token = AuthViewModel.retrieveToken() else {
             print("No token found")
             return
         }
         
         // fetchPendingMeetings defined in ./Models/APIEndpoints
-        guard let url = URL(string: APIEndpoints.fetchPendingMeetings(token: token)) else {
-            print("Invalid URL for fetchPendingMeetings")
+        guard let url = URL(string: APIEndpoints.fetchJoinPeriodMeetings(token: token)) else {
+            print("Invalid URL for fetchJoinPeriodMeetings")
             return
         }
         
         do {
-            let response: MeetingsResponse = try await APICall.request(
+            let response: JoinPeriodMeetingsResponse = try await APICall.request(
                 url: url,
                 method: "GET",
-                responseType: MeetingsResponse.self
+                responseType: JoinPeriodMeetingsResponse.self
             )
             if response.success {
-                print("Pending Meetings Loaded: \(response.response)")
-                self.pendingMeetings = response.response // assigning the response to the model JoinPeriodMeeting
+                print("Join Period Meetings Loaded: \(response.response)")
+                self.joinPeriodMeetings = response.response // assigning the response to the model JoinPeriodMeeting
+            } else {
+                print("Failed to load polls")
+            }
+        } catch {
+            print("Error decoding JSON: \(error.localizedDescription)")
+        }
+    }
+    
+    // Get the poll period meetings
+    @MainActor
+    func fetchPollPeriodMeetings() async {
+        guard let token = AuthViewModel.retrieveToken() else {
+            print("No token found")
+            return
+        }
+        
+        // fetchPendingMeetings defined in ./Models/APIEndpoints
+        guard let url = URL(string: APIEndpoints.fetchPollPeriodMeetings(token: token)) else {
+            print("Invalid URL for fetchPollPeriodMeetings")
+            return
+        }
+        
+        do {
+            let response: PollPeriodMeetingsResponse = try await APICall.request(
+                url: url,
+                method: "GET",
+                responseType: PollPeriodMeetingsResponse.self
+            )
+            if response.success {
+                print("Poll Period Meetings Loaded: \(response.response)")
+                self.pollPeriodMeetings = response.response // assigning the response to the model JoinPeriodMeeting
             } else {
                 print("Failed to load polls")
             }

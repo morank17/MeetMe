@@ -7,9 +7,14 @@
 
 import Foundation
 
-struct MeetingsResponse: Codable {
+struct JoinPeriodMeetingsResponse: Codable {
     let success: Bool
     let response: [JoinPeriodMeeting]
+}
+
+struct PollPeriodMeetingsResponse: Codable {
+    let success: Bool
+    let response: [PollPeriodMeeting]
 }
 
 struct JoinPeriodMeeting: Identifiable, Hashable, Codable {
@@ -22,4 +27,17 @@ struct JoinPeriodMeeting: Identifiable, Hashable, Codable {
     let max_n_victors: Int
     let join_code: String /* Join Code! */
     let participants: [String]
+}
+
+struct PollPeriodMeeting: Identifiable, Hashable, Codable {
+    var id: String { join_code }
+    var title: String
+    var dates_list: [String]
+    var minimum_duration_in_minutes: Int
+    var militime_ranges: [[String]]
+    var timezone_str: String
+    var max_n_victors: Int
+    var join_code: String
+    var participants: [String]
+    var has_voted: Bool
 }

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct VotingProgressCarousel: View {
-    @StateObject private var viewModel = VotingProgressViewModel()
+    @StateObject private var viewModel = PendingMeetingsViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,14 +20,12 @@ struct VotingProgressCarousel: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack() {
-                    if viewModel.polls.isEmpty {
+                    if viewModel.pollPeriodMeetings.isEmpty {
                         // Places 1 placeholder view icon
-                        ForEach(0..<3, id: \.self) { _ in
-                            PlaceholderVotingIconView()
-                        }
+                        PlaceholderVotingIconView()
                     } else {
-                        ForEach(viewModel.polls) { poll in
-                            VotingIconView(details: poll)
+                        ForEach(viewModel.pollPeriodMeetings) { meeting in
+                            TimerMeetingView(remainingSeconds: 60, progress: 1.0, details: meeting)
                         }
                     }
                 }
@@ -35,29 +33,42 @@ struct VotingProgressCarousel: View {
         }
         .onAppear {
             Task {
-                await viewModel.fetchVotingProgress()
+                await viewModel.fetchPollPeriodMeetings()
             }
         }
     }
 }
 
-
-struct VotingIconView: View {
-    let details: Poll
+struct TimerMeetingView: View {
+    @State var remainingSeconds: Int
+    @State var progress: CGFloat
+    let details: PollPeriodMeeting
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
-        VStack {
-//          based on if the poll is_closed == true, etc.
-            Image(systemName: details.is_closed ? "checkmark.circle.fill" : "clock.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 50, height: 50)
-                .foregroundColor(details.is_closed ? .blue : .gray)
-            Text(details.title)
-                .font(.caption)
-                .foregroundColor(.primary)
+        VStack(spacing: 20) {
+            CircularProgressView(
+                progress: progress,
+                timeText: String(format: "%d:%02d", remainingSeconds / 60, remainingSeconds % 60),
+                hasVoted: details.has_voted
+            )
+            
+            Text(details.title.truncated(to: 15))
+                .font(.headline)
+                .foregroundColor(.white)
+                .opacity(details.has_voted ? 0.3 : 1.0) // Reduce opacity when voted
+
+            
         }
-        .frame(width: 80)
+        .onReceive(timer) { _ in
+            guard remainingSeconds > 0 else { return }
+            remainingSeconds -= 1
+            withAnimation(.linear(duration: 1)) {
+                progress = CGFloat(remainingSeconds) / 125.0
+            }
+        }
+        .padding()
     }
 }
 
@@ -65,15 +76,19 @@ struct VotingIconView: View {
 struct PlaceholderVotingIconView: View {
     var body: some View {
         VStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.gray.opacity(0.3))
-                .frame(width: 50, height: 50)
-
+            ZStack{
+                Text("No Polls")
+                    .font(TextStyles.boldtext)
+                    .foregroundColor(.white)
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 114, height: 114)
+            }
             RoundedRectangle(cornerRadius: 5)
                 .fill(Color.gray.opacity(0.3))
-                .frame(width: 60, height: 10)
+                .frame(width: 114, height: 10)
         }
-        .frame(width: 80)
+        .frame(width: 120)
     }
 }
 
@@ -85,30 +100,34 @@ struct VotingProgressCarousel_Previews: PreviewProvider {
         
         // testing votingicons
         VStack(spacing: 16) {
-           Text("Closed Poll")
+            Text("Closed Poll")
                .font(.headline)
                .foregroundColor(.white)
-           VotingIconView(details: Poll(
-               poll_id: "1",
-               title: "Poll Closed",
-               is_closed: true,
-               votes_cast: 50,
-               number_of_attendees: 100,
-               final_start_time: "10:00 AM",
-               final_end_time: "12:00 PM"
-           ))
+            TimerMeetingView(remainingSeconds: 0, progress: 1.0, details: PollPeriodMeeting(
+                title: "Test",
+                dates_list: ["2025-02-01"],
+                minimum_duration_in_minutes: 60,
+                militime_ranges: [["00:00","03:00"]],
+                timezone_str: "-05:00",
+                max_n_victors: 10,
+                join_code: "6D2-GOF",
+                participants: ["laptttop"],
+                has_voted: false
+            ))
 
            Text("Open Poll")
                .font(.headline)
                .foregroundColor(.white)
-           VotingIconView(details: Poll(
-               poll_id: "2",
-               title: "Poll Open",
-               is_closed: false,
-               votes_cast: 30,
-               number_of_attendees: 80,
-               final_start_time: nil,
-               final_end_time: nil
+           TimerMeetingView(remainingSeconds: 0, progress: 1.0, details: PollPeriodMeeting(
+                title: "Test",
+                dates_list: ["2025-02-01"],
+                minimum_duration_in_minutes: 60,
+                militime_ranges: [["00:00","03:00"]],
+                timezone_str: "-05:00",
+                max_n_victors: 10,
+                join_code: "6D2-GOF",
+                participants: ["laptttop"],
+                has_voted: true
            ))
 
            Text("Placeholder View")
