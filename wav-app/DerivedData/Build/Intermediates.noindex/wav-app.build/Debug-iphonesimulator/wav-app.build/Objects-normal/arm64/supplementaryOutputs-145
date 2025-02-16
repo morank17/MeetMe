@@ -1,0 +1,24 @@
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/VotingDoneView.swift":
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingDoneView.d"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingDoneView.dia"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingDoneView.swiftdeps"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingDoneView.swiftconstvalues"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingDoneView.o"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/wav_appApp.swift":
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/wav_appApp.swiftconstvalues"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/wav_appApp.d"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/wav_appApp.dia"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/wav_appApp.swiftdeps"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/wav_appApp.o"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/VotingView.swift":
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingView.dia"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingView.swiftconstvalues"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingView.o"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingView.swiftdeps"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingView.d"
+"/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/DerivedSources/GeneratedAssetSymbols.swift":
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/GeneratedAssetSymbols.dia"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/GeneratedAssetSymbols.d"

@@ -1,0 +1,30 @@
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Auth/OnboardingView.swift":
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/OnboardingView.o"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/OnboardingView.swiftdeps"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/OnboardingView.d"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/OnboardingView.swiftconstvalues"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/OnboardingView.dia"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Auth/LoginView.swift":
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/LoginView.d"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/LoginView.dia"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/LoginView.swiftconstvalues"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/LoginView.swiftdeps"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/LoginView.o"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Auth/CreateAccountView.swift":
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/CreateAccountView.d"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/CreateAccountView.swiftdeps"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/CreateAccountView.o"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/CreateAccountView.swiftconstvalues"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/CreateAccountView.dia"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/MainNavView.swift":
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/MainNavView.d"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/MainNavView.swiftdeps"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/MainNavView.swiftconstvalues"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/MainNavView.o"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/MainNavView.dia"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/DateSelectionView.swift":
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/DateSelectionView.dia"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/DateSelectionView.d"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/DateSelectionView.o"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/DateSelectionView.swiftdeps"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/DateSelectionView.swiftconstvalues"

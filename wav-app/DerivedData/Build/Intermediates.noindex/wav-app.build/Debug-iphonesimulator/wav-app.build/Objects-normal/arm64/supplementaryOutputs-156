@@ -1,0 +1,30 @@
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/ViewModels/PendingMeetingsViewModel.swift":
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PendingMeetingsViewModel.d"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PendingMeetingsViewModel.swiftconstvalues"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PendingMeetingsViewModel.o"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PendingMeetingsViewModel.dia"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PendingMeetingsViewModel.swiftdeps"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/ViewModels/VotingProgressViewModel.swift":
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingProgressViewModel.d"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingProgressViewModel.swiftconstvalues"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingProgressViewModel.dia"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingProgressViewModel.swiftdeps"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingProgressViewModel.o"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/ViewModels/PollResultsViewModel.swift":
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PollResultsViewModel.swiftconstvalues"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PollResultsViewModel.swiftdeps"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PollResultsViewModel.dia"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PollResultsViewModel.d"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PollResultsViewModel.o"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/ViewModels/VotingViewModel.swift":
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingViewModel.o"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingViewModel.swiftconstvalues"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingViewModel.d"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingViewModel.swiftdeps"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotingViewModel.dia"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Auth/ConnectCalendarView.swift":
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/ConnectCalendarView.swiftdeps"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/ConnectCalendarView.swiftconstvalues"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/ConnectCalendarView.d"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/ConnectCalendarView.dia"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/ConnectCalendarView.o"

@@ -1,0 +1,30 @@
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Models/Polls.swift":
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Polls.d"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Polls.o"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Polls.swiftdeps"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Polls.dia"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Polls.swiftconstvalues"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Models/Auth.swift":
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Auth.dia"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Auth.d"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Auth.swiftdeps"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Auth.swiftconstvalues"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Auth.o"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Models/APIEndpoints.swift":
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/APIEndpoints.swiftdeps"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/APIEndpoints.d"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/APIEndpoints.swiftconstvalues"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/APIEndpoints.dia"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/APIEndpoints.o"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Models/Meetings.swift":
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Meetings.o"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Meetings.swiftconstvalues"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Meetings.swiftdeps"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Meetings.d"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/Meetings.dia"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Models/AppColors.swift":
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AppColors.swiftconstvalues"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AppColors.o"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AppColors.d"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AppColors.swiftdeps"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AppColors.dia"

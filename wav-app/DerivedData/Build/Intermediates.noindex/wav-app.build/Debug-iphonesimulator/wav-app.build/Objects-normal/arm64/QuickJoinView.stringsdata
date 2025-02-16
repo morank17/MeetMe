@@ -1,0 +1,16 @@
+{
+  "source": "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/QuickJoinView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Quick Join",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 16
+        }
+      }
+    ]
+  },
+  "version": 1
+}

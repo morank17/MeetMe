@@ -1,0 +1,24 @@
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/AcceptPollView.swift":
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptPollView.swiftdeps"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptPollView.swiftconstvalues"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptPollView.o"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptPollView.d"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptPollView.dia"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/HomeView.swift":
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/HomeView.swiftconstvalues"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/HomeView.swiftdeps"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/HomeView.o"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/HomeView.dia"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/HomeView.d"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/ColorSelectionView.swift":
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/ColorSelectionView.swiftconstvalues"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/ColorSelectionView.o"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/ColorSelectionView.d"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/ColorSelectionView.swiftdeps"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/ColorSelectionView.dia"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/NewMeetingStep1View.swift":
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep1View.d"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep1View.swiftconstvalues"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep1View.swiftdeps"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep1View.dia"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep1View.o"

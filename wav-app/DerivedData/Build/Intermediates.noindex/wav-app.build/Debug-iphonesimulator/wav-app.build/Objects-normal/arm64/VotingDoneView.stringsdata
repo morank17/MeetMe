@@ -1,0 +1,32 @@
+{
+  "source": "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/VotingDoneView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Save Event!",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add to Clipboard",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "10/14 Mon, 3PM - 4PM",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 22
+        }
+      }
+    ]
+  },
+  "version": 1
+}

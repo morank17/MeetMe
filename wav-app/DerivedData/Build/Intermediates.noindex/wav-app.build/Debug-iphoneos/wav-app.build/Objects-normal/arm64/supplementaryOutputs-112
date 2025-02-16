@@ -1,0 +1,24 @@
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/NewMeetingView.swift":
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingView.d"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingView.swiftconstvalues"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingView.swiftdeps"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingView.o"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingView.dia"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/PollResultsView.swift":
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PollResultsView.o"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PollResultsView.swiftdeps"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PollResultsView.swiftconstvalues"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PollResultsView.dia"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PollResultsView.d"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/NewMeetingStep2View.swift":
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep2View.swiftconstvalues"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep2View.swiftdeps"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep2View.dia"
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep2View.o"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep2View.d"
+"/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/SettingsView.swift":
+  object: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/SettingsView.o"
+  dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/SettingsView.d"
+  const-values: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/SettingsView.swiftconstvalues"
+  swift-dependencies: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/SettingsView.swiftdeps"
+  diagnostics: "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/SettingsView.dia"

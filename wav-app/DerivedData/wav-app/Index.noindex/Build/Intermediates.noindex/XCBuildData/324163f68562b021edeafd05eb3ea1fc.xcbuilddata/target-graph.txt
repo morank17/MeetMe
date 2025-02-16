@@ -1,0 +1,13 @@
+Target dependency graph (8 targets)
+Target 'wav-appUITests' in project 'wav-app' (no dependencies)
+Target 'wav-appUITests' in project 'wav-app'
+➜ Explicit dependency on target 'wav-app' in project 'wav-app'
+Target 'wav-appUITests' in project 'wav-app'
+➜ Explicit dependency on target 'wav-app' in project 'wav-app'
+Target 'wav-appTests' in project 'wav-app' (no dependencies)
+Target 'wav-appTests' in project 'wav-app'
+➜ Explicit dependency on target 'wav-app' in project 'wav-app'
+Target 'wav-appTests' in project 'wav-app'
+➜ Explicit dependency on target 'wav-app' in project 'wav-app'
+Target 'wav-app' in project 'wav-app' (no dependencies)
+Target 'wav-app' in project 'wav-app' (no dependencies)

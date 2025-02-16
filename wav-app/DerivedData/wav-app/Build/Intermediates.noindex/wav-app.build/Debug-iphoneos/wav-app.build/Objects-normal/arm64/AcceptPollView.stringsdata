@@ -1,0 +1,56 @@
+{
+  "source": "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/AcceptPollView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Home",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save Event",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add to Clipboard",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "10/14",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mon, 3PM - 4PM",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 29
+        }
+      }
+    ]
+  },
+  "version": 1
+}

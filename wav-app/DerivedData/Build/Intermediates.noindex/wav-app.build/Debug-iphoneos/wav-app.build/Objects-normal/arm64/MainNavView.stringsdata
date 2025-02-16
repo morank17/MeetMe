@@ -1,0 +1,32 @@
+{
+  "source": "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/MainNavView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Home",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "New Invite",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 40
+        }
+      }
+    ]
+  },
+  "version": 1
+}

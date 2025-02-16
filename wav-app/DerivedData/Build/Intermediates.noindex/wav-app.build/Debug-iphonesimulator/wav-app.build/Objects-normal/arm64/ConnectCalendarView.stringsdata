@@ -1,0 +1,24 @@
+{
+  "source": "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Auth/ConnectCalendarView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Connect a Calendar Account",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Continue",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 79
+        }
+      }
+    ]
+  },
+  "version": 1
+}

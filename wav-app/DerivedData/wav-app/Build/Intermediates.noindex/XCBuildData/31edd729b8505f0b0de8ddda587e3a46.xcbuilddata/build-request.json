@@ -1,0 +1,65 @@
+{
+  "buildCommand" : {
+    "command" : "preview",
+    "style" : "xojit"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "3643b7699419bed8ec5ae18e25e312c12fd1f98f7c0da021579197e1fa5e514e"
+    }
+  ],
+  "containerPath" : "/Users/dime/Documents/project-musketeers/wav-app/wav-app.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "undefined_arch",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : true,
+      "platform" : "iphoneos",
+      "sdk" : "iphoneos18.0",
+      "sdkVariant" : "iphoneos",
+      "supportedArchitectures" : [
+        "armv4t",
+        "armv5",
+        "armv6",
+        "armv7",
+        "armv7f",
+        "armv7s",
+        "armv7k",
+        "arm64",
+        "arm64e"
+      ],
+      "targetArchitecture" : "undefined_arch"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Products",
+      "derivedDataPath" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "CLANG_COVERAGE_MAPPING" : "YES",
+          "CLANG_PROFILE_DATA_DIRECTORY" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/wav-app/Build/ProfileData",
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "YES",
+          "ONLY_ACTIVE_ARCH" : "YES"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

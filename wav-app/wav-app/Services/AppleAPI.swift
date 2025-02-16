@@ -16,50 +16,66 @@ struct MyApp: App {
             ConnectCalendarView()
                 .onAppear {
                     Task {
-                        await calendarFetcher.requestAndFetchEvents()
+                        await calendarFetcher.fetchCalendarEvents()
                     }
                 }
         }
     }
 }
 
-
 class CalendarFetcher: ObservableObject {
     private let store = EKEventStore()
-   
-    func requestAndFetchEvents() async {
+
+    /// Requests full access to the user's calendar.
+    func requestFullCalendarAccess() async -> Bool {
+        if EKEventStore.authorizationStatus(for: .event) == .fullAccess {
+            print("Already have full access ✅")
+            return true
+        }
+
         do {
-            // Request Full Access to Calendar
-            guard try await store.requestFullAccessToEvents() else {
-                print("Access Denied")
-                return
+            let granted = try await store.requestFullAccessToEvents()
+            if granted {
+                print("Full access granted ✅")
+            } else {
+                print("Access denied ❌")
             }
-
-            // Fetch Calendar Events for Next 7 Days
-            let calendar = Calendar.current
-            let startDate = Date()
-            let endDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
-
-            let predicate = store.predicateForEvents(withStart: startDate, end: endDate, calendars: store.calendars(for: .event))
-            let events = store.events(matching: predicate)
-            
-            // Convert Events to JSON-Friendly Format
-            let eventData: [[String: String]] = events.compactMap { event in
-                return [
-                    "title": event.title,
-                    "start": event.startDate.ISO8601Format(),
-                    "end": event.endDate.ISO8601Format()
-                ]
-            }
-            
-            print(eventData)
-            // Send to Backend
-            await sendEventsToBackend(eventData: eventData)
-           
+            return granted
         } catch {
-            print("Failed to fetch calendar events: \(error.localizedDescription)")
+            print("Failed to request calendar access: \(error.localizedDescription)")
+            return false
         }
     }
+
+
+
+    /// Fetches calendar events for the next 7 days if access is granted.
+    func fetchCalendarEvents() async {
+        let hasAccess = await requestFullCalendarAccess()
+        guard hasAccess else { return }
+
+        let calendar = Calendar.current
+        let startDate = Date()
+        let endDate = calendar.date(byAdding: .day, value: 7, to: startDate)!
+
+        let predicate = store.predicateForEvents(
+            withStart: startDate,
+            end: endDate,
+            calendars: store.calendars(for: .event)
+        )
+        let events = store.events(matching: predicate)
+
+        let eventData: [[String: String]] = events.compactMap { event in
+            [
+                "title": event.title,
+                "start": event.startDate.ISO8601Format(),
+                "end": event.endDate.ISO8601Format()
+            ]
+        }
+
+        print(eventData)
+    }
+}
 
     func sendEventsToBackend(eventData: [[String: String]]) async {
         guard let url = URL(string: "http://your-backend.com/api/receive_calendar_events/") else { return }
@@ -82,5 +98,4 @@ class CalendarFetcher: ObservableObject {
             print("Failed to send event data: \(error.localizedDescription)")
         }
     }
-}
 

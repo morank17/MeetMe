@@ -1,0 +1,40 @@
+{
+  "source": "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/SettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Synced Calendars",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Profile Picture Selection",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Color Selection",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Log out",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 73
+        }
+      }
+    ]
+  },
+  "version": 1
+}

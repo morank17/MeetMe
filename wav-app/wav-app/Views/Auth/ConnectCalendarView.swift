@@ -50,12 +50,14 @@ struct ConnectCalendarView: View {
                     }
                 }
                 Button(action: {
-                    // connect to apple calendar
-                    let fetcher = CalendarFetcher()
-                    Task {
-                        await fetcher.requestAndFetchEvents()
-                                        }
-                }) {
+                                  let fetcher = CalendarFetcher()
+                                  Task {
+                                      let hasAccess = await fetcher.requestFullCalendarAccess()
+                                      DispatchQueue.main.async {
+                                          loginMessage = hasAccess ? "Already logged into Apple Calendar ✅" : "Calendar access required ❌"
+                                      }
+                                  }
+                              }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.white)
@@ -68,7 +70,7 @@ struct ConnectCalendarView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 45, height: 45)
-                            .foregroundColor(.red) // Adjust for Google colors
+                            .foregroundColor(.red)
                     }
                 }
             }
