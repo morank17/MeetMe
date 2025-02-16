@@ -46,7 +46,7 @@ struct CreateAccountView: View {
                     
                     TextField("", text: $username)
                         .padding()
-                        .frame(maxWidth: .infinity)  //fix this. not all the wat yo the edges
+                        .frame(maxWidth: .infinity)
                         .background(AppColors.textBlockGray)
                         .foregroundColor(.white)
                         .cornerRadius(10)
@@ -58,7 +58,7 @@ struct CreateAccountView: View {
                     
                     TextField("", text: $email)
                         .padding()
-                        .frame(maxWidth: .infinity)  //fix this. not all the wat yo the edges
+                        .frame(maxWidth: .infinity)
                         .background(AppColors.textBlockGray)
                         .foregroundColor(.white)
                         .cornerRadius(10)
@@ -70,7 +70,7 @@ struct CreateAccountView: View {
                     
                     SecureField("", text: $password1)
                         .padding()
-                        .frame(maxWidth: .infinity)  //fix this. not all the wat yo the edges
+                        .frame(maxWidth: .infinity)
                         .background(AppColors.textBlockGray)
                         .foregroundColor(.white)
                         .cornerRadius(10)
@@ -83,7 +83,7 @@ struct CreateAccountView: View {
                     
                     SecureField("Password2", text: $password2)
                         .padding()
-                        .frame(maxWidth: .infinity)  //fix this. not all the wat yo the edges
+                        .frame(maxWidth: .infinity) 
                         .background(AppColors.textBlockGray)
                         .foregroundColor(.white)
                         .cornerRadius(10)
