@@ -43,6 +43,10 @@ class APICall {
                 return
             }
             
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Received data: \(jsonString)")
+            }
+            
             // Safely handle JSON parsing with do-catch
             do {
                 if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
