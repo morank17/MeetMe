@@ -11,6 +11,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
     @Published var title: String = ""
     @Published var meetingDurationHrs: Int = 0
     @Published var meetingDurationMins: Int = 0
+    @Published var selectedDuration: String = ""
 
     // State variables for second screen
     @Published var selectedEarliestDate: Date? = nil
@@ -19,8 +20,11 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
     
     // UI & Validation
     @Published var errorMessage: String?
-    @Published var showSuccessPopup: Bool = false
     @Published var currentPage: Int = 0 // Tracks user progress in the flow
+    
+    // Setup meeting state variables
+    @Published var joinCode: String?
+    @Published var showSuccessView: Bool = false
     
     var dateRangeFormatted: [String] {
         guard let startDate = selectedEarliestDate, let endDate = selectedLatestDate else {
@@ -38,6 +42,20 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         }
         
         return dates
+    }
+    
+    // reset all fields (to be called after successful API request)
+    func resetFields() {
+        title = ""
+        meetingDurationHrs = 0
+        meetingDurationMins = 0
+        selectedDuration = ""
+        selectedEarliestDate = nil
+        selectedLatestDate = nil
+        selectedTimeSlots = []
+        errorMessage = nil
+        showSuccessView = false
+        joinCode = nil
     }
     
     // merge time intervals in to continuous ones (basically leetcode problem)
@@ -76,6 +94,14 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         return mergedIntervals
     }
     
+    // get timezone of users phone
+    func getUTCOffset() -> String {
+        let secondsFromGMT = TimeZone.current.secondsFromGMT()
+        let hours = secondsFromGMT / 3600
+        let minutes = abs(secondsFromGMT % 3600) / 60
+        return String(format: "%+03d:%02d", hours, minutes)
+    }
+        
     // Submit a new meeting
     func submitNewMeeting() {
         // catch edge cases
@@ -102,6 +128,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         let dates = dateRangeFormatted
         let timeRanges = getMergedTimeRanges()
         let minMtgMinutes = meetingDurationHrs * 60 + meetingDurationMins
+        let timezone = getUTCOffset()
         guard let token = AuthViewModel.retrieveToken() else { return }
         
         print(title, dates, timeRanges, minMtgMinutes)
@@ -112,7 +139,9 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
             "title": title,
             "dates": dates,
             "time_ranges": timeRanges,
-            "min_mtg_minutes": minMtgMinutes
+            "minimum_duration_in_minutes": minMtgMinutes,
+            "timezone_str": timezone,
+            "max_n_victors": 20
         ]
         
         print(requestBody)
@@ -132,25 +161,27 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
                     self.errorMessage = "Error: \(error.localizedDescription)"
                     return
                 }
+            
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200,
+                   let data = data {
+                    do {
+                        if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                           let joinCode = jsonResponse["join-code"] as? String {
+                            print("hello")
+                            self.joinCode = joinCode
+                            self.showSuccessView = true
+                        }
+                    } catch {
+                        self.errorMessage = "Failed to parse response."
+                    }
+                } else {
+                    self.errorMessage = "Failed to create meeting. Please try again."
+                }
+            
                 if let httpResponse = response as? HTTPURLResponse {
                     print("Response status code: \(httpResponse.statusCode)")
                 }
 
-                if let data = data {
-                    // Convert data to a string for debugging
-                    if let jsonString = String(data: data, encoding: .utf8) {
-                        print("Received data: \(jsonString)")
-                    }
-                }
-            
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                    // maybe success popup, navigate back to home page
-                    self.showSuccessPopup = true
-                    
-                    // reset related state variables
-                } else {
-                    self.errorMessage = "Failed to create meeting. Please try again."
-                }
             }
         }.resume()
     }
