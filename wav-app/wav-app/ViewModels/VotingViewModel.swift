@@ -39,10 +39,10 @@ class VotingViewModel: ObservableObject {
         }
     }
     
-    func vote(for poll_option_id: String, completion: @escaping (Bool) -> Void) async {
+    func vote(for poll_option_id: String) async -> Bool {
         guard let token = AuthViewModel.retrieveToken() else {
             print("No token found")
-            return
+            return false
         }
         
         // Create the json body for the POST request
@@ -50,7 +50,7 @@ class VotingViewModel: ObservableObject {
         
         guard let url = URL(string: APIEndpoints.votePoll()) else {
             print("Invalid votePoll URL")
-            return
+            return false
         }
         
         do {
@@ -63,68 +63,14 @@ class VotingViewModel: ObservableObject {
             )
             if response.success {
                 print("POST vote poll Sucess!")
+                return true
             } else {
                 print("Failed to send POST request to vote")
+                return false
             }
         } catch {
             print("Error decoding JSON: \(error.localizedDescription)")
+            return false
         }
     }
-    
-    //    func vote(for pollOptionId: String, completion: @escaping (Bool) -> Void) {
-    //        guard let token = AuthViewModel.retrieveToken() else { return }
-    //        let url = URL(string: "https://musketeers-django.onrender.com/api/polls/vote")!
-    //        var request = URLRequest(url: url)
-    //        request.httpMethod = "POST"
-    //        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    //
-    //        // create request body
-    //        let requestBody: [String: Any] = [
-    //            "token": token,
-    //            "poll_option_id": pollOptionId
-    //        ]
-    //
-    //        print(requestBody)
-    //        // convert to JSON
-    //        do {
-    //            let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
-    //            request.httpBody = jsonData
-    //        } catch {
-    //            return
-    //        }
-    //
-    //        // make API call
-    //        URLSession.shared.dataTask(with: request) { data, response, error in DispatchQueue.main.async {
-    //            if let error = error {
-    //                print("Error: \(error)")
-    //                completion(false)
-    //                return
-    //            }
-    //            if let httpResponse = response as? HTTPURLResponse {
-    //                print("Response status code: \(httpResponse.statusCode)")
-    //            }
-    //
-    //            if let data = data {
-    //                // Convert data to string for debugging
-    //                if let jsonString = String(data: data, encoding: .utf8) {
-    //                    print("Received data: \(jsonString)")
-    //                }
-    //
-    //                // Decode the response to check for success
-    //                do {
-    //                    let decoder = JSONDecoder()
-    //                    let decodedResponse = try decoder.decode([String: Bool].self, from: data)
-    //                    if decodedResponse["success"] == true {
-    //                        completion(true)
-    //                    } else {
-    //                        completion(false)
-    //                    }
-    //                } catch {
-    //                    print("Error decoding response: \(error)")
-    //                    completion(false)
-    //                }
-    //            }
-    //        }
-    //    }.resume()
-    //    }
 }
