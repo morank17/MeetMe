@@ -63,7 +63,7 @@ struct MeetingCreatedView: View {
 
                 Button(action: {
                     viewModel.resetFields()
-                    viewModel.currentPage = 0
+                    currentPage = 0
                 }) {
                     Text("Done")
                         .padding()

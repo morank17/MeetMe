@@ -11,12 +11,13 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
     @Published var title: String = ""
     @Published var meetingDurationHrs: Int = 0
     @Published var meetingDurationMins: Int = 0
-    @Published var selectedDuration: String = ""
+    @Published var selectedDuration: String?
 
     // State variables for second screen
     @Published var selectedEarliestDate: Date? = nil
     @Published var selectedLatestDate: Date? = nil
     @Published var selectedTimeSlots: Set<String> = []
+    @Published var showDatePicker: Bool = false
     
     // UI & Validation
     @Published var errorMessage: String?
@@ -56,6 +57,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         errorMessage = nil
         showSuccessView = false
         joinCode = nil
+        showDatePicker = false
     }
     
     // merge time intervals in to continuous ones (basically leetcode problem)

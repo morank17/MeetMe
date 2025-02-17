@@ -14,9 +14,9 @@ struct NewMeetingView: View {
     var body: some View {
         VStack {
             TabView(selection: $currentPage) {
-                NewMeetingStep1View(viewModel: viewModel, currentPage: $currentPage)
+                NewMeetingStep1View(viewModel: viewModel, currentPage: $currentPage, selectedDuration: $viewModel.selectedDuration)
                     .tag(0)
-                NewMeetingStep2View(viewModel: viewModel, currentPage: $currentPage)
+                NewMeetingStep2View(viewModel: viewModel, currentPage: $currentPage, showDatePicker: $viewModel.showDatePicker)
                     .tag(1)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))

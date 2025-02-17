@@ -11,7 +11,7 @@ struct NewMeetingStep1View: View {
     @ObservedObject var viewModel: NewMeetingViewModel
     @Binding var currentPage: Int
     
-    @State private var selectedDuration: String? = nil //temporary state variable keeping track of which option is selected
+    @Binding var selectedDuration: String?
     
     var body: some View {
         VStack {
