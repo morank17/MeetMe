@@ -17,6 +17,11 @@ struct PollPeriodMeetingsResponse: Codable {
     let response: [PollPeriodMeeting]
 }
 
+struct MeetingInfoResponse: Codable {
+    let success: Bool
+    let response: MeetingInfo
+}
+
 struct JoinPeriodMeeting: Identifiable, Hashable, Codable {
     var id: String { join_code }
     let title: String
@@ -27,7 +32,6 @@ struct JoinPeriodMeeting: Identifiable, Hashable, Codable {
     let max_n_victors: Int
     let join_code: String /* Join Code! */
     let participants: [String]
-    let in_meeting: Bool
 }
 
 struct PollPeriodMeeting: Identifiable, Hashable, Codable {
@@ -41,4 +45,16 @@ struct PollPeriodMeeting: Identifiable, Hashable, Codable {
     var join_code: String
     var participants: [String]
     var has_voted: Bool
+}
+
+struct MeetingInfo: Hashable, Codable {
+    let title: String
+    let dates_list: [String]
+    let minimum_duration_in_minutes: Int
+    let militime_ranges: [[String]]
+    let timezone_str: String
+    let max_n_victors: Int
+    let join_code: String /* Join Code! */
+    let participants: [String]
+    let in_meeting: Bool
 }

@@ -12,6 +12,7 @@ class PendingMeetingsViewModel: ObservableObject {
     // JoinPeriodMeeting & PollPeriodMeeting comes from ./Models/Meetings
     @Published var joinPeriodMeetings: [JoinPeriodMeeting] = []
     @Published var pollPeriodMeetings: [PollPeriodMeeting] = []
+    @Published var meetingInfo: MeetingInfo? = nil
     
     // Get the join period meetings
     @MainActor
@@ -77,31 +78,31 @@ class PendingMeetingsViewModel: ObservableObject {
     
     @MainActor
     func fetchMeetingInfo(join_code: String) async {
-        
-        guard let token = AuthViewModel.retrieveToken() else {
-            print("No token found")
-            return
-        }
-        
-        guard let url = URL(string: APIEndpoints.fetchMeetingInfo(token: token, join_code: join_code)) else {
-            print("Invalid URL for fetchMeetingInfo")
-            return
-        }
-        
-        do {
-            let response: JoinPeriodMeetingsResponse = try await APICall.request(
-                url: url,
-                method: "GET",
-                responseType: JoinPeriodMeetingsResponse.self
-            )
-            if response.success {
-                print("Poll Period Meetings Loaded: \(response.response)")
-                self.joinPeriodMeetings = response.response // assigning the response to the model JoinPeriodMeeting
-            } else {
-                print("Failed to load polls")
-            }
-        } catch {
-            print("Error decoding JSON: \(error.localizedDescription)")
-        }
-    }
+           guard let token = AuthViewModel.retrieveToken() else {
+               print("No token found")
+               return
+           }
+
+           guard let url = URL(string: APIEndpoints.fetchMeetingInfo(token: token, join_code: join_code)) else {
+               print("Invalid URL for fetchMeetingInfo")
+               return
+           }
+
+           do {
+               let response: MeetingInfoResponse = try await APICall.request(
+                   url: url,
+                   method: "GET",
+                   responseType: MeetingInfoResponse.self
+               )
+
+               if response.success {
+                   print("MeetingInfo Loaded: \(response.response)")
+                   self.meetingInfo = response.response
+               } else {
+                   print("Failed to load meeting info")
+               }
+           } catch {
+               print("Error decoding JSON: \(error.localizedDescription)")
+           }
+       }
  }

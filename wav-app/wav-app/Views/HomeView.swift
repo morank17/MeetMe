@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var path: [String] = [] // This will hold our navigation data
     var body: some View {
         ZStack {
             AppColors.backgroundGray.ignoresSafeArea(.all)
             
-            NavigationView {
+            NavigationStack(path: $path) {
                 VStack {
-                    QuickJoinView()
+                    QuickJoinView(path: $path)
                         .padding(.top, 20)
                     VotingProgressCarousel()
                         .padding(.top, 10)
@@ -23,6 +24,9 @@ struct HomeView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(AppColors.backgroundGray)
+                .navigationDestination(for: String.self) { join_code in
+                    AcceptMeetingView(join_code: join_code)
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }

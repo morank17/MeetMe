@@ -26,12 +26,11 @@ struct AcceptMeetingView: View {
                     .foregroundColor(.white)
                     .padding()
                     .padding()
-                if viewModel.joinPeriodMeetings.isEmpty {
-                    PlaceholderMeetingView()
+                
+                if let meeting = viewModel.meetingInfo {
+                    MeetingView(details: meeting)
                 } else {
-                    ForEach(viewModel.joinPeriodMeetings) { meeting in
-                        MeetingView(details: meeting)
-                    }
+                    PlaceholderMeetingView()
                 }
                 
                 Spacer()
@@ -41,14 +40,13 @@ struct AcceptMeetingView: View {
         .onAppear {
             Task { await viewModel.fetchMeetingInfo(join_code: join_code) }
         }
-        .navigationTitle("Accept Meeting")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 
 struct MeetingView: View {
-    let details: JoinPeriodMeeting
+    let details: MeetingInfo
     
     var body: some View {
         VStack(spacing: 10) {
@@ -81,7 +79,7 @@ struct MeetingView: View {
                     .padding(.vertical)
             }
             
-            Text("Meeting ID: \(details.id)")
+            Text("Meeting ID: \(details.join_code)")
                 .foregroundColor(AppColors.textGray)
                 .padding(.vertical)
         }
@@ -159,7 +157,7 @@ func firstAndLastIndices(from dates_list: [String]) -> (firstIndex: Int, lastInd
 // Preview for SwiftUI Canvas
 struct MeetingView_Previews: PreviewProvider {
     static var previews: some View {
-        let sampleMeeting = JoinPeriodMeeting(
+        let sampleMeeting = MeetingInfo(
             title: "Weekly Standup",
             dates_list: ["1/27", "2/03"],
             minimum_duration_in_minutes: 60,
