@@ -26,53 +26,7 @@ struct AcceptMeetingView: View {
                     .foregroundColor(.white)
                     .padding(.horizontal)
                 
-                ScrollView {
-                    // Loop through each joinPeriodMeeting in the array
-                    ForEach(viewModel.joinPeriodMeetings, id: \.id) { meeting in
-                        VStack(spacing: 10) {
-                            Text(meeting.title)
-                                .font(TextStyles.heading)
-                                .foregroundColor(.white)
-                                .bold()
-                                .padding(.vertical)
-                            
-                            // Unwrap the tuple returned by firstAndLastIndices
-                            if let indices = firstAndLastIndices(from: meeting.dates_list) {
-                                // Use the indices to get the first and last dates
-                                Text("Start: \(meeting.dates_list[indices.firstIndex])")
-                                    .font(TextStyles.subheading)
-                                    .foregroundColor(.white)
-                                    .padding(.vertical)
-                                Text("End: \(meeting.dates_list[indices.lastIndex])")
-                                    .font(TextStyles.subheading)
-                                    .foregroundColor(.white)
-                                    .padding(.vertical)
-                            } else {
-                                Text("No Dates")
-                                    .font(TextStyles.subheading)
-                                    .foregroundColor(.white)
-                                    .padding(.vertical)
-                            }
-                            
-                            Text("Host: \(meeting.participants.first ?? "Unknown")")
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding(.vertical)
-                            
-                            Text("Meeting ID: \(meeting.meetingCode)")
-                                .foregroundColor(AppColors.textGray)
-                                .padding(.vertical)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.white, lineWidth: 3)
-                        )
-                        .padding(.horizontal, 20)
-                    }
-                }
-                
+               
                 HStack(spacing: 20) {
                     Button(action: {
                         // Deny action

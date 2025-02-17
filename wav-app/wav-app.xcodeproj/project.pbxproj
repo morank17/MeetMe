@@ -29,9 +29,22 @@
 		86776B062CCF10F70041FC3C /* wav-appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "wav-appUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		30E259EA2D6281DE005862C4 /* Exceptions for "wav-app" folder in "wav-app" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 86776AEB2CCF10F50041FC3C /* wav-app */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		86776AEE2CCF10F50041FC3C /* wav-app */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				30E259EA2D6281DE005862C4 /* Exceptions for "wav-app" folder in "wav-app" target */,
+			);
 			path = "wav-app";
 			sourceTree = "<group>";
 		};
@@ -396,9 +409,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wav-app/Preview Content\"";
-				DEVELOPMENT_TEAM = 6B7AZRT9V4;
+				DEVELOPMENT_TEAM = RTJRP8VCM2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "wav-app/Info.plist";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to retrieve events.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -425,9 +440,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wav-app/Preview Content\"";
-				DEVELOPMENT_TEAM = 6B7AZRT9V4;
+				DEVELOPMENT_TEAM = RTJRP8VCM2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "wav-app/Info.plist";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to retrieve events.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
