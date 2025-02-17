@@ -16,10 +16,7 @@ struct VotingView: View {
     
     var body: some View {
         NavigationView {
-            Color(AppColors.backgroundGray).edgesIgnoringSafeArea(.all) // Dark background color
             ZStack {
-                Color.black.edgesIgnoringSafeArea(.all) // Background color set to black
-                
                 VStack(spacing: 20) {
                     
                     // Voting title
@@ -30,6 +27,7 @@ struct VotingView: View {
                         .padding(.top, 10)
                     
                     Spacer()
+                    
                     // Meeting rows with date headers and voting counts
                     ScrollView {
                         VStack(spacing: 20) {
@@ -48,9 +46,7 @@ struct VotingView: View {
                     
                     Spacer()
                     
-                    // Label above Submit button
-                    
-                    // Bottom buttons
+                    // Bottom Submit button
                     HStack(spacing: 20) {
                         VStack(spacing: 5) {
                             submitButton()
@@ -61,99 +57,76 @@ struct VotingView: View {
                 .padding(.horizontal, 20)
             }
             .onAppear {
-                viewModel.loadPollOptions(for: pollId)
+                Task {
+                    await viewModel.loadPollOptions(for: pollId)
+                }
             }
         }
     }
     
     private func submitButton() -> some View {
         Button(action: {
-//            if let selectedPollID = selectedPollID {
-//                viewModel.vote(for: selectedPollID) { success in
-//                    if success {
-//                        isNavigating = true // Update state to navigate to PollResultsView
-//                    } else {
-//                        print("Voting failed, try again")
-//                    }
-//                }
-//            }
+            if let selectedPollID = selectedPollID {
+                Task {
+                    let success = await viewModel.vote(for: selectedPollID)
+                    if success {
+                        isNavigating = true // Navigate to PollResultsView on success
+                    } else {
+                        print("Voting failed, try again")
+                    }
+                }
+            }
         }) {
             Text("SUBMIT")
                 .font(.custom("JetBrainsMono-Regular", size: 16))
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(
-                    AppColors.blueGradient
-                )
+                .background(AppColors.blueGradient)
                 .cornerRadius(10)
-                .shadow(color: Color.cyan.opacity(0.7), radius: 5, x: 0, y: 0) // Glow effect
+                .shadow(color: Color.cyan.opacity(0.7), radius: 5, x: 0, y: 0)
         }
         .background(
             NavigationLink(
                 destination: isNavigating ? AnyView(PollResultsView(pollId: pollId)) : AnyView(EmptyView()),
-                isActive: $isNavigating // Binding isActive to isNavigating
+                isActive: $isNavigating
             ) {
                 EmptyView()
             }
-                .hidden() // Keep NavigationLink hidden so it doesn't affect layout
+            .hidden()
         )
     }
     
-    // View for each meeting section with a header date and list of time slots
+    // Updated MeetingSection view using TimeSlotView
     struct MeetingSection: View {
         var pollOption: PollOption
         @Binding var selectedPollID: String?
         
         var body: some View {
             VStack(alignment: .leading, spacing: 10) {
-                // Display poll option start time as the header
+                // Display poll option's formatted date as the header
                 Text(pollOption.formattedDate)
                     .font(.custom("JetBrainsMono-Regular", size: 18))
                     .foregroundColor(.white.opacity(0.8))
                 
-                // Display the time slot and votes for this poll option
-                timeSlotView(pollOption: pollOption)
-            }
-        }
-        
-        
-        // Individual time slot with vote indicator
-        private func timeSlotView(pollOption: PollOption) -> some View {
-            Button(action: {
-                selectedPollID = pollOption.poll_option_id
-            }) {
-                HStack {
-                    Text(pollOption.formattedTime)
-                        .font(.custom("JetBrainsMono-Regular", size: 16))
-                        .foregroundColor(.white)
-                    
-                    Spacer()
-                    
-                    Text("\(pollOption.number_of_votes)")
-                        .font(.custom("JetBrainsMono-Regular", size: 14))
-                        .foregroundColor(.white)
-                        .padding(8)
-                        .background(Color.cyan.opacity(0.8))
-                        .clipShape(Circle())
-                        .shadow(color: Color.cyan.opacity(0.7), radius: 5, x: 0, y: 0) // Glow effect
-                }
-                .padding()
-                .frame(width: UIScreen.main.bounds.width * 0.8) // Set width to 80% of screen
-                .background(
-                    selectedPollID == pollOption.poll_option_id ? AppColors.blueGradient : AppColors.gradientTypedBlack
+                // Use the existing TimeSlotView for displaying the time slot and vote count
+                TimeSlotView(
+                    dateTime: pollOption.formattedTime,
+                    votes: pollOption.number_of_votes,
+                    onPress: {
+                        selectedPollID = pollOption.poll_option_id
+                    }
                 )
-                .cornerRadius(20) // Rounded corners
-                .shadow(color: Color.cyan.opacity(0.5), radius: 5, x: 0, y: 0) // Glow effect for row
             }
         }
     }
-    
-    // Preview
-    struct VotingView_Previews: PreviewProvider {
-        static var previews: some View {
-            VotingView(pollId: "f4685efe-690a-4c8c-86d0-60dedfa3f7b9")
-                .previewDevice("iPhone 12")
-        }
+}
+
+// Preview (if needed)
+struct VotingView_Previews: PreviewProvider {
+    static var previews: some View {
+        VotingView(pollId: "8c4a3ad9-a0de-46c5-bfe8-cdfdad8384d7")
+            .previewDevice("iPhone 12")
+            .background(AppColors.backgroundGray)
     }
 }

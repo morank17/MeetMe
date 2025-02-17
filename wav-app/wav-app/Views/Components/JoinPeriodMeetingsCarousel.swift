@@ -8,25 +8,25 @@
 import SwiftUI
 import Foundation
 
-struct PendingMeetingsCarousel: View {
+struct JoinPeriodMeetingsCarousel: View {
     @StateObject private var viewModel = PendingMeetingsViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Pending Meetings")
+            Text("Waiting for People to Join")
                 .font(TextStyles.subheading)
                 .foregroundColor(.white)
                 .padding(.leading)
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack() {
-                    if viewModel.meetings.isEmpty {
+                    if viewModel.joinPeriodMeetings.isEmpty {
                         // Places 1 placeholder view icon
                         ForEach(0..<3, id: \.self) { _ in
                             PlaceholderPendingMeetingsTab()
                         }
                     } else {
-                        ForEach(viewModel.meetings) { meeting in
+                        ForEach(viewModel.joinPeriodMeetings) { meeting in
                             PendingMeetingsTab(details: meeting)
                         }
                     }
@@ -35,26 +35,51 @@ struct PendingMeetingsCarousel: View {
         }
         .onAppear {
             Task {
-                await viewModel.fetchPendingMeetings()
+                await viewModel.fetchJoinPeriodMeetings()
             }
         }
     }
 }
 
+/*
+ var id: String { join_code }
+ let dates_list: [String]
+ let minimum_duration_in_minutes: Int
+ let militime_ranges: [[String]]
+ let timezone_str: String
+ let max_n_victors: Int
+ let join_code: String /* Join Code! */
+ let participants: [String]
+ */
+
 struct PendingMeetingsTab: View {
-    let details: Meetings
+    let details: JoinPeriodMeeting
     
     var body: some View {
-        VStack {
+        ZStack {
+            // Background Rectangle
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.gray.opacity(0.3))
-                .frame(width: 50, height: 50)
-
-            RoundedRectangle(cornerRadius: 5)
-                .fill(Color.gray.opacity(0.3))
-                .frame(width: 60, height: 10)
+                .frame(height: 50)
+            
+            Text(details.title.truncated(to: 35)) // Limits meetingName to 20 characters
+                .font(TextStyles.nonboldlarge)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 16)
+            
+            HStack {
+                Spacer() // Pushes content to the right
+                HStack(spacing: 8) {
+                    Image(systemName: "person.fill")
+                        .foregroundColor(.white)
+                    Text("x\(details.participants.count)")
+                        .foregroundColor(.white)
+                }
+                .padding(.trailing, 16) // Add some padding from the right edge
+            }
         }
-        .frame(width: 80)
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -75,7 +100,7 @@ struct PlaceholderPendingMeetingsTab: View {
 
 struct PendingMeetingsCarousel_Previews: PreviewProvider {
     static var previews: some View {
-        PendingMeetingsCarousel()
+        JoinPeriodMeetingsCarousel()
             .background(AppColors.backgroundGray)
     }
 }

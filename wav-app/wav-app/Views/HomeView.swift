@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         ZStack {
-            AppColors.backgroundGray.ignoresSafeArea(.all) // Full-screen background
+            AppColors.backgroundGray.ignoresSafeArea(.all)
             
             NavigationView {
                 VStack {
@@ -18,16 +18,17 @@ struct HomeView: View {
                         .padding(.top, 20)
                     VotingProgressCarousel()
                         .padding(.top, 10)
-                    PendingMeetingsCarousel()
+                    JoinPeriodMeetingsCarousel()
                         .padding(.top, 10)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity) // Ensures full-screen VStack
-                .background(AppColors.backgroundGray) // Ensures the VStack area has the same background
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(AppColors.backgroundGray)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity) // Ensures NavigationView expands
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 }
+
 
 // Preview
 struct HomeView_Previews: PreviewProvider {

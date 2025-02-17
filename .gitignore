@@ -1,11 +1,32 @@
-### Xcode Patch ###
+### Xcode Project ###
 *.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata/
-!*.xcodeproj/project.xcworkspace/
-!*.xcworkspace/contents.xcworkspacedata
-/*.gcno
-**/xcshareddata/WorkspaceSettings.xcsettings
+!*.xcodeproj/project.pbxproj  # Tracks project settings that generate Info.plist
+!*.xcodeproj/xcshareddata/     # Shared schemes and settings for all developers
+
+### Xcode Workspace (if applicable) ###
+!*.xcworkspace/contents.xcworkspacedata  # Ensure the workspace file is tracked
+
+### Ignore User-Specific Xcode Settings ###
 *.xcuserstate
-*.xcuserdatad
+*.xcuserdatad/
+*.xcworkspace/xcuserdata/
+*.xcscmblueprint
 .DS_Store
+
+### Ignore Derived Data & Build Artifacts ###
+DerivedData/
+*.gcno
+*.gcda
+*.xccheckout
+*.xcdebugger/
+
+### Ignore Unnecessary Xcode Logs & Temp Files ###
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcscmblueprint
+*.xcassets/.DS_Store
+*.xcodeproj/project.xcworkspace/
+
+### Ignore CocoaPods (if using) ###
+Pods/
+

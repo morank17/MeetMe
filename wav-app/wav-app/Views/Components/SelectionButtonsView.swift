@@ -30,6 +30,7 @@ struct SelectionButtonsView: View {
                         .foregroundColor(AppColors.backgroundGray)
                         .cornerRadius(10)
                 }
+                .buttonStyle(.plain)
             }
         }
 //        .padding(.horizontal, 16) // 16px margin on the sides

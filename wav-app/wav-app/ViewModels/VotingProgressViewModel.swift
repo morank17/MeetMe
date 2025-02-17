@@ -17,8 +17,8 @@ class VotingProgressViewModel: ObservableObject {
             return
         }
         
-        guard let url = URL(string: APIEndpoints.fetchAllPolls(token: token)) else {
-            print("Invalid URL for fetchAllPolls")
+        guard let url = URL(string: APIEndpoints.fetchPollPeriodMeetings(token: token)) else {
+            print("Invalid URL for fetchPollPeriodMeetings")
             return
         }
         
