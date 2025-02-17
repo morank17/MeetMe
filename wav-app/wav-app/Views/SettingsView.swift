@@ -1,40 +1,46 @@
 import SwiftUI
-
 struct SettingsView: View {
-    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = true // true statement gives default initialization value
+    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = true
     @Environment(\.presentationMode) var presentationMode
+    @State private var navigateToCalendar = false  // Added state for navigation
     var body: some View {
-        ZStack {
-            Color(.black).edgesIgnoringSafeArea(.all) // Dark background
-            
-            VStack(spacing: 30) { // Increased spacing for better alignment
-                syncedCalendarsButton()
-                profilePictureButton()
-                colorSelectionButton()
+        NavigationStack {
+            ZStack {
+                Color(.black).edgesIgnoringSafeArea(.all)
                 
-                Spacer() // Pushes the log-out button to the bottom
-                
-                logOutButton()
-                    .padding(.bottom, 20)
+                VStack(spacing: 30) {
+                    syncedCalendarsButton()
+                    profilePictureButton()
+                    colorSelectionButton()
+                    
+                    Spacer()
+                    
+                    logOutButton()
+                        .padding(.bottom, 20)
+                }
+                .padding(.top, 80)
             }
-            .padding(.top, 80) // Adjusts button placement
+            .navigationDestination(isPresented: $navigateToCalendar) {
+                ConnectCalendarView()
+            }
         }
     }
     
+    ///  Updated button to navigate using state
     private func syncedCalendarsButton() -> some View {
         Button(action: {
-            // Action for Synced Calendars
+            print("Navigating to ConnectCalendarView")
+            navigateToCalendar = true //  Triggers navigation
         }) {
             Text("Synced Calendars")
                 .font(TextStyles.subheading)
                 .foregroundColor(Color.white)
                 .padding()
                 .frame(width: 350, height: 50)
-                .background(Color.gray.opacity(0.3)) // Adjusted to match the screenshot
+                .background(Color.gray.opacity(0.3))
                 .cornerRadius(10)
         }
     }
-
     private func profilePictureButton() -> some View {
         Button(action: {
             // Action for Profile Picture Selection
@@ -44,11 +50,10 @@ struct SettingsView: View {
                 .foregroundColor(Color.white)
                 .padding()
                 .frame(width: 350, height: 50)
-                .background(Color.gray.opacity(0.3)) // Matching UI style
+                .background(Color.gray.opacity(0.3))
                 .cornerRadius(10)
         }
     }
-
     private func colorSelectionButton() -> some View {
         Button(action: {
             // Action for Color Selection
@@ -58,30 +63,27 @@ struct SettingsView: View {
                 .foregroundColor(Color.white)
                 .padding()
                 .frame(width: 350, height: 50)
-                .background(Color.gray.opacity(0.3)) // Matching UI style
+                .background(Color.gray.opacity(0.3))
                 .cornerRadius(10)
         }
     }
-    
     private func logOutButton() -> some View {
         Button(action: {
-            // Log-out action
             AuthViewModel.deleteToken()
             isLoggedIn.toggle()
-            
         }) {
             Text("Log out")
                 .font(TextStyles.subheading)
                 .foregroundColor(Color.white)
                 .padding()
                 .frame(width: 350, height: 50)
-                .background(Color.gray.opacity(0.3)) // Matching UI style
+                .background(Color.gray.opacity(0.3))
                 .cornerRadius(10)
         }
     }
 }
-
 #Preview {
     SettingsView()
 }
+
 

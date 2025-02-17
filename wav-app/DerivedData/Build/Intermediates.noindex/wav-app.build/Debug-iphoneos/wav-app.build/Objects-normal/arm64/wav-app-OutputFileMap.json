@@ -155,6 +155,16 @@
     "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotingViewModel.swiftdeps",
     "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotingViewModel~partial.swiftmodule"
   },
+  "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/AcceptMeetingView.swift" : {
+    "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptMeetingView.swiftconstvalues",
+    "dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptMeetingView.d",
+    "diagnostics" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptMeetingView.dia",
+    "index-unit-output-path" : "/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptMeetingView.o",
+    "llvm-bc" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptMeetingView.bc",
+    "object" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptMeetingView.o",
+    "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptMeetingView.swiftdeps",
+    "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptMeetingView~partial.swiftmodule"
+  },
   "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/AcceptPollView.swift" : {
     "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptPollView.swiftconstvalues",
     "dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/AcceptPollView.d",
@@ -225,6 +235,16 @@
     "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/DateSelectionView.swiftdeps",
     "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/DateSelectionView~partial.swiftmodule"
   },
+  "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/JoinPeriodMeetingsCarousel.swift" : {
+    "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/JoinPeriodMeetingsCarousel.swiftconstvalues",
+    "dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/JoinPeriodMeetingsCarousel.d",
+    "diagnostics" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/JoinPeriodMeetingsCarousel.dia",
+    "index-unit-output-path" : "/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/JoinPeriodMeetingsCarousel.o",
+    "llvm-bc" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/JoinPeriodMeetingsCarousel.bc",
+    "object" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/JoinPeriodMeetingsCarousel.o",
+    "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/JoinPeriodMeetingsCarousel.swiftdeps",
+    "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/JoinPeriodMeetingsCarousel~partial.swiftmodule"
+  },
   "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/MainNavView.swift" : {
     "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MainNavView.swiftconstvalues",
     "dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MainNavView.d",
@@ -234,16 +254,6 @@
     "object" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MainNavView.o",
     "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MainNavView.swiftdeps",
     "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MainNavView~partial.swiftmodule"
-  },
-  "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/PendingMeetingsCarousel.swift" : {
-    "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PendingMeetingsCarousel.swiftconstvalues",
-    "dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PendingMeetingsCarousel.d",
-    "diagnostics" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PendingMeetingsCarousel.dia",
-    "index-unit-output-path" : "/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PendingMeetingsCarousel.o",
-    "llvm-bc" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PendingMeetingsCarousel.bc",
-    "object" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PendingMeetingsCarousel.o",
-    "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PendingMeetingsCarousel.swiftdeps",
-    "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/PendingMeetingsCarousel~partial.swiftmodule"
   },
   "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/QuickJoinView.swift" : {
     "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/QuickJoinView.swiftconstvalues",
@@ -275,6 +285,26 @@
     "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/TextInputView.swiftdeps",
     "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/TextInputView~partial.swiftmodule"
   },
+  "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/UI/CircularTimer.swift" : {
+    "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/CircularTimer.swiftconstvalues",
+    "dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/CircularTimer.d",
+    "diagnostics" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/CircularTimer.dia",
+    "index-unit-output-path" : "/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/CircularTimer.o",
+    "llvm-bc" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/CircularTimer.bc",
+    "object" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/CircularTimer.o",
+    "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/CircularTimer.swiftdeps",
+    "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/CircularTimer~partial.swiftmodule"
+  },
+  "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/VotePollButtonView.swift" : {
+    "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotePollButtonView.swiftconstvalues",
+    "dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotePollButtonView.d",
+    "diagnostics" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotePollButtonView.dia",
+    "index-unit-output-path" : "/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotePollButtonView.o",
+    "llvm-bc" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotePollButtonView.bc",
+    "object" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotePollButtonView.o",
+    "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotePollButtonView.swiftdeps",
+    "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotePollButtonView~partial.swiftmodule"
+  },
   "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/Components/VotingProgressCarousel.swift" : {
     "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotingProgressCarousel.swiftconstvalues",
     "dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/VotingProgressCarousel.d",
@@ -294,6 +324,16 @@
     "object" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/HomeView.o",
     "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/HomeView.swiftdeps",
     "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/HomeView~partial.swiftmodule"
+  },
+  "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/MeetingCreatedView.swift" : {
+    "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MeetingCreatedView.swiftconstvalues",
+    "dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MeetingCreatedView.d",
+    "diagnostics" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MeetingCreatedView.dia",
+    "index-unit-output-path" : "/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MeetingCreatedView.o",
+    "llvm-bc" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MeetingCreatedView.bc",
+    "object" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MeetingCreatedView.o",
+    "swift-dependencies" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MeetingCreatedView.swiftdeps",
+    "swiftmodule" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/MeetingCreatedView~partial.swiftmodule"
   },
   "/Users/dime/Documents/project-musketeers/wav-app/wav-app/Views/NewMeetingStep1View.swift" : {
     "const-values" : "/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphoneos/wav-app.build/Objects-normal/arm64/NewMeetingStep1View.swiftconstvalues",

@@ -7,7 +7,7 @@
         "key": "Synced Calendars",
         "location": {
           "startingColumn": 18,
-          "startingLine": 28
+          "startingLine": 35
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "Profile Picture Selection",
         "location": {
           "startingColumn": 18,
-          "startingLine": 42
+          "startingLine": 48
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "Color Selection",
         "location": {
           "startingColumn": 18,
-          "startingLine": 56
+          "startingLine": 61
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "Log out",
         "location": {
           "startingColumn": 18,
-          "startingLine": 73
+          "startingLine": 75
         }
       }
     ]

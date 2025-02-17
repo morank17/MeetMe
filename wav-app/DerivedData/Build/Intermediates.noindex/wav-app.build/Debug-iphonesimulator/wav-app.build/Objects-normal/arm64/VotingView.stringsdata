@@ -7,7 +7,7 @@
         "key": "Voting time!",
         "location": {
           "startingColumn": 26,
-          "startingLine": 26
+          "startingLine": 23
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "Loading Poll Options...",
         "location": {
           "startingColumn": 38,
-          "startingLine": 37
+          "startingLine": 35
         }
       },
       {
@@ -23,15 +23,7 @@
         "key": "SUBMIT",
         "location": {
           "startingColumn": 18,
-          "startingLine": 81
-        }
-      },
-      {
-        "comment": "",
-        "key": "%lld",
-        "location": {
-          "startingColumn": 26,
-          "startingLine": 133
+          "startingLine": 80
         }
       }
     ]

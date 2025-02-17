@@ -6,56 +6,32 @@
         "comment": "",
         "key": "Give us a range to search",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 21
+          "startingColumn": 30,
+          "startingLine": 25
         }
       },
       {
         "comment": "",
         "key": "Pick time(s) of day",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 76
+          "startingColumn": 30,
+          "startingLine": 80
         }
       },
       {
         "comment": "",
         "key": "Select a date",
         "location": {
-          "startingColumn": 25,
-          "startingLine": 48
+          "startingColumn": 33,
+          "startingLine": 52
         }
       },
       {
         "comment": "",
         "key": "Submit",
         "location": {
-          "startingColumn": 26,
-          "startingLine": 94
-        }
-      },
-      {
-        "comment": "",
-        "key": "Success",
-        "location": {
-          "startingColumn": 37,
-          "startingLine": 104
-        }
-      },
-      {
-        "comment": "",
-        "key": "🎉 Meeting created successfully!",
-        "location": {
-          "startingColumn": 39,
-          "startingLine": 105
-        }
-      },
-      {
-        "comment": "",
-        "key": "Close",
-        "location": {
-          "startingColumn": 54,
-          "startingLine": 106
+          "startingColumn": 34,
+          "startingLine": 98
         }
       }
     ]

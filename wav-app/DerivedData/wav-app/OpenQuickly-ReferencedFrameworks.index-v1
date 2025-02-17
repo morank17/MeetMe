@@ -6,8 +6,8 @@
 	<string>SwiftUI</string>
 	<string>Security</string>
 	<string>wav</string>
-	<string>EventKit</string>
 	<string>Testing</string>
+	<string>EventKit</string>
 	<string>XCTest</string>
 </array>
 </plist>

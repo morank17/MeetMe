@@ -6,7 +6,7 @@
 	<integer>11</integer>
 	<key>logs</key>
 	<dict>
-		<key>22D30A3D-1CF6-4859-85F3-5927837B5574</key>
+		<key>396376C0-496E-4EB6-BFA4-D1F4094CC9EF</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -15,7 +15,91 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>22D30A3D-1CF6-4859-85F3-5927837B5574.xcactivitylog</string>
+			<string>396376C0-496E-4EB6-BFA4-D1F4094CC9EF.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>3</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>wav-app project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>wav-app</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build (Automatic) wav-app</string>
+			<key>timeStartedRecording</key>
+			<real>761517658.62035406</real>
+			<key>timeStoppedRecording</key>
+			<real>761517685.98144102</real>
+			<key>title</key>
+			<string>Build (Automatic) wav-app</string>
+			<key>uniqueIdentifier</key>
+			<string>396376C0-496E-4EB6-BFA4-D1F4094CC9EF</string>
+		</dict>
+		<key>3A4DE113-C70C-4827-AA45-1D3B276DB88B</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>3A4DE113-C70C-4827-AA45-1D3B276DB88B.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>1</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>wav-app project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>wav-app</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build (Automatic) wav-app</string>
+			<key>timeStartedRecording</key>
+			<real>761517843.87945402</real>
+			<key>timeStoppedRecording</key>
+			<real>761517864.87804699</real>
+			<key>title</key>
+			<string>Build (Automatic) wav-app</string>
+			<key>uniqueIdentifier</key>
+			<string>3A4DE113-C70C-4827-AA45-1D3B276DB88B</string>
+		</dict>
+		<key>3EBF6764-8817-46E8-B816-8B180F407FBD</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>3EBF6764-8817-46E8-B816-8B180F407FBD.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -40,15 +124,15 @@
 			<key>signature</key>
 			<string>Build wav-app</string>
 			<key>timeStartedRecording</key>
-			<real>761432383.40495396</real>
+			<real>761440688.08689106</real>
 			<key>timeStoppedRecording</key>
-			<real>761432391.07873201</real>
+			<real>761440691.67566597</real>
 			<key>title</key>
 			<string>Build wav-app</string>
 			<key>uniqueIdentifier</key>
-			<string>22D30A3D-1CF6-4859-85F3-5927837B5574</string>
+			<string>3EBF6764-8817-46E8-B816-8B180F407FBD</string>
 		</dict>
-		<key>31D2B2C7-FEA4-4321-98CB-7E3875A29A82</key>
+		<key>4C5AD633-1D13-4AF1-9121-9DF73E1EDCD4</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -57,91 +141,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>31D2B2C7-FEA4-4321-98CB-7E3875A29A82.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>W</string>
-				<key>totalNumberOfAnalyzerIssues</key>
-				<integer>0</integer>
-				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
-				<key>totalNumberOfTestFailures</key>
-				<integer>0</integer>
-				<key>totalNumberOfWarnings</key>
-				<integer>3</integer>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>wav-app project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>wav-app</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Build wav-app</string>
-			<key>timeStartedRecording</key>
-			<real>761430548.96485496</real>
-			<key>timeStoppedRecording</key>
-			<real>761430552.00255001</real>
-			<key>title</key>
-			<string>Build wav-app</string>
-			<key>uniqueIdentifier</key>
-			<string>31D2B2C7-FEA4-4321-98CB-7E3875A29A82</string>
-		</dict>
-		<key>596C307A-08A2-4DF6-BDC7-8BDA65A6B9A3</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>596C307A-08A2-4DF6-BDC7-8BDA65A6B9A3.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-				<key>totalNumberOfAnalyzerIssues</key>
-				<integer>0</integer>
-				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
-				<key>totalNumberOfTestFailures</key>
-				<integer>0</integer>
-				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>wav-app project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>wav-app</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Build wav-app</string>
-			<key>timeStartedRecording</key>
-			<real>761432379.07786</real>
-			<key>timeStoppedRecording</key>
-			<real>761432383.12130105</real>
-			<key>title</key>
-			<string>Build wav-app</string>
-			<key>uniqueIdentifier</key>
-			<string>596C307A-08A2-4DF6-BDC7-8BDA65A6B9A3</string>
-		</dict>
-		<key>758B976C-C899-4B26-8000-513748A7314C</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>758B976C-C899-4B26-8000-513748A7314C.xcactivitylog</string>
+			<string>4C5AD633-1D13-4AF1-9121-9DF73E1EDCD4.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -155,7 +155,7 @@
 				<key>totalNumberOfTestFailures</key>
 				<integer>0</integer>
 				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
+				<integer>3</integer>
 			</dict>
 			<key>schemeIdentifier-containerName</key>
 			<string>wav-app project</string>
@@ -166,15 +166,15 @@
 			<key>signature</key>
 			<string>Build wav-app</string>
 			<key>timeStartedRecording</key>
-			<real>761432186.41788006</real>
+			<real>761518022.14242995</real>
 			<key>timeStoppedRecording</key>
-			<real>761432187.66998804</real>
+			<real>761518041.32781601</real>
 			<key>title</key>
 			<string>Build wav-app</string>
 			<key>uniqueIdentifier</key>
-			<string>758B976C-C899-4B26-8000-513748A7314C</string>
+			<string>4C5AD633-1D13-4AF1-9121-9DF73E1EDCD4</string>
 		</dict>
-		<key>7D0B4C77-4C1A-4DC7-A774-14AB6564A033</key>
+		<key>631BB61F-8E6B-4BD2-9AF2-E805423CE057</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -183,49 +183,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>7D0B4C77-4C1A-4DC7-A774-14AB6564A033.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-				<key>totalNumberOfAnalyzerIssues</key>
-				<integer>0</integer>
-				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
-				<key>totalNumberOfTestFailures</key>
-				<integer>0</integer>
-				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>wav-app project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>wav-app</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Clean wav-app</string>
-			<key>timeStartedRecording</key>
-			<real>761430522.93176198</real>
-			<key>timeStoppedRecording</key>
-			<real>761430523.45092595</real>
-			<key>title</key>
-			<string>Clean wav-app</string>
-			<key>uniqueIdentifier</key>
-			<string>7D0B4C77-4C1A-4DC7-A774-14AB6564A033</string>
-		</dict>
-		<key>832B96EF-159C-43C6-95EE-E8DA6B05D183</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>832B96EF-159C-43C6-95EE-E8DA6B05D183.xcactivitylog</string>
+			<string>631BB61F-8E6B-4BD2-9AF2-E805423CE057.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -239,7 +197,7 @@
 				<key>totalNumberOfTestFailures</key>
 				<integer>0</integer>
 				<key>totalNumberOfWarnings</key>
-				<integer>3</integer>
+				<integer>4</integer>
 			</dict>
 			<key>schemeIdentifier-containerName</key>
 			<string>wav-app project</string>
@@ -250,15 +208,15 @@
 			<key>signature</key>
 			<string>Build wav-app</string>
 			<key>timeStartedRecording</key>
-			<real>761432363.20731997</real>
+			<real>761518166.68674302</real>
 			<key>timeStoppedRecording</key>
-			<real>761432365.18810999</real>
+			<real>761518169.32467306</real>
 			<key>title</key>
 			<string>Build wav-app</string>
 			<key>uniqueIdentifier</key>
-			<string>832B96EF-159C-43C6-95EE-E8DA6B05D183</string>
+			<string>631BB61F-8E6B-4BD2-9AF2-E805423CE057</string>
 		</dict>
-		<key>AB360ED4-529B-4E09-838B-8F1F61552EAE</key>
+		<key>8ED3CE9F-58C0-4114-939A-8ADE8CF60FB9</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -267,7 +225,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>AB360ED4-529B-4E09-838B-8F1F61552EAE.xcactivitylog</string>
+			<string>8ED3CE9F-58C0-4114-939A-8ADE8CF60FB9.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -281,7 +239,7 @@
 				<key>totalNumberOfTestFailures</key>
 				<integer>0</integer>
 				<key>totalNumberOfWarnings</key>
-				<integer>3</integer>
+				<integer>1</integer>
 			</dict>
 			<key>schemeIdentifier-containerName</key>
 			<string>wav-app project</string>
@@ -290,17 +248,17 @@
 			<key>schemeIdentifier-sharedScheme</key>
 			<integer>1</integer>
 			<key>signature</key>
-			<string>Build wav-app</string>
+			<string>Build (Automatic) wav-app</string>
 			<key>timeStartedRecording</key>
-			<real>761433671.70783401</real>
+			<real>761517686.34537697</real>
 			<key>timeStoppedRecording</key>
-			<real>761433676.34817505</real>
+			<real>761517704.70234597</real>
 			<key>title</key>
-			<string>Build wav-app</string>
+			<string>Build (Automatic) wav-app</string>
 			<key>uniqueIdentifier</key>
-			<string>AB360ED4-529B-4E09-838B-8F1F61552EAE</string>
+			<string>8ED3CE9F-58C0-4114-939A-8ADE8CF60FB9</string>
 		</dict>
-		<key>C9C35828-1135-4C68-AB22-BED2599A9420</key>
+		<key>BBFAA70D-8F91-4948-A9AC-81786C6557C1</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -309,21 +267,63 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>C9C35828-1135-4C68-AB22-BED2599A9420.xcactivitylog</string>
+			<string>BBFAA70D-8F91-4948-A9AC-81786C6557C1.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
 			<dict>
 				<key>highLevelStatus</key>
-				<string>W</string>
+				<string>E</string>
 				<key>totalNumberOfAnalyzerIssues</key>
 				<integer>0</integer>
 				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>totalNumberOfTestFailures</key>
 				<integer>0</integer>
 				<key>totalNumberOfWarnings</key>
-				<integer>3</integer>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>wav-app project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>wav-app</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build (Automatic) wav-app</string>
+			<key>timeStartedRecording</key>
+			<real>761517704.96401894</real>
+			<key>timeStoppedRecording</key>
+			<real>761517777.849823</real>
+			<key>title</key>
+			<string>Build (Automatic) wav-app</string>
+			<key>uniqueIdentifier</key>
+			<string>BBFAA70D-8F91-4948-A9AC-81786C6557C1</string>
+		</dict>
+		<key>E5283BB6-E3DB-4BF4-B66E-DFC769F7B1A1</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>E5283BB6-E3DB-4BF4-B66E-DFC769F7B1A1.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>2</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
 			</dict>
 			<key>schemeIdentifier-containerName</key>
 			<string>wav-app project</string>
@@ -334,13 +334,55 @@
 			<key>signature</key>
 			<string>Build wav-app</string>
 			<key>timeStartedRecording</key>
-			<real>761434223.97294497</real>
+			<real>761517941.44783998</real>
 			<key>timeStoppedRecording</key>
-			<real>761434225.78129303</real>
+			<real>761517943.00458097</real>
 			<key>title</key>
 			<string>Build wav-app</string>
 			<key>uniqueIdentifier</key>
-			<string>C9C35828-1135-4C68-AB22-BED2599A9420</string>
+			<string>E5283BB6-E3DB-4BF4-B66E-DFC769F7B1A1</string>
+		</dict>
+		<key>EA7DBB40-4694-4728-A226-A2ADB8C3E433</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>EA7DBB40-4694-4728-A226-A2ADB8C3E433.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>2</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>wav-app project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>wav-app</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build wav-app</string>
+			<key>timeStartedRecording</key>
+			<real>761517889.65849698</real>
+			<key>timeStoppedRecording</key>
+			<real>761517893.69730902</real>
+			<key>title</key>
+			<string>Build wav-app</string>
+			<key>uniqueIdentifier</key>
+			<string>EA7DBB40-4694-4728-A226-A2ADB8C3E433</string>
 		</dict>
 	</dict>
 </dict>

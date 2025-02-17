@@ -6,16 +6,16 @@
         "comment": "",
         "key": "Connect a Calendar Account",
         "location": {
-          "startingColumn": 18,
-          "startingLine": 22
+          "startingColumn": 22,
+          "startingLine": 13
         }
       },
       {
         "comment": "",
         "key": "Continue",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 81
+          "startingColumn": 26,
+          "startingLine": 69
         }
       }
     ]

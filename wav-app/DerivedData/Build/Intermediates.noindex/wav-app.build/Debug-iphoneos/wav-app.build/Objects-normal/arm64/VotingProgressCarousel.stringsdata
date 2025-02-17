@@ -12,10 +12,18 @@
       },
       {
         "comment": "",
+        "key": "No Polls",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
         "key": "Closed Poll",
         "location": {
-          "startingColumn": 17,
-          "startingLine": 88
+          "startingColumn": 18,
+          "startingLine": 103
         }
       },
       {
@@ -23,7 +31,7 @@
         "key": "Open Poll",
         "location": {
           "startingColumn": 17,
-          "startingLine": 101
+          "startingLine": 118
         }
       },
       {
@@ -31,7 +39,7 @@
         "key": "Placeholder View",
         "location": {
           "startingColumn": 17,
-          "startingLine": 114
+          "startingLine": 133
         }
       }
     ]

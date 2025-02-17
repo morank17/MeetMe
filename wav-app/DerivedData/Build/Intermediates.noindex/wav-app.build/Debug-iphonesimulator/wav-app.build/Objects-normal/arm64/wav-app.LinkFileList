@@ -1,6 +1,9 @@
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/APIEndpoints.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/AppColors.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/Auth.o
+/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/CircularTimer.o
+/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/JoinPeriodMeetingsCarousel.o
+/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/VotePollButtonView.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/Meetings.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/Polls.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/TextStyles.o
@@ -18,7 +21,8 @@
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/OnboardingView.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/DateSelectionView.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/MainNavView.o
-/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/PendingMeetingsCarousel.o
+/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/AcceptMeetingView.o
+/Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/MeetingCreatedView.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/QuickJoinView.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/SelectionButtonsView.o
 /Users/dime/Documents/project-musketeers/wav-app/DerivedData/Build/Intermediates.noindex/wav-app.build/Debug-iphonesimulator/wav-app.build/Objects-normal/arm64/TextInputView.o
