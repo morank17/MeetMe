@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct QuickJoinView: View {
+    @Binding var path: [String] // Now this view accepts a binding to the path
     @State private var join_code: String = ""
-    @State private var isNavigating: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -17,14 +17,15 @@ struct QuickJoinView: View {
                 .font(TextStyles.subheading)
                 .foregroundColor(.white)
             Spacer().frame(height: 5) // Space for placeholder animation
-            
+
             HStack {
                 TextInputView(text: $join_code, placeholder: "Meeting ID")
                     .frame(height: 44) // Keeps height uniform
-                
+
                 Button(action: {
                     print("Joining meeting with ID: \(join_code)")
-                    isNavigating = true  // Trigger navigation
+                    // Append the join_code to the path to trigger navigation
+                    path.append(join_code)
                 }) {
                     Image(systemName: "magnifyingglass")
                         .resizable()
@@ -37,22 +38,14 @@ struct QuickJoinView: View {
                 .padding(.leading, 10) // Total horizontal padding adjusted
             }
             .frame(maxWidth: .infinity) // HStack takes full width
-            
-            // Hidden NavigationLink that navigates to AcceptMeetingView
-            NavigationLink(
-                destination: AcceptMeetingView(join_code: join_code),
-                isActive: $isNavigating,
-                label: { EmptyView() }
-            )
-            .hidden()
         }
         .padding(.horizontal, 16)
+        .background(AppColors.backgroundGray)
     }
 }
 
 struct QuickJoinView_Previews: PreviewProvider {
     static var previews: some View {
-        QuickJoinView()
-            .background(AppColors.backgroundGray)
+        QuickJoinView(path: .constant([]))
     }
 }
