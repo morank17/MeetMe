@@ -27,6 +27,7 @@ struct JoinPeriodMeeting: Identifiable, Hashable, Codable {
     let max_n_victors: Int
     let join_code: String /* Join Code! */
     let participants: [String]
+    let in_meeting: Bool
 }
 
 struct PollPeriodMeeting: Identifiable, Hashable, Codable {

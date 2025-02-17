@@ -9,50 +9,48 @@ import SwiftUI
 
 struct QuickJoinView: View {
     @State private var join_code: String = ""
-    @State private var isNavigating: Bool = false
-    
+    @State private var path: [String] = [] // This will hold our navigation data
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Quick Join")
-                .font(TextStyles.subheading)
-                .foregroundColor(.white)
-            Spacer().frame(height: 5) // Space for placeholder animation
-            
-            HStack {
-                TextInputView(text: $join_code, placeholder: "Meeting ID")
-                    .frame(height: 44) // Keeps height uniform
-                
-                Button(action: {
-                    print("Joining meeting with ID: \(join_code)")
-                    isNavigating = true  // Trigger navigation
-                }) {
-                    Image(systemName: "magnifyingglass")
-                        .resizable()
-                        .foregroundColor(.white)
-                        .frame(width: 29, height: 29)
+        NavigationStack(path: $path) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Quick Join")
+                    .font(TextStyles.subheading)
+                    .foregroundColor(.white)
+                Spacer().frame(height: 5) // Space for placeholder animation
+
+                HStack {
+                    TextInputView(text: $join_code, placeholder: "Meeting ID")
+                        .frame(height: 44) // Keeps height uniform
+
+                    Button(action: {
+                        print("Joining meeting with ID: \(join_code)")
+                        // Append the join_code to the path to trigger navigation
+                        path.append(join_code)
+                    }) {
+                        Image(systemName: "magnifyingglass")
+                            .resizable()
+                            .foregroundColor(.white)
+                            .frame(width: 29, height: 29)
+                    }
+                    .frame(width: 58, height: 58) // Ensures square shape
+                    .background(Color.blue)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.leading, 10) // Total horizontal padding adjusted
                 }
-                .frame(width: 58, height: 58) // Ensures square shape
-                .background(Color.blue)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.leading, 10) // Total horizontal padding adjusted
+                .frame(maxWidth: .infinity) // HStack takes full width
             }
-            .frame(maxWidth: .infinity) // HStack takes full width
-            
-            // Hidden NavigationLink that navigates to AcceptMeetingView
-            NavigationLink(
-                destination: AcceptMeetingView(join_code: join_code),
-                isActive: $isNavigating,
-                label: { EmptyView() }
-            )
-            .hidden()
+            .padding(.horizontal, 16)
+            .navigationDestination(for: String.self) { join_code in
+                AcceptMeetingView(join_code: join_code)
+            }
+            .background(AppColors.backgroundGray)
         }
-        .padding(.horizontal, 16)
     }
 }
 
 struct QuickJoinView_Previews: PreviewProvider {
     static var previews: some View {
         QuickJoinView()
-            .background(AppColors.backgroundGray)
     }
 }
