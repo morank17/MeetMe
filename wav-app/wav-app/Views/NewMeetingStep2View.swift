@@ -12,7 +12,7 @@ struct NewMeetingStep2View: View {
     @Binding var currentPage: Int
     
     
-    @State private var showDatePicker = false
+    @Binding var showDatePicker: Bool
     @State private var isSelectingEarliest = false
     
     var body: some View {
