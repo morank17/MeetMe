@@ -409,11 +409,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wav-app/Preview Content\"";
-<<<<<<< Updated upstream
-				DEVELOPMENT_TEAM = 88MV7MNU42;
-=======
 				DEVELOPMENT_TEAM = 6B7AZRT9V4;
->>>>>>> Stashed changes
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "wav-app/Info.plist";
@@ -444,11 +440,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wav-app/Preview Content\"";
-<<<<<<< Updated upstream
-				DEVELOPMENT_TEAM = 88MV7MNU42;
-=======
 				DEVELOPMENT_TEAM = 6B7AZRT9V4;
->>>>>>> Stashed changes
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "wav-app/Info.plist";
