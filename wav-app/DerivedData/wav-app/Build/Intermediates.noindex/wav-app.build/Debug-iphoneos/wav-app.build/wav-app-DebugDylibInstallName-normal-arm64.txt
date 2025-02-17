@@ -1,1 +1,0 @@
-@rpath/wav-app.debug.dylib
