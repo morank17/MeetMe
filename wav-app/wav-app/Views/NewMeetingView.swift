@@ -13,24 +13,28 @@ struct NewMeetingView: View {
     
     var body: some View {
         VStack {
-            TabView(selection: $currentPage) {
-                NewMeetingStep1View(viewModel: viewModel, currentPage: $currentPage, selectedDuration: $viewModel.selectedDuration)
-                    .tag(0)
-                NewMeetingStep2View(viewModel: viewModel, currentPage: $currentPage, showDatePicker: $viewModel.showDatePicker)
-                    .tag(1)
+            if viewModel.showSuccessView {
+                MeetingCreatedView(viewModel: viewModel, currentPage: $currentPage)
+            } else {
+                TabView(selection: $currentPage) {
+                    NewMeetingStep1View(viewModel: viewModel, currentPage: $currentPage, selectedDuration: $viewModel.selectedDuration)
+                        .tag(0)
+                    NewMeetingStep2View(viewModel: viewModel, currentPage: $currentPage, showDatePicker: $viewModel.showDatePicker)
+                        .tag(1)
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                
+                // Custom dots for navigation at the bottom
+                HStack {
+                    Circle()
+                        .fill(currentPage == 0 ? AppColors.highlightBlue : AppColors.textGray)
+                        .frame(width: 10, height: 10)
+                    Circle()
+                        .fill(currentPage == 1 ? AppColors.highlightBlue : AppColors.textGray)
+                        .frame(width: 10, height: 10)
+                }
+                .padding(.bottom, 20)
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            
-            //custom dots for navigation at the bottom
-            HStack {
-                Circle()
-                    .fill(currentPage == 0 ? AppColors.highlightBlue : AppColors.textGray)
-                    .frame(width: 10, height: 10)
-                Circle()
-                    .fill(currentPage == 1 ? AppColors.highlightBlue : AppColors.textGray)
-                    .frame(width: 10, height: 10)
-            }
-            .padding(.bottom, 20)
         }
         .background(AppColors.backgroundGray)
     }
