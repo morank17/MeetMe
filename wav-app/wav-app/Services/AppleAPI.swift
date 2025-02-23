@@ -13,14 +13,14 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             ConnectCalendarView()
-                .onAppear {
-                    Task {
-                        await calendarFetcher.fetchCalendarEvents()
-                    }
+               // .onAppear {
+              //      Task {
+               //         await calendarFetcher.fetchCalendarEvents(for: <#[Date]#>)
+                 //   }
                 }
         }
     }
-}
+
 class CalendarFetcher: ObservableObject {
     private let store = EKEventStore()
     /// Requests full access to the user's calendar.
@@ -42,32 +42,51 @@ class CalendarFetcher: ObservableObject {
             return false
         }
     }
-    /// Fetches calendar events for the next 7 days if access is granted.
-    func fetchCalendarEvents() async {
+    /// Fetches calendar events for the given list of dates, excluding all-day events.
+    func fetchCalendarEvents(for dates: [Date]) async {
         let hasAccess = await requestFullCalendarAccess()
         guard hasAccess else { return }
+        
+        var allEventData: [[String: String]] = []
         let calendar = Calendar.current
-        let startDate = Date()
-        let endDate = calendar.date(byAdding: .day, value: 7, to: startDate)!
-        let predicate = store.predicateForEvents(
-            withStart: startDate,
-            end: endDate,
-            calendars: store.calendars(for: .event)
-        )
-        let events = store.events(matching: predicate)
-        let eventData: [[String: String]] = events.compactMap { event in
-            [
-                "title": event.title,
-                "start": event.startDate.ISO8601Format(),
-                "end": event.endDate.ISO8601Format()
-            ]
+        
+        for date in dates {
+            let startDate = calendar.startOfDay(for: date)
+            let endDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
+            
+            let predicate = store.predicateForEvents(
+                withStart: startDate,
+                end: endDate,
+                calendars: store.calendars(for: .event)
+            )
+            let events = store.events(matching: predicate)
+            
+            // **Filter out all-day events**
+            let filteredEvents = events.filter { !$0.isAllDay }
+            
+            let eventData: [[String: String]] = filteredEvents.map { event in
+                [
+                    "title": event.title,
+                    "start": event.startDate.ISO8601Format(),
+                    "end": event.endDate.ISO8601Format()
+                ]
+            }
+            
+            allEventData.append(contentsOf: eventData)
         }
-        print(eventData)
+        
+        if let jsonData = try? JSONSerialization.data(withJSONObject: allEventData, options: .prettyPrinted),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            print(jsonString)
+        } else {
+            print("Failed to generate JSON")
+        }
     }
-}
+    
+    
     func sendEventsToBackend(eventData: [[String: String]]) async {
-        guard let url = URL(string: "http://your-backend.com/api/receive_calendar_events/") else { return }
-       
+        guard let url = URL(string: "https://musketeers-django.onrender.com/api/meetings/download") else { return }
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -84,5 +103,5 @@ class CalendarFetcher: ObservableObject {
             print("Failed to send event data: \(error.localizedDescription)")
         }
     }
-
-
+    
+}
