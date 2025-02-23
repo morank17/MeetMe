@@ -1,18 +1,27 @@
+//
+//  ConnectCalendarView.swift
+//  wav-app
+//
+//  Created by Nikola Dimitrijevic on 12/15/2024
+//
 import SwiftUI
 import EventKit
+
 struct ConnectCalendarView: View {
     @Environment(\.presentationMode) var presentationMode
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     @State private var loginMessage = "Not Logged In to Calendar"
     @State private var googleSignInURL: String = ""
     @State private var navigateToHome = false
-    private let fetcher = CalendarFetcher() // ✅ Use CalendarFetcher instance
+    private let fetcher = CalendarFetcher()
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 30) {
                 Text("Connect a Calendar Account")
                     .font(.title)
                     .padding()
+
                 HStack(spacing: 30) {
                     // Google Sign-In Button
                     Button(action: {
@@ -40,10 +49,14 @@ struct ConnectCalendarView: View {
                                 .frame(width: 50, height: 50)
                         }
                     }
-                    // Apple Calendar Button - Fetches and Prints Events
+
+                    // Apple Calendar Button - Requests Full Access
                     Button(action: {
                         Task {
-                            await fetchCalendarEventsForTesting()
+                            let accessGranted = await fetcher.requestFullCalendarAccess()
+                            DispatchQueue.main.async {
+                                loginMessage = accessGranted ? "Connected to Apple Calendar ✅" : "Access Denied ❌"
+                            }
                         }
                     }) {
                         ZStack {
@@ -61,6 +74,7 @@ struct ConnectCalendarView: View {
                         }
                     }
                 }
+
                 // Continue Button (Navigates to HomeView)
                 Button(action: {
                     isLoggedIn = true
@@ -75,6 +89,7 @@ struct ConnectCalendarView: View {
                 .background(AppColors.blueGradient)
                 .cornerRadius(30)
                 .padding(.horizontal, 60)
+
                 // Display Login Message
                 Text(loginMessage)
                     .foregroundColor(.gray)
@@ -90,43 +105,44 @@ struct ConnectCalendarView: View {
             }
         }
     }
-    /// ✅ Calls `fetchCalendarEvents()` from `CalendarFetcher` and prints events.
-    func fetchCalendarEventsForTesting() async {
-        let hasAccess = await fetcher.requestFullCalendarAccess()
-        guard hasAccess else {
-            DispatchQueue.main.async {
-                loginMessage = "Calendar access required ❌"
-            }
-            print("Access Denied ❌")
-            return
-        }
-        await fetcher.fetchCalendarEvents() // ✅ Calls your existing function
-    }
-    /// ✅ Checks Apple Calendar access and updates UI message but does **not** toggle `isLoggedIn`
+
+
+    /// Checks Apple Calendar access
     func checkAppleCalendarAccess() async {
-        let hasAccess = await fetcher.requestFullCalendarAccess()
+        let status = EKEventStore.authorizationStatus(for: .event)
+
         DispatchQueue.main.async {
-            loginMessage = hasAccess ? "Connected to Apple Calendar ✅" : "Not Logged In to Calendar ❌"
+            if status == .fullAccess {
+                loginMessage = "Connected to Apple Calendar ✅"
+            } else {
+                loginMessage = "Not Logged In to Calendar ❌"
+            }
         }
     }
+
+
     func getGoogleSignInURL() async throws -> String {
         let url = URL(string: "https://musketeers-django.onrender.com/api/users/google-register")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+
         let token = AuthViewModel.retrieveToken() ?? "default_token"
         let bodyString = "token=\(token)"
         request.httpBody = bodyString.data(using: .utf8)
+
         let (data, response) = try await URLSession.shared.data(for: request)
         if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
             throw URLError(.badServerResponse)
         }
+
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
               let authUrl = jsonObject["auth_url"] as? String else {
             throw URLError(.cannotParseResponse)
         }
         return authUrl
     }
+
     func startSignInWithGoogle() {
         print("Running sign-in with Google")
         print(googleSignInURL)
@@ -141,8 +157,8 @@ struct ConnectCalendarView: View {
         }
     }
 }
+
 #Preview {
     ConnectCalendarView()
 }
-
 
