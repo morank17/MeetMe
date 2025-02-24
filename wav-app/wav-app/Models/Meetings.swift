@@ -51,6 +51,7 @@ struct PollPeriodMeeting: Identifiable, Hashable, Codable {
     var participants: [String]
     var vote_status: Bool
     var poll_id: String
+    var seconds_remaining: Int
 }
 
 struct MeetingInfo: Hashable, Codable {
