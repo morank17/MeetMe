@@ -82,6 +82,8 @@ class CalendarFetcher: ObservableObject {
         } else {
             print("⚠️ No events found or failed to format JSON.")
         }
+        // **Send collected events to backend**
+          await sendEventsToBackend(eventData: allEventData)
     }
 
 
