@@ -47,7 +47,13 @@ struct NewMeetingStep2View: View {
                     DatePicker(
                         "Select a date",
                         selection: Binding(
-                            get: { isSelectingEarliest ? (viewModel.selectedEarliestDate ?? Date()) : (viewModel.selectedLatestDate ?? Date()) },
+                            get: {
+                                if isSelectingEarliest {
+                                    return viewModel.selectedEarliestDate ?? Date()
+                                } else {
+                                    return viewModel.selectedLatestDate ?? viewModel.selectedEarliestDate ?? Date()
+                                }
+                            },
                             set: { newDate in
                                 if isSelectingEarliest {
                                     viewModel.selectedEarliestDate = newDate
