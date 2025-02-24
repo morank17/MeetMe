@@ -103,9 +103,24 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         let minutes = abs(secondsFromGMT % 3600) / 60
         return String(format: "%+03d:%02d", hours, minutes)
     }
-        
-    // Submit a new meeting
+    
     func submitNewMeeting() {
+        let dates = dateRangeFormatted
+        let timezone = getUTCOffset()
+
+        Task {
+            let fetcher = CalendarFetcher()
+            await fetcher.sendEventsToBackend(datesList: dates, timeZoneStr: timezone)
+
+            DispatchQueue.main.async {
+                self.meetingAPICall(dates: dates, timezone: timezone)
+            }
+        }
+    }
+
+    
+    // Submit a new meeting
+    func meetingAPICall(dates: [String], timezone: String) {
         // catch edge cases
         guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             errorMessage = "Please add a meeting title."
@@ -127,10 +142,8 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
         let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = "yyyy-MM-dd"
         
-        let dates = dateRangeFormatted
         let timeRanges = getMergedTimeRanges()
         let minMtgMinutes = meetingDurationHrs * 60 + meetingDurationMins
-        let timezone = getUTCOffset()
         guard let token = AuthViewModel.retrieveToken() else { return }
         
         print(title, dates, timeRanges, minMtgMinutes)

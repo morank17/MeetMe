@@ -26,6 +26,13 @@ struct DateSelectionView: View {
                     placeholder: placeholder
                 )
                 .focused($isFocused)
+                .onChange(of: isFocused) { newValue in
+                    if newValue {
+                        DispatchQueue.main.async {
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
+                    }
+                }
                 
                 Button(action: {
                     if selectedDate == nil {
