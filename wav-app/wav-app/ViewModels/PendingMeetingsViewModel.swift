@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// Note: PendingMeeting is the same as JoinPeriodMeeting on Backend.
+// Note: PendingMeeting is the same as JoinPeriodMeeting on Backend.j
 class PendingMeetingsViewModel: ObservableObject {
     // JoinPeriodMeeting & PollPeriodMeeting comes from ./Models/Meetings
     @Published var joinPeriodMeetings: [JoinPeriodMeeting] = []
