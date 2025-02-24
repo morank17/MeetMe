@@ -28,7 +28,7 @@ struct AcceptMeetingView: View {
                     .padding()
                 
                 if let meeting = viewModel.meetingInfo {
-                    MeetingView(details: meeting)
+                    MeetingView(details: meeting, viewModel: viewModel)
                 } else {
                     PlaceholderMeetingView()
                 }
@@ -47,6 +47,7 @@ struct AcceptMeetingView: View {
 
 struct MeetingView: View {
     let details: MeetingInfo
+    @ObservedObject var viewModel: PendingMeetingsViewModel
     
     var body: some View {
         VStack(spacing: 10) {
@@ -110,7 +111,10 @@ struct MeetingView: View {
                 }
                 
                 Button(action: {
-                    // Accept action
+                    Task {
+                        print("trying to join")
+                        await viewModel.joinMeeting(join_code: details.join_code)
+                    }
                 }) {
                     Text("Accept")
                         .foregroundColor(.white)
@@ -168,8 +172,8 @@ struct MeetingView_Previews: PreviewProvider {
             participants: ["Alice", "Bob", "Charlie"],
             in_meeting: true
         )
-        
-        MeetingView(details: sampleMeeting)
+        let mockViewModel = PendingMeetingsViewModel()
+        MeetingView(details: sampleMeeting, viewModel: mockViewModel)
             .background(AppColors.backgroundGray)
             .previewLayout(.sizeThatFits)
     }

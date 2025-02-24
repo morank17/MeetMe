@@ -78,12 +78,19 @@ class APICall {
             request.httpBody = body
 
             let (data, response) = try await URLSession.shared.data(for: request)
-
             // Ensure valid HTTP response
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw APIError.invalidResponse
             }
-            
+                
+            print("Status Code: \(httpResponse.statusCode)")
+
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("Response Body: \(responseString)")
+            } else {
+                print("Response Body: (Binary data - cannot convert to string)")
+            }
+        
             // Check for HTTP status errors
             guard (200...299).contains(httpResponse.statusCode) else {
                 throw APIError.httpError(statusCode: httpResponse.statusCode)

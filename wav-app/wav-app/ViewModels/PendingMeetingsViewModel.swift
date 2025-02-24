@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-// Note: PendingMeeting is the same as JoinPeriodMeeting on Backend.
+// Note: PendingMeeting is the same as JoinPeriodMeeting on Backend.j
 class PendingMeetingsViewModel: ObservableObject {
     // JoinPeriodMeeting & PollPeriodMeeting comes from ./Models/Meetings
     @Published var joinPeriodMeetings: [JoinPeriodMeeting] = []
     @Published var pollPeriodMeetings: [PollPeriodMeeting] = []
     @Published var meetingInfo: MeetingInfo? = nil
+    @Published var joinMeetingInfo: JoinMeetingInfo? = nil
     
     // Get the join period meetings
     @MainActor
@@ -78,31 +79,69 @@ class PendingMeetingsViewModel: ObservableObject {
     
     @MainActor
     func fetchMeetingInfo(join_code: String) async {
-           guard let token = AuthViewModel.retrieveToken() else {
-               print("No token found")
-               return
-           }
-
-           guard let url = URL(string: APIEndpoints.fetchMeetingInfo(token: token, join_code: join_code)) else {
-               print("Invalid URL for fetchMeetingInfo")
-               return
-           }
-
-           do {
-               let response: MeetingInfoResponse = try await APICall.request(
-                   url: url,
-                   method: "GET",
-                   responseType: MeetingInfoResponse.self
-               )
-
-               if response.success {
-                   print("MeetingInfo Loaded: \(response.response)")
-                   self.meetingInfo = response.response
-               } else {
-                   print("Failed to load meeting info")
-               }
-           } catch {
-               print("Error decoding JSON: \(error.localizedDescription)")
-           }
+       guard let token = AuthViewModel.retrieveToken() else {
+           print("No token found")
+           return
        }
+
+       guard let url = URL(string: APIEndpoints.fetchMeetingInfo(token: token, join_code: join_code)) else {
+           print("Invalid URL for fetchMeetingInfo")
+           return
+       }
+
+       do {
+           let response: MeetingInfoResponse = try await APICall.request(
+               url: url,
+               method: "GET",
+               responseType: MeetingInfoResponse.self
+           )
+
+           if response.success {
+               print("MeetingInfo Loaded: \(response.response)")
+               self.meetingInfo = response.response
+           } else {
+               print("Failed to load meeting info")
+           }
+       } catch {
+           print("Error decoding JSON: \(error.localizedDescription)")
+       }
+    }
+    @MainActor
+    func joinMeeting(join_code: String) async {
+        guard let token = AuthViewModel.retrieveToken() else {
+            print("No token found")
+            return
+        }
+        
+        guard let url = URL(string: APIEndpoints.joinMeeting()) else {
+            print("Invalid URL for joinMeeting")
+            return
+        }
+        
+        let requestBody: [String: Any] = [
+            "token": token,
+            "join-code": join_code
+        ]
+        print(requestBody)
+        
+        do {
+            // convert to JSON
+            let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+            let response: JoinMeetingResponse = try await APICall.request(
+                url: url,
+                method: "POST",
+                headers: ["Content-Type": "application/json"],
+                body: jsonData,
+                responseType: JoinMeetingResponse.self
+            )
+            if response.success {
+                print("MeetingInfo Loaded: \(response.response)")
+                self.joinMeetingInfo = response.response
+            } else {
+                print("Failed to load meeting info")
+            }
+        } catch {
+            print("Error decoding JSON pendingmeetings: \(error.localizedDescription)")
+        }
+    }
  }

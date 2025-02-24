@@ -33,4 +33,9 @@ struct APIEndpoints {
     static func votePoll() -> String {
         return "\(baseURL)polls/vote"
     }
+    
+    // add user to proposed meeting
+    static func joinMeeting() -> String {
+        return "\(baseURL)meetings/join"
+    }
 }
