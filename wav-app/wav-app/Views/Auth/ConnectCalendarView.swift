@@ -1,5 +1,6 @@
 import SwiftUI
 import EventKit
+import SafariServices
 
 struct ConnectCalendarView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -19,16 +20,23 @@ struct ConnectCalendarView: View {
                 HStack(spacing: 30) {
                     // Google Sign-In Button
                     Button(action: {
-                        Task {
-                            do {
-                                googleSignInURL = try await getGoogleSignInURL()
-                                startSignInWithGoogle()
-                            } catch {
-                                loginMessage = "Failed to get sign-in URL. Please try again."
-                                print("Error: \(error)")
-                            }
-                        }
-                    }) {
+                                        Task {
+                                            do {
+                                                googleSignInURL = try await getGoogleSignInURL()
+                                                
+                                                // Get the root view controller and present Safari pop-up from it
+                                                if let rootViewController = UIApplication.shared.connectedScenes
+                                                    .compactMap({ ($0 as? UIWindowScene)?.windows.first?.rootViewController })
+                                                    .first {
+                                                    startSignInWithGoogle(from: rootViewController)
+                                                }
+                                                
+                                            } catch {
+                                                loginMessage = "Failed to get sign-in URL. Please try again."
+                                                print("Error: \(error)")
+                                            }
+                                        }
+                                    }) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color.white)
@@ -175,20 +183,10 @@ struct ConnectCalendarView: View {
         }
         return authUrl
     }
-
-    func startSignInWithGoogle() {
-        print("Running sign-in with Google")
-        print(googleSignInURL)
-        guard let url = URL(string: googleSignInURL) else {
-            loginMessage = "Invalid Sign-In URL"
-            return
-        }
-        UIApplication.shared.open(url) { success in
-            DispatchQueue.main.async {
-                loginMessage = success ? "Redirecting to Google sign-in..." : "Failed to open URL."
-            }
-        }
-    }
+    
+    
+    
+    
 //    func testAddAppleEvent() async {
 //        let title = "Test Meeting"
 //        let winningStartDateTime = "2025-02-09T09:00:00Z"  // ISO 8601 UTC format
@@ -206,10 +204,47 @@ struct ConnectCalendarView: View {
 //        
 //        print("✅ Test event creation complete.")
 //    }
+    
+    
+    
+    
+    
+    func startSignInWithGoogle(from viewController: UIViewController) {
+            print("Running sign in with Google")
+            print(googleSignInURL)
 
-}
+            guard let url = URL(string: googleSignInURL) else {
+                loginMessage = "Invalid Sign-In URL"
+                return
+            }
+
+            let safariVC = SFSafariViewController(url: url)
+            safariVC.delegate = viewController as? SFSafariViewControllerDelegate
+            safariVC.modalPresentationStyle = .formSheet // Makes it a pop-up instead of full screen
+            viewController.present(safariVC, animated: true, completion: nil)
+        }
+    }
+
+    // ✅ Extend the ViewController to Detect Redirects and Close the Pop-Up
+    extension UIViewController: SFSafariViewControllerDelegate {
+        // Detects when the user is redirected to a new page inside the Safari pop-up
+        public func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL) {
+            print("🔄 Redirect detected: \(URL.absoluteString)")
+
+            // Check if the URL contains Google Auth Callback and a Code
+            if URL.absoluteString.contains("google_auth_callback") && URL.absoluteString.contains("code=") {
+                print("✅ Authentication Successful - Closing Pop-up")
+                controller.dismiss(animated: true, completion: nil)
+            }
+        }
+
+        // Detects when the user manually closes the pop-up
+        public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+            print("❌ User manually closed the pop-up")
+        }
+    }
+
 
 #Preview {
     ConnectCalendarView()
 }
-
