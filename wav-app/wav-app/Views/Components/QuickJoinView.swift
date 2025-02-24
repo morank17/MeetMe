@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct QuickJoinView: View {
-    @Binding var path: [String] // Now this view accepts a binding to the path
+    @Binding var path: [Destination] // Now this view accepts a binding to the path
     @State private var join_code: String = ""
     
     var body: some View {
@@ -25,7 +25,7 @@ struct QuickJoinView: View {
                 Button(action: {
                     print("Joining meeting with ID: \(join_code)")
                     // Append the join_code to the path to trigger navigation
-                    path.append(join_code)
+                    path.append(.acceptMeeting(joinCode: join_code))
                 }) {
                     Image(systemName: "magnifyingglass")
                         .resizable()
