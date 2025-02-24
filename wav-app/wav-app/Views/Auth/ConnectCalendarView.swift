@@ -1,9 +1,3 @@
-//
-//  ConnectCalendarView.swift
-//  wav-app
-//
-//  Created by Nikola Dimitrijevic on 12/15/2024
-//
 import SwiftUI
 import EventKit
 
@@ -75,6 +69,20 @@ struct ConnectCalendarView: View {
                     }
                 }
 
+                // Test Fetch Calendar Events Button
+                // Comment this out
+//                Button(action: {
+//                    Task {
+//                        await testFetchCalendarEvents()
+//                    }
+//                }) {
+//                    Text("Test Fetch Calendar Events")
+//                        .padding()
+//                        .foregroundColor(.white)
+//                        .background(Color.blue)
+//                        .cornerRadius(10)
+//                }
+
                 // Continue Button (Navigates to HomeView)
                 Button(action: {
                     isLoggedIn = true
@@ -106,6 +114,19 @@ struct ConnectCalendarView: View {
         }
     }
 
+    /// Tests fetching calendar events and prints the JSON to the console.
+    /// Comment this out
+//    func testFetchCalendarEvents() async {
+//        let calendar = Calendar.current
+//        let today = Date()
+//        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
+//        let timeZone = "America/New_York" // Set the timezone to EST
+//
+//        print("📅 Fetching calendar events for today and tomorrow in \(timeZone)...")
+//
+//        await fetcher.fetchCalendarEvents(for: [today, tomorrow], withTimeZone: timeZone)
+//    }
+
 
     /// Checks Apple Calendar access
     func checkAppleCalendarAccess() async {
@@ -119,7 +140,6 @@ struct ConnectCalendarView: View {
             }
         }
     }
-
 
     func getGoogleSignInURL() async throws -> String {
         let url = URL(string: "https://musketeers-django.onrender.com/api/users/google-register")!
