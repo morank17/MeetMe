@@ -19,17 +19,6 @@ struct ConnectCalendarView: View {
 
                 HStack(spacing: 30) {
                     // Google Sign-In Button
-//                    Button(action: {
-//                        Task {
-//                            do {
-//                                googleSignInURL = try await getGoogleSignInURL()
-//                                startSignInWithGoogle()
-//                            } catch {
-//                                loginMessage = "Failed to get sign-in URL. Please try again."
-//                                print("Error: \(error)")
-//                            }
-//                        }
-//                    }
                     Button(action: {
                                         Task {
                                             do {
@@ -194,20 +183,10 @@ struct ConnectCalendarView: View {
         }
         return authUrl
     }
-
-    func startSignInWithGoogle() {
-        print("Running sign-in with Google")
-        print(googleSignInURL)
-        guard let url = URL(string: googleSignInURL) else {
-            loginMessage = "Invalid Sign-In URL"
-            return
-        }
-        UIApplication.shared.open(url) { success in
-            DispatchQueue.main.async {
-                loginMessage = success ? "Redirecting to Google sign-in..." : "Failed to open URL."
-            }
-        }
-    }
+    
+    
+    
+    
 //    func testAddAppleEvent() async {
 //        let title = "Test Meeting"
 //        let winningStartDateTime = "2025-02-09T09:00:00Z"  // ISO 8601 UTC format
@@ -225,6 +204,10 @@ struct ConnectCalendarView: View {
 //        
 //        print("✅ Test event creation complete.")
 //    }
+    
+    
+    
+    
     
     func startSignInWithGoogle(from viewController: UIViewController) {
             print("Running sign in with Google")
