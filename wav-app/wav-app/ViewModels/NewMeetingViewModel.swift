@@ -145,9 +145,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
             "timezone_str": timezone,
             "max_n_victors": 20
         ]
-        
-        print(requestBody)
-        
+                
         // convert to JSON
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
@@ -168,10 +166,10 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
                    let data = data {
                     do {
                         if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                           let joinCode = jsonResponse["join-code"] as? String {
-                            print("hello")
+                            let joinCode = jsonResponse["join-code"] as? String {
                             self.joinCode = joinCode
                             self.showSuccessView = true
+                            print(jsonResponse)
                         }
                     } catch {
                         self.errorMessage = "Failed to parse response."
@@ -183,6 +181,7 @@ class NewMeetingViewModel: ObservableObject { // use an observable object so tha
                 if let httpResponse = response as? HTTPURLResponse {
                     print("Response status code: \(httpResponse.statusCode)")
                 }
+            
 
             }
         }.resume()
