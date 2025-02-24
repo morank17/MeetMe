@@ -7,15 +7,15 @@ class CalendarFetcher: ObservableObject {
     /// Requests full access to the user's calendar.
     func requestFullCalendarAccess() async -> Bool {
         if EKEventStore.authorizationStatus(for: .event) == .fullAccess {
-            print("Already have full access ✅")
+            print("Already have full access ")
             return true
         }
         do {
             let granted = try await store.requestFullAccessToEvents()
             if granted {
-                print("Full access granted ✅")
+                print("Full access granted ")
             } else {
-                print("Access denied ❌")
+                print("Access denied ")
             }
             return granted
         } catch {
@@ -28,7 +28,7 @@ class CalendarFetcher: ObservableObject {
     func fetchCalendarEvents(for dateStrings: [String], withTimeZone timeZoneIdentifier: String) async -> [[String: String]] {
         let hasAccess = await requestFullCalendarAccess()
         guard hasAccess else {
-            print("❌ Access to Calendar Denied")
+            print(" Access to Calendar Denied")
             return []
         }
         
@@ -36,7 +36,7 @@ class CalendarFetcher: ObservableObject {
         let calendar = Calendar.current
         
         guard let eventTimeZone = timeZoneFromOffset(timeZoneIdentifier) else {
-            print("⚠️ Failed to determine timezone from offset: \(timeZoneIdentifier), using system default.")
+            print(" Failed to determine timezone from offset: \(timeZoneIdentifier), using system default.")
             return []
         }
         
@@ -50,7 +50,7 @@ class CalendarFetcher: ObservableObject {
         
         for dateString in dateStrings {
             guard let date = inputFormatter.date(from: dateString) else {
-                print("⚠️ Invalid date format: \(dateString), skipping...")
+                print(" Invalid date format: \(dateString), skipping...")
                 continue
             }
             
@@ -86,7 +86,7 @@ class CalendarFetcher: ObservableObject {
     func timeZoneFromOffset(_ offsetString: String) -> TimeZone? {
         let components = offsetString.split(separator: ":")
         guard let hours = Int(components[0]) else {
-            print("⚠️ Invalid timezone offset format: \(offsetString)")
+            print(" Invalid timezone offset format: \(offsetString)")
             return nil
         }
         
@@ -96,9 +96,9 @@ class CalendarFetcher: ObservableObject {
         let matchingTimeZone = possibleTimeZones.first { $0.secondsFromGMT() == secondsFromGMT }
         
         if let matchedZone = matchingTimeZone {
-            print("✅ Found matching timezone: \(matchedZone.identifier) for offset \(offsetString)")
+            print("Found matching timezone: \(matchedZone.identifier) for offset \(offsetString)")
         } else {
-            print("⚠️ No exact timezone match found for offset \(offsetString), using system default.")
+            print(" No exact timezone match found for offset \(offsetString), using system default.")
         }
         
         return matchingTimeZone ?? TimeZone.current // Default to system timezone if no match
@@ -107,7 +107,7 @@ class CalendarFetcher: ObservableObject {
     /// Sends collected events to the backend.
     func sendEventsToBackend(datesList: [String], timeZoneStr: String) async {
         guard let url = URL(string: "https://musketeers-django.onrender.com/api/meetings/download") else {
-            print("❌ Invalid backend URL")
+            print(" Invalid backend URL")
             return
         }
         
@@ -116,7 +116,7 @@ class CalendarFetcher: ObservableObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         guard let token = AuthViewModel.retrieveToken(), !token.isEmpty else {
-            print("❌ Token is missing!")
+            print(" Token is missing!")
             return
         }
         
@@ -124,7 +124,7 @@ class CalendarFetcher: ObservableObject {
         let hasAppleAccess = await fetcher.requestFullCalendarAccess()
         
         if hasAppleAccess {
-            print("✅ Apple access granted, fetching events...")
+            print(" Apple access granted, fetching events...")
             let appleEvents = await fetcher.fetchCalendarEvents(for: datesList, withTimeZone: timeZoneStr)
             
             // Apple Payload
@@ -136,7 +136,7 @@ class CalendarFetcher: ObservableObject {
 //                "timezone_str": timeZoneStr
             ]
             
-            print("📡 Sending Apple payload: \(payload)")
+            print(" Sending Apple payload: \(payload)")
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
@@ -146,21 +146,21 @@ class CalendarFetcher: ObservableObject {
                 
                 if let httpResponse = response as? HTTPURLResponse {
                     let responseText = String(data: data, encoding: .utf8) ?? "No response body"
-                    print("📡 Response from backend: \(httpResponse.statusCode)")
-                    print("📜 Response body: \(responseText)")
+                    print("Response from backend: \(httpResponse.statusCode)")
+                    print(" Response body: \(responseText)")
                     
                     if httpResponse.statusCode == 200 {
-                        print("✅ Successfully sent Apple event data to backend")
+                        print(" Successfully sent Apple event data to backend")
                     } else {
-                        print("❌ Error sending Apple event data: \(httpResponse.statusCode)")
+                        print(" Error sending Apple event data: \(httpResponse.statusCode)")
                     }
                 }
             } catch {
-                print("❌ Failed to send Apple event data: \(error.localizedDescription)")
+                print("Failed to send Apple event data: \(error.localizedDescription)")
             }
             
         } else {
-            print("🟡 Apple access denied, defaulting to Google payload.")
+            print(" Apple access denied, defaulting to Google payload.")
             
             // Google Payload (Empty events list)
             let payload: [String: Any] = [
@@ -171,7 +171,7 @@ class CalendarFetcher: ObservableObject {
                 "timezone_str": timeZoneStr
             ]
             
-            print("📡 Sending Google payload: \(payload)")
+            print(" Sending Google payload: \(payload)")
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
@@ -181,18 +181,67 @@ class CalendarFetcher: ObservableObject {
                 
                 if let httpResponse = response as? HTTPURLResponse {
                     let responseText = String(data: data, encoding: .utf8) ?? "No response body"
-                    print("📡 Response from backend: \(httpResponse.statusCode)")
-                    print("📜 Response body: \(responseText)")
+                    print(" Response from backend: \(httpResponse.statusCode)")
+                    print(" Response body: \(responseText)")
                     
                     if httpResponse.statusCode == 200 {
-                        print("✅ Successfully sent Google payload with empty events.")
+                        print(" Successfully sent Google payload with empty events.")
                     } else {
-                        print("❌ Error sending Google payload: \(httpResponse.statusCode)")
+                        print("Error sending Google payload: \(httpResponse.statusCode)")
                     }
                 }
             } catch {
-                print("❌ Failed to send Google event data: \(error.localizedDescription)")
+                print(" Failed to send Google event data: \(error.localizedDescription)")
             }
         }
     }
+    /// Creates an Apple Calendar event with timezone conversion
+    func createAppleEvent(title: String, dateTimeStr: String, inputTimeZoneStr: String, participants: [String]) async {
+        let hasAccess = await requestFullCalendarAccess()
+        guard hasAccess else {
+            print("Access to Calendar Denied")
+            return
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        // Detect the input timezone
+        if let inputTimeZone = timeZoneFromOffset(inputTimeZoneStr) {
+            dateFormatter.timeZone = inputTimeZone
+        } else {
+            print("Could not determine input timezone, assuming UTC")
+            dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        }
+        
+        guard let inputDate = dateFormatter.date(from: dateTimeStr) else {
+            print(" Invalid date format: \(dateTimeStr)")
+            return
+        }
+        
+        // Convert the date to the user's system timezone
+        let userTimeZone = TimeZone.current
+        let timeDifference = TimeInterval(userTimeZone.secondsFromGMT(for: inputDate) - dateFormatter.timeZone.secondsFromGMT(for: inputDate))
+        let convertedDate = inputDate.addingTimeInterval(timeDifference)
+        
+        let event = EKEvent(eventStore: store)
+        event.title = title
+        event.startDate = convertedDate
+        event.endDate = Calendar.current.date(byAdding: .hour, value: 1, to: convertedDate) ?? convertedDate.addingTimeInterval(3600)
+        event.timeZone = userTimeZone // Ensure it is set to the user's timezone
+        
+        // Add attendees to the description
+        let attendeesText = participants.isEmpty ? "No attendees listed" : "Attendees: " + participants.joined(separator: ", ")
+        event.notes = attendeesText
+        
+        event.calendar = store.defaultCalendarForNewEvents
+        
+        do {
+            try store.save(event, span: .thisEvent)
+            print(" Event created: \(title) on \(event.startDate!) in \(userTimeZone.identifier)")
+        } catch {
+            print(" Failed to save event: \(error.localizedDescription)")
+        }
+    }
+
 }
