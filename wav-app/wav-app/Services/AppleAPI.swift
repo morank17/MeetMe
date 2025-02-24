@@ -196,52 +196,59 @@ class CalendarFetcher: ObservableObject {
         }
     }
     /// Creates an Apple Calendar event with timezone conversion
-    func createAppleEvent(title: String, dateTimeStr: String, inputTimeZoneStr: String, participants: [String]) async {
-        let hasAccess = await requestFullCalendarAccess()
-        guard hasAccess else {
-            print("Access to Calendar Denied")
-            return
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        // Detect the input timezone
-        if let inputTimeZone = timeZoneFromOffset(inputTimeZoneStr) {
-            dateFormatter.timeZone = inputTimeZone
-        } else {
-            print("Could not determine input timezone, assuming UTC")
-            dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        }
-        
-        guard let inputDate = dateFormatter.date(from: dateTimeStr) else {
-            print(" Invalid date format: \(dateTimeStr)")
-            return
-        }
-        
-        // Convert the date to the user's system timezone
-        let userTimeZone = TimeZone.current
-        let timeDifference = TimeInterval(userTimeZone.secondsFromGMT(for: inputDate) - dateFormatter.timeZone.secondsFromGMT(for: inputDate))
-        let convertedDate = inputDate.addingTimeInterval(timeDifference)
-        
-        let event = EKEvent(eventStore: store)
-        event.title = title
-        event.startDate = convertedDate
-        event.endDate = Calendar.current.date(byAdding: .hour, value: 1, to: convertedDate) ?? convertedDate.addingTimeInterval(3600)
-        event.timeZone = userTimeZone // Ensure it is set to the user's timezone
-        
-        // Add attendees to the description
-        let attendeesText = participants.isEmpty ? "No attendees listed" : "Attendees: " + participants.joined(separator: ", ")
-        event.notes = attendeesText
-        
-        event.calendar = store.defaultCalendarForNewEvents
-        
-        do {
-            try store.save(event, span: .thisEvent)
-            print(" Event created: \(title) on \(event.startDate!) in \(userTimeZone.identifier)")
-        } catch {
-            print(" Failed to save event: \(error.localizedDescription)")
+        /// Creates an Apple Calendar event using ISO 8601 formatted start and end dates in UTC.
+        func createAppleEvent(title: String,
+                              winningStartDateTime: String,
+                              winningEndDateTime: String,
+                              timeZoneStr: String,
+                              participants: [String]) async {
+            let hasAccess = await requestFullCalendarAccess()
+            guard hasAccess else {
+                print("❌ Access to Calendar Denied")
+                return
+            }
+
+            let isoFormatter = ISO8601DateFormatter()
+            isoFormatter.formatOptions = [.withInternetDateTime]
+
+            // Convert the provided ISO 8601 strings to Date objects
+            guard let inputStartDate = isoFormatter.date(from: winningStartDateTime),
+                  let inputEndDate = isoFormatter.date(from: winningEndDateTime) else {
+                print("❌ Invalid date format: \(winningStartDateTime) - \(winningEndDateTime)")
+                return
+            }
+
+            // Convert provided timezone string into a TimeZone object
+            let eventTimeZone = timeZoneFromOffset(timeZoneStr) ?? TimeZone.current
+
+            // Convert event times to the user's local timezone
+            let userTimeZone = TimeZone.current
+            let startTimeDifference = TimeInterval(userTimeZone.secondsFromGMT(for: inputStartDate) - eventTimeZone.secondsFromGMT(for: inputStartDate))
+            let convertedStartDate = inputStartDate.addingTimeInterval(startTimeDifference)
+
+            let endTimeDifference = TimeInterval(userTimeZone.secondsFromGMT(for: inputEndDate) - eventTimeZone.secondsFromGMT(for: inputEndDate))
+            let convertedEndDate = inputEndDate.addingTimeInterval(endTimeDifference)
+
+            let event = EKEvent(eventStore: store)
+            event.title = title
+            event.startDate = convertedStartDate
+            event.endDate = convertedEndDate
+            event.timeZone = userTimeZone // Ensure it is set to the user's timezone
+
+            // Add attendees to the description
+            let attendeesText = participants.isEmpty ? "No attendees listed" : "Attendees: " + participants.joined(separator: ", ")
+            event.notes = attendeesText
+
+            event.calendar = store.defaultCalendarForNewEvents
+
+            do {
+                try store.save(event, span: .thisEvent)
+                print("✅ Event created: \(title) from \(event.startDate!) to \(event.endDate!) in \(userTimeZone.identifier)")
+            } catch {
+                print("❌ Failed to save event: \(error.localizedDescription)")
+            }
         }
     }
 
-}
+
+
