@@ -62,6 +62,19 @@ struct ConnectCalendarView: View {
                                 .frame(width: 50, height: 50)
                         }
                     }
+                    // Test Add Event Button
+//                    Button(action: {
+//                        Task {
+//                            await testAddAppleEvent()
+//                        }
+//                    }) {
+//                        Text("Test Add Apple Event")
+//                            .padding()
+//                            .foregroundColor(.white)
+//                            .background(Color.green)
+//                            .cornerRadius(10)
+//                    }
+
 
                     // Apple Calendar Button - Requests Full Access
                     Button(action: {
@@ -182,18 +195,35 @@ struct ConnectCalendarView: View {
         return authUrl
     }
 
-//    func startSignInWithGoogle() {
-//        print("Running sign-in with Google")
-//        print(googleSignInURL)
-//        guard let url = URL(string: googleSignInURL) else {
-//            loginMessage = "Invalid Sign-In URL"
-//            return
-//        }
-//        UIApplication.shared.open(url) { success in
-//            DispatchQueue.main.async {
-//                loginMessage = success ? "Redirecting to Google sign-in..." : "Failed to open URL."
-//            }
-//        }
+    func startSignInWithGoogle() {
+        print("Running sign-in with Google")
+        print(googleSignInURL)
+        guard let url = URL(string: googleSignInURL) else {
+            loginMessage = "Invalid Sign-In URL"
+            return
+        }
+        UIApplication.shared.open(url) { success in
+            DispatchQueue.main.async {
+                loginMessage = success ? "Redirecting to Google sign-in..." : "Failed to open URL."
+            }
+        }
+    }
+//    func testAddAppleEvent() async {
+//        let title = "Test Meeting"
+//        let winningStartDateTime = "2025-02-09T09:00:00Z"  // ISO 8601 UTC format
+//        let winningEndDateTime = "2025-02-09T10:00:00Z"    // ISO 8601 UTC format
+//        let timeZoneStr = "-5:00"  // The timezone of the given input (e.g., EST)
+//        let participants = ["alice@example.com", "bob@example.com", "charlie@example.com"]
+//        
+//        print("📅 Attempting to create test event in Apple Calendar...")
+//        
+//        await fetcher.createAppleEvent(title: title,
+//                                       winningStartDateTime: winningStartDateTime,
+//                                       winningEndDateTime: winningEndDateTime,
+//                                       timeZoneStr: timeZoneStr,
+//                                       participants: participants)
+//        
+//        print("✅ Test event creation complete.")
 //    }
     
     func startSignInWithGoogle(from viewController: UIViewController) {
