@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AcceptMeetingView: View {
     @StateObject private var viewModel = PendingMeetingsViewModel()
+//    @StateObject private var fetcher = CalendarFetcher()
     var join_code: String
 
     var body: some View {
@@ -48,6 +49,7 @@ struct AcceptMeetingView: View {
 struct MeetingView: View {
     let details: MeetingInfo
     @ObservedObject var viewModel: PendingMeetingsViewModel
+//    var fetcher: CalendarFetcher
     
     var body: some View {
         VStack(spacing: 10) {
@@ -114,6 +116,8 @@ struct MeetingView: View {
                     Task {
                         print("trying to join")
                         await viewModel.joinMeeting(join_code: details.join_code)
+                        let fetcher = CalendarFetcher()
+                        await fetcher.sendEventsToBackend(datesList: details.dates_list, timeZoneStr: details.timezone_str)
                     }
                 }) {
                     Text("Accept")
