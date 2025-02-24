@@ -20,8 +20,8 @@ struct HomeView: View {
                         .padding(.top, 20)
                     VotingProgressCarousel(path: $path)
                         .padding(.top, 10)
-//                    JoinPeriodMeetingsCarousel()
-//                        .padding(.top, 10)
+                    JoinPeriodMeetingsCarousel()
+                        .padding(.top, 10)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(AppColors.backgroundGray)

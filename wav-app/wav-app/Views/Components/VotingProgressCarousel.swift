@@ -27,9 +27,14 @@ struct VotingProgressCarousel: View {
                     } else {
                         ForEach(viewModel.pollPeriodMeetings) { meeting in
                             TimerMeetingView(
-                                remainingSeconds: 60,
+                                remainingSeconds: meeting.seconds_remaining,
                                 progress: 1.0,
-                                details: meeting
+                                details: meeting,
+                                onTimerExpired: {
+                                    Task {
+                                        await viewModel.fetchPollPeriodMeetings()
+                                    }
+                                }
                             )
                             .onTapGesture {
                                 path.append(.voting(pollId: meeting.poll_id))
@@ -49,16 +54,19 @@ struct VotingProgressCarousel: View {
 
 struct TimerMeetingView: View {
     @State var remainingSeconds: Int
-    @State var progress: CGFloat
-    let details: PollPeriodMeeting
+    @State var progress: CGFloat = 1.0
     
+    let totalTime = 86400.0
+    let details: PollPeriodMeeting
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    var onTimerExpired: () -> Void  // Callback function
     
     var body: some View {
         VStack(spacing: 20) {
             CircularProgressView(
                 progress: progress,
-                timeText: String(format: "%d:%02d", remainingSeconds / 60, remainingSeconds % 60),
+                timeText: String(format: "%d:%02d:%02d", remainingSeconds / 3600, (remainingSeconds % 3600) / 60, remainingSeconds % 60),
                 hasVoted: details.vote_status
             )
             
@@ -66,14 +74,16 @@ struct TimerMeetingView: View {
                 .font(.headline)
                 .foregroundColor(.white)
                 .opacity(details.vote_status ? 0.3 : 1.0) // Reduce opacity when voted
-
             
         }
         .onReceive(timer) { _ in
-            guard remainingSeconds > 0 else { return }
+            guard remainingSeconds > 0 else {
+                progress = 0.0 // Ensure progress is 0 when time is up
+                return
+            }
             remainingSeconds -= 1
             withAnimation(.linear(duration: 1)) {
-                progress = CGFloat(remainingSeconds) / 125.0
+                progress = max(CGFloat(remainingSeconds) / totalTime, 0.0) // Ensure progress never goes negative
             }
         }
         .padding()
@@ -121,8 +131,11 @@ struct VotingProgressCarousel_Previews: PreviewProvider {
                 join_code: "6D2-GOF",
                 participants: ["laptttop"],
                 vote_status: false,
-                poll_id: "1"
-            ))
+                poll_id: "1",
+                seconds_remaining: 6000
+                ),
+            onTimerExpired: {}
+            )
 
            Text("Open Poll")
                .font(.headline)
@@ -137,8 +150,11 @@ struct VotingProgressCarousel_Previews: PreviewProvider {
                 join_code: "6D2-GOF",
                 participants: ["laptttop"],
                 vote_status: true,
-                poll_id: "1"
-           ))
+                poll_id: "1",
+                seconds_remaining: 6000
+               ),
+           onTimerExpired: {}
+           )
 
            Text("Placeholder View")
                .font(.headline)
