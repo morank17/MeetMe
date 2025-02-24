@@ -30,7 +30,7 @@ struct HomeView: View {
                     case .acceptMeeting(let joinCode):
                         AcceptMeetingView(join_code: joinCode)
                     case .voting(let pollId):
-                        VotingView(pollId: pollId)
+                        VotingView(path: $path, pollId: pollId)
                     }
                 }
             }

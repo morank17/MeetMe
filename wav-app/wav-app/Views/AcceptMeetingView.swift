@@ -10,7 +10,6 @@ import SwiftUI
 
 struct AcceptMeetingView: View {
     @StateObject private var viewModel = PendingMeetingsViewModel()
-//    @StateObject private var fetcher = CalendarFetcher()
     var join_code: String
 
     var body: some View {
