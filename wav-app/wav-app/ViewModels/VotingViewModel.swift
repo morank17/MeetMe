@@ -11,6 +11,7 @@ class VotingViewModel: ObservableObject {
     @Published var pollOptions: [PollOption] = []
     
     // Fetch poll options for a specific poll_id
+    @MainActor
     func loadPollOptions(for poll_id: String) async {
         guard let token = AuthViewModel.retrieveToken() else {
             print("No token found")

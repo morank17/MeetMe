@@ -49,7 +49,8 @@ struct PollPeriodMeeting: Identifiable, Hashable, Codable {
     var max_n_victors: Int
     var join_code: String
     var participants: [String]
-    var has_voted: Bool
+    var vote_status: Bool
+    var poll_id: String
 }
 
 struct MeetingInfo: Hashable, Codable {

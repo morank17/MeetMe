@@ -10,6 +10,7 @@ import SwiftUI
 
 struct VotingProgressCarousel: View {
     @StateObject private var viewModel = PendingMeetingsViewModel()
+    @Binding var path: [Destination]
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -25,7 +26,14 @@ struct VotingProgressCarousel: View {
                         PlaceholderVotingIconView()
                     } else {
                         ForEach(viewModel.pollPeriodMeetings) { meeting in
-                            TimerMeetingView(remainingSeconds: 60, progress: 1.0, details: meeting)
+                            TimerMeetingView(
+                                remainingSeconds: 60,
+                                progress: 1.0,
+                                details: meeting
+                            )
+                            .onTapGesture {
+                                path.append(.voting(pollId: meeting.poll_id))
+                            }
                         }
                     }
                 }
@@ -51,13 +59,13 @@ struct TimerMeetingView: View {
             CircularProgressView(
                 progress: progress,
                 timeText: String(format: "%d:%02d", remainingSeconds / 60, remainingSeconds % 60),
-                hasVoted: details.has_voted
+                hasVoted: details.vote_status
             )
             
             Text(details.title.truncated(to: 15))
                 .font(.headline)
                 .foregroundColor(.white)
-                .opacity(details.has_voted ? 0.3 : 1.0) // Reduce opacity when voted
+                .opacity(details.vote_status ? 0.3 : 1.0) // Reduce opacity when voted
 
             
         }
@@ -95,7 +103,7 @@ struct PlaceholderVotingIconView: View {
 // MARK: - Preview
 struct VotingProgressCarousel_Previews: PreviewProvider {
     static var previews: some View {
-        VotingProgressCarousel()
+        VotingProgressCarousel(path: .constant([]))
             .background(AppColors.backgroundGray)
         
         // testing votingicons
@@ -112,7 +120,8 @@ struct VotingProgressCarousel_Previews: PreviewProvider {
                 max_n_victors: 10,
                 join_code: "6D2-GOF",
                 participants: ["laptttop"],
-                has_voted: false
+                vote_status: false,
+                poll_id: "1"
             ))
 
            Text("Open Poll")
@@ -127,7 +136,8 @@ struct VotingProgressCarousel_Previews: PreviewProvider {
                 max_n_victors: 10,
                 join_code: "6D2-GOF",
                 participants: ["laptttop"],
-                has_voted: true
+                vote_status: true,
+                poll_id: "1"
            ))
 
            Text("Placeholder View")

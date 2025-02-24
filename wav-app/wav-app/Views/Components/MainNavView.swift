@@ -23,21 +23,18 @@ struct MainNavView: View {
             HomeView()
             .tabItem {
                 Image(systemName: "house")
-                Text("Home")
             }
             .tag(0)
             
             NewMeetingView()
             .tabItem {
-                Image(systemName: "house")
-                Text("New Invite")
+                Image(systemName: "plus")
             }
             .tag(1)
             
             SettingsView()
             .tabItem {
                 Image(systemName: "gear")
-                Text("Settings")
             }
             .tag(2)
 
