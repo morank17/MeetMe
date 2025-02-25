@@ -22,8 +22,12 @@ struct APIEndpoints {
     
     // Fetching all polls based on user token (stored from login).
     static func fetchMeetingInfo(token: String, join_code: String) -> String {
-        print("\(baseURL)meetings/info?token=\(token)&joincode=\(join_code)")
         return "\(baseURL)meetings/info?token=\(token)&joincode=\(join_code)"
+    }
+    
+    // Fetching all completed meetings based on user token
+    static func fetchCompletedMeetings(token: String) -> String {
+        return "\(baseURL)meetings/fetch-confirm-mtgs?token=\(token)"
     }
     
     static func fetchPollOptions(token: String, poll_id: String) -> String {
@@ -38,4 +42,5 @@ struct APIEndpoints {
     static func joinMeeting() -> String {
         return "\(baseURL)meetings/join"
     }
+    
 }
