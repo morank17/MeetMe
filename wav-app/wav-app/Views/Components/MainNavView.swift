@@ -32,11 +32,17 @@ struct MainNavView: View {
             }
             .tag(1)
             
+            CompletedMeetingsView()
+            .tabItem {
+                Image(systemName: "calendar.badge.checkmark")
+            }
+            .tag(2)
+            
             SettingsView()
             .tabItem {
                 Image(systemName: "gear")
             }
-            .tag(2)
+            .tag(3)
 
         }
     }
