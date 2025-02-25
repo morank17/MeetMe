@@ -6,7 +6,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(.black).edgesIgnoringSafeArea(.all)
+                Color(AppColors.backgroundGray).edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 30) {
                     syncedCalendarsButton()
@@ -37,7 +37,7 @@ struct SettingsView: View {
                 .foregroundColor(Color.white)
                 .padding()
                 .frame(width: 350, height: 50)
-                .background(Color.gray.opacity(0.3))
+                .background(AppColors.textBlockGray)
                 .cornerRadius(10)
         }
     }
@@ -50,7 +50,7 @@ struct SettingsView: View {
                 .foregroundColor(Color.white)
                 .padding()
                 .frame(width: 350, height: 50)
-                .background(Color.gray.opacity(0.3))
+                .background(AppColors.textBlockGray)
                 .cornerRadius(10)
         }
     }
@@ -63,7 +63,7 @@ struct SettingsView: View {
                 .foregroundColor(Color.white)
                 .padding()
                 .frame(width: 350, height: 50)
-                .background(Color.gray.opacity(0.3))
+                .background(AppColors.textBlockGray)
                 .cornerRadius(10)
         }
     }
@@ -77,7 +77,7 @@ struct SettingsView: View {
                 .foregroundColor(Color.white)
                 .padding()
                 .frame(width: 350, height: 50)
-                .background(Color.gray.opacity(0.3))
+                .background(AppColors.textBlockGray)
                 .cornerRadius(10)
         }
     }
