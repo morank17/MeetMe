@@ -42,11 +42,11 @@ class CompletedMeetingsViewModel: ObservableObject {
     }
     
     func declineMeeting() {
-        
+        print("hello")
     }
     
     func acceptMeeting() {
-        
+        print("hello")
     }
 }
 
