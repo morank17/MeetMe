@@ -92,7 +92,8 @@ struct CompletedMeeting: Identifiable, Hashable, Codable {
     let max_n_victors: Int
     let join_code: String /* Join Code! */
     let participants: [String]
-    let winning_start_datetime: String
-    let winning_end_datetime: String
+    let winning_start_datetime: String?
+    let winning_end_datetime: String?
     let addback: Bool
+    let archive: Bool
 }
