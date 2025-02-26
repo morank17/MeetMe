@@ -43,20 +43,19 @@ struct ConnectCalendarView: View {
                                 .frame(width: 50, height: 50)
                         }
                     }
-                    // Test Add Event Button
-//                    Button(action: {
+//                    Button {
 //                        Task {
 //                            await testAddAppleEvent()
 //                        }
-//                    }) {
+//                    } label: {
 //                        Text("Test Add Apple Event")
-//                            .padding()
+//                            .font(.headline)
 //                            .foregroundColor(.white)
+//                            .padding()
+//                            .frame(maxWidth: .infinity) // Makes it stretch if needed
 //                            .background(Color.green)
 //                            .cornerRadius(10)
 //                    }
-
-
                     // Apple Calendar Button - Requests Full Access
                     Button(action: {
                         Task {
@@ -190,11 +189,12 @@ struct ConnectCalendarView: View {
         }
     }
 //    func testAddAppleEvent() async {
-//        let title = "Test Meeting"
-//        let winningStartDateTime = "2025-02-09T09:00:00Z"  // ISO 8601 UTC format
-//        let winningEndDateTime = "2025-02-09T10:00:00Z"    // ISO 8601 UTC format
+//        let title = "Test Meeting 1"
+//        let winningStartDateTime = "2025-02-28T09:00:00Z"  // ISO 8601 UTC format
+//        let winningEndDateTime = "2025-02-28T10:00:00Z"    // ISO 8601 UTC format
 //        let timeZoneStr = "-5:00"  // The timezone of the given input (e.g., EST)
 //        let participants = ["alice@example.com", "bob@example.com", "charlie@example.com"]
+//        let loginCode = "ZTR-C1U"
 //        
 //        print("📅 Attempting to create test event in Apple Calendar...")
 //        
@@ -202,7 +202,7 @@ struct ConnectCalendarView: View {
 //                                       winningStartDateTime: winningStartDateTime,
 //                                       winningEndDateTime: winningEndDateTime,
 //                                       timeZoneStr: timeZoneStr,
-//                                       participants: participants)
+//                                       participants: participants, loginCode: loginCode)
 //        
 //        print("✅ Test event creation complete.")
 //    }

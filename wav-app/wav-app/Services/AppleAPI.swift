@@ -195,26 +195,86 @@ class CalendarFetcher: ObservableObject {
             }
         }
     }
-    /// Creates an Apple Calendar event with timezone conversion
-        /// Creates an Apple Calendar event using ISO 8601 formatted start and end dates in UTC.
+    private func isAppleCalendarConnected() async -> Bool {
+           return await requestFullCalendarAccess()
+       }
+
+     
+    /// Sends event payload to backend
+    private func sendEventPayloadToBackend(payload: [String: Any]) async {
+        guard let url = URL(string: "https://musketeers-django.onrender.com/api/meetings/addback") else {
+            print("❌ Invalid backend URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
+            request.httpBody = jsonData
+            
+            let (data, response) = try await URLSession.shared.data(for: request)
+
+            if let httpResponse = response as? HTTPURLResponse {
+                let responseText = String(data: data, encoding: .utf8) ?? "No response body"
+                print("📩 Response from backend: \(httpResponse.statusCode)")
+                print("📝 Response body: \(responseText)")
+                
+                if httpResponse.statusCode == 200 {
+                    print("✅ Successfully sent event payload to backend")
+                } else {
+                    print("⚠️ Error sending event payload: \(httpResponse.statusCode)")
+                }
+            }
+        } catch {
+            print("❌ Failed to send event payload: \(error.localizedDescription)")
+        }
+    }
+
+    /// Generates and sends the JSON payload with selected calendar system, token, and login code
+    private func generateEventPayload(loginCode: String, selectedCalSystem: String) async {
+        guard let token = AuthViewModel.retrieveToken(), !token.isEmpty else {
+            print("❌ Token is missing!")
+            return
+        }
+        
+        let payload: [String: Any] = [
+            "token": token,
+            "join-code": loginCode,
+            "selected_cal_system": selectedCalSystem
+        ]
+        
+        print("✅ Generated payload: \(payload)")
+        
+        // Send the payload to the backend
+        await sendEventPayloadToBackend(payload: payload)
+    }
+
+    /// Creates an Apple Calendar event with timezone conversion and sends payload
         func createAppleEvent(title: String,
                               winningStartDateTime: String,
                               winningEndDateTime: String,
                               timeZoneStr: String,
-                              participants: [String]) async {
+                              participants: [String],
+                              loginCode: String) async {
             let hasAccess = await requestFullCalendarAccess()
-            guard hasAccess else {
-                print("❌ Access to Calendar Denied")
+            
+            if !hasAccess {
+                print("❌ Access to Apple Calendar Denied. Defaulting to Google.")
+                _ = await generateEventPayload(loginCode: loginCode, selectedCalSystem: "Google")
                 return
             }
-
+            
             let isoFormatter = ISO8601DateFormatter()
             isoFormatter.formatOptions = [.withInternetDateTime]
 
             // Convert the provided ISO 8601 strings to Date objects
             guard let inputStartDate = isoFormatter.date(from: winningStartDateTime),
                   let inputEndDate = isoFormatter.date(from: winningEndDateTime) else {
-                print("❌ Invalid date format: \(winningStartDateTime) - \(winningEndDateTime)")
+                print("❌ Invalid date format: \(winningStartDateTime) - \(winningEndDateTime). Defaulting to Google.")
+                _ = await generateEventPayload(loginCode: loginCode, selectedCalSystem: "Google")
                 return
             }
 
@@ -244,11 +304,17 @@ class CalendarFetcher: ObservableObject {
             do {
                 try store.save(event, span: .thisEvent)
                 print("✅ Event created: \(title) from \(event.startDate!) to \(event.endDate!) in \(userTimeZone.identifier)")
+                
+                // Send payload with Apple as the selected calendar system
+                _ = await generateEventPayload(loginCode: loginCode, selectedCalSystem: "Apple")
+                
             } catch {
-                print("❌ Failed to save event: \(error.localizedDescription)")
+                print("❌ Failed to save event in Apple Calendar: \(error.localizedDescription). Defaulting to Google.")
+                
+                // Send payload with Google as the selected calendar system
+                _ = await generateEventPayload(loginCode: loginCode, selectedCalSystem: "Google")
             }
         }
     }
-
 
 
