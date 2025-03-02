@@ -9,6 +9,7 @@ import SwiftUI
 
 class CompletedMeetingsViewModel: ObservableObject {
     @Published var completedMeetings: [CompletedMeeting] = []
+    private let fetcher = CalendarFetcher()
 
     // Get the completed meetings
     @MainActor
@@ -42,11 +43,17 @@ class CompletedMeetingsViewModel: ObservableObject {
     }
     
     func declineMeeting() {
-        print("hello")
+        print("this doesn't do anything yet")
     }
     
-    func acceptMeeting() {
-        print("hello")
+    func acceptMeeting(title: String,
+                       winningStartDateTime: String,
+                       winningEndDateTime: String,
+                       timeZoneStr: String,
+                       participants: [String],
+                       loginCode: String) {
+        print("this doesn't do anything yet")
+//        fetcher.createAppleEvent(title: title, winningStartDateTime: winningStartDateTime, winningEndDateTime: winningEndDateTime, timeZoneStr: timeZoneStr, participants: participants, loginCode: loginCode)
     }
 }
 
