@@ -78,7 +78,12 @@ struct CompletedMeetingsTab: View {
 
             Button(action: {
                 if hasWinningTime {
-                    viewModel.acceptMeeting()
+                    viewModel.acceptMeeting(details.title,
+                                            details.winning_start_datetime,
+                                            details.winning_end_datetime,
+                                            details.timezone_str,
+                                            details.participants,
+                                            details.)
                 }
             }) {
                 Label("Accept", systemImage: "calendar.badge.plus")
