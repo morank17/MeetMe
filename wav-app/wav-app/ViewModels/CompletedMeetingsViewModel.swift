@@ -42,18 +42,44 @@ class CompletedMeetingsViewModel: ObservableObject {
         }
     }
     
-    func declineMeeting() {
-        print("this doesn't do anything yet")
+    @MainActor
+    func declineMeeting(joinCode: String) async {
+        guard let token = AuthViewModel.retrieveToken() else {
+            print("No token found")
+            return
+        }
+        
+        // archiveMeeting defined in ./Models/APIEndpoints
+        guard let url = URL(string: APIEndpoints.archiveMeeting(token: token, join_code: joinCode)) else {
+            print("Invalid URL for archiveMeeting")
+            return
+        }
+        
+        do {
+            let response: ArchiveMeetingResponse = try await APICall.request(
+                url: url,
+                method: "GET",
+                responseType: ArchiveMeetingResponse.self
+            )
+            if response.success {
+                await fetchCompletedMeetings() // reload completed meetings
+            } else {
+                print("Failed to archive meeting")
+            }
+        } catch {
+            print("Error decoding JSON: \(error.localizedDescription)")
+        }
     }
     
+    @MainActor
     func acceptMeeting(title: String,
                        winningStartDateTime: String,
                        winningEndDateTime: String,
                        timeZoneStr: String,
                        participants: [String],
-                       loginCode: String) {
-        print("this doesn't do anything yet")
-//        fetcher.createAppleEvent(title: title, winningStartDateTime: winningStartDateTime, winningEndDateTime: winningEndDateTime, timeZoneStr: timeZoneStr, participants: participants, loginCode: loginCode)
+                       loginCode: String) async {
+        await fetcher.createAppleEvent(title: title, winningStartDateTime: winningStartDateTime, winningEndDateTime: winningEndDateTime, timeZoneStr: timeZoneStr, participants: participants, loginCode: loginCode)
+        await fetchCompletedMeetings()
     }
 }
 
