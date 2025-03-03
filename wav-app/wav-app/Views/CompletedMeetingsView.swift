@@ -70,20 +70,24 @@ struct CompletedMeetingsTab: View {
         .padding(.top, 5)
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(action: {
-                viewModel.declineMeeting()
+                Task {
+                    await viewModel.declineMeeting(joinCode: details.join_code)
+                }
             }) {
                 Label("Decline", systemImage: "minus")
             }
             .tint(.red)
 
             Button(action: {
-                if hasWinningTime {
-                    viewModel.acceptMeeting(details.title,
-                                            details.winning_start_datetime,
-                                            details.winning_end_datetime,
-                                            details.timezone_str,
-                                            details.participants,
-                                            details.)
+                if hasWinningTime, let winningStartDateTime = details.winning_start_datetime, let winningEndDateTime = details.winning_end_datetime {
+                    Task {
+                        await viewModel.acceptMeeting(title: details.title,
+                                                      winningStartDateTime: winningStartDateTime,
+                                                      winningEndDateTime: winningEndDateTime,
+                                                      timeZoneStr: details.timezone_str,
+                                                      participants: details.participants,
+                                                      loginCode: details.join_code)
+                    }
                 }
             }) {
                 Label("Accept", systemImage: "calendar.badge.plus")
