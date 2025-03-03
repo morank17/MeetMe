@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct QuickJoinView: View {
+    @StateObject private var viewModel = PendingMeetingsViewModel()
     @Binding var path: [Destination] // Now this view accepts a binding to the path
+    @State private var showAlert: Bool = false
     @State private var join_code: String = ""
+    @State private var alertMessage: String = ""
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -23,9 +26,24 @@ struct QuickJoinView: View {
                     .frame(height: 44) // Keeps height uniform
 
                 Button(action: {
-                    print("Joining meeting with ID: \(join_code)")
-                    // Append the join_code to the path to trigger navigation
-                    path.append(.acceptMeeting(joinCode: join_code))
+                    if join_code.isEmpty {
+                        alertMessage = "Please type a meeting ID"
+                        showAlert = true
+                    } else {
+                    Task {
+                        viewModel.meetingInfo = nil
+                        await viewModel.fetchMeetingInfo(join_code: join_code)
+                        DispatchQueue.main.async {
+                            if viewModel.meetingInfo == nil {
+                                alertMessage = "Invalid Meeting ID"
+                                showAlert = true
+                            } else {
+                                print("Joining meeting with ID: \(join_code)")
+                                path.append(.acceptMeeting(joinCode: join_code))
+                            }
+                        }
+                        }
+                    }
                 }) {
                     Image(systemName: "magnifyingglass")
                         .resizable()
@@ -36,6 +54,9 @@ struct QuickJoinView: View {
                 .background(Color.blue)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.leading, 10) // Total horizontal padding adjusted
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                }
             }
             .frame(maxWidth: .infinity) // HStack takes full width
         }
