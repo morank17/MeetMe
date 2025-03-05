@@ -47,4 +47,7 @@ struct APIEndpoints {
         return "\(baseURL)meetings/archive?token=\(token)&join-code=\(join_code)"
     }
     
+    static func endJoinPeriod(token: String, join_code: String) -> String {
+        return "\(baseURL)meetings/end-join?token=\(token)&join-code=\(join_code)"
+    }
 }

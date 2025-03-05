@@ -20,9 +20,19 @@ struct CompletedMeetingsView: View {
                 .padding(.leading, 16)
             
             List {
-                ForEach(viewModel.completedMeetings.filter { !$0.archive }) { meeting in
-                    CompletedMeetingsTab(details: meeting, viewModel: viewModel)
-                        .listRowBackground(Color.clear)
+                if viewModel.completedMeetings.allSatisfy({ $0.archive }) {
+                    Text(
+                        "No completed meetings"
+                    )
+                    .font(TextStyles.selectionlabel)
+                    .foregroundColor(AppColors.white)
+                    .listRowBackground(Color.clear)
+
+                } else {
+                    ForEach(viewModel.completedMeetings.filter { !$0.archive }) { meeting in
+                        CompletedMeetingsTab(details: meeting, viewModel: viewModel)
+                            .listRowBackground(Color.clear)
+                    }
                 }
             }
             .listStyle(PlainListStyle())

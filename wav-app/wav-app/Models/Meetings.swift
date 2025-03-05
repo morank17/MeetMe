@@ -37,6 +37,11 @@ struct ArchiveMeetingResponse: Codable {
     let response: String
 }
 
+struct ChangeMeetingPeriodResponse: Codable {
+    let success: Bool
+    let response: String
+}
+
 struct JoinPeriodMeeting: Identifiable, Hashable, Codable {
     var id: String { join_code }
     let title: String

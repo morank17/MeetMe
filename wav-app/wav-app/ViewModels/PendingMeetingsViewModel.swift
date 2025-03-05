@@ -144,4 +144,33 @@ class PendingMeetingsViewModel: ObservableObject {
             print("Error decoding JSON pendingmeetings: \(error.localizedDescription)")
         }
     }
+    @MainActor
+    func endJoinPeriod(joinCode: String) async {
+        guard let token = AuthViewModel.retrieveToken() else {
+            print("No token found")
+            return
+        }
+        
+        // archiveMeeting defined in ./Models/APIEndpoints
+        guard let url = URL(string: APIEndpoints.endJoinPeriod(token: token, join_code: joinCode)) else {
+            print("Invalid URL for archiveMeeting")
+            return
+        }
+        
+        do {
+            let response: ChangeMeetingPeriodResponse = try await APICall.request(
+                url: url,
+                method: "GET",
+                responseType: ChangeMeetingPeriodResponse.self
+            )
+            if response.success {
+                await fetchJoinPeriodMeetings() // reload completed meetings
+                await fetchPollPeriodMeetings()
+            } else {
+                print("Failed to move meeting out of join period")
+            }
+        } catch {
+            print("Error decoding JSON: \(error.localizedDescription)")
+        }
+    }
  }
