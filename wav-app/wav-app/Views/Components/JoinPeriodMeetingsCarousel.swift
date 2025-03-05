@@ -18,20 +18,24 @@ struct JoinPeriodMeetingsCarousel: View {
                 .foregroundColor(.white)
                 .padding(.leading)
             
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack() {
-                    if viewModel.joinPeriodMeetings.isEmpty {
-                        // Places 1 placeholder view icon
-                        ForEach(0..<3, id: \.self) { _ in
-                            PlaceholderPendingMeetingsTab()
-                        }
-                    } else {
-                        ForEach(viewModel.joinPeriodMeetings) { meeting in
-                            PendingMeetingsTab(details: meeting)
-                        }
+            List {
+                if viewModel.joinPeriodMeetings.isEmpty {
+                    Text(
+                        "No meetings"
+                    )
+                    .font(TextStyles.selectionlabel)
+                    .foregroundColor(AppColors.white)
+                    .listRowBackground(Color.clear)
+
+                } else {
+                    ForEach(viewModel.joinPeriodMeetings) { meeting in
+                        PendingMeetingsTab(details: meeting, viewModel: viewModel)
+                            .listRowBackground(Color.clear)
                     }
                 }
             }
+            .listStyle(PlainListStyle())
+            .background(AppColors.backgroundGray)
         }
         .onAppear {
             Task {
@@ -54,34 +58,37 @@ struct JoinPeriodMeetingsCarousel: View {
 
 struct PendingMeetingsTab: View {
     let details: JoinPeriodMeeting
-    
+    @ObservedObject var viewModel: PendingMeetingsViewModel
+
     var body: some View {
-        ZStack {
-            // Background Rectangle
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.gray.opacity(0.3))
-                .frame(height: 50)
-            
-            Text(details.title.truncated(to: 35)) // Limits meetingName to 20 characters
-                .font(TextStyles.nonboldlarge)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 16)
-            
-            HStack {
-                Spacer() // Pushes content to the right
-                HStack(spacing: 8) {
-                    Image(systemName: "person.fill")
-                        .foregroundColor(.white)
-                    Text("x\(details.participants.count)")
-                        .foregroundColor(.white)
-                }
-                .padding(.trailing, 16) // Add some padding from the right edge
+        HStack {
+            VStack(alignment: .leading) {
+                Text(details.title.truncated(to: 35)) // Limits meeting name to 35 characters
+                    .font(TextStyles.nonboldlarge)
+                    .foregroundColor(.white)
+                    .padding(.bottom, 4)
+
+                Text("Participants: \(details.participants.count)")
+                    .font(TextStyles.selectionlabel)
+                    .foregroundColor(.white)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(maxWidth: .infinity)
+        .padding(.bottom, 5)
+        .padding(.top, 5)
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            Button(action: {
+                Task {
+                    await viewModel.endJoinPeriod(joinCode: details.join_code)
+                }
+            }) {
+                Label("End Join Period Early", systemImage: "stop.circle.fill")
+            }
+            .tint(AppColors.highlightBlue)
+        }
     }
 }
+
 
 struct PlaceholderPendingMeetingsTab: View {
     var body: some View {
