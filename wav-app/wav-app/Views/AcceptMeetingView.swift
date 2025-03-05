@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct AcceptMeetingView: View {
+    @State private var showSuccessModal = false
+    @Binding var path: [Destination]
     @StateObject private var viewModel = PendingMeetingsViewModel()
     var join_code: String
 
@@ -28,7 +30,7 @@ struct AcceptMeetingView: View {
                     .padding()
                 
                 if let meeting = viewModel.meetingInfo {
-                    MeetingView(details: meeting, viewModel: viewModel)
+                    MeetingView(details: meeting, showSuccessModal: $showSuccessModal, viewModel: viewModel)
                 } else {
                     PlaceholderMeetingView()
                 }
@@ -41,12 +43,75 @@ struct AcceptMeetingView: View {
             Task { await viewModel.fetchMeetingInfo(join_code: join_code) }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .overlay(
+            ZStack {
+                if showSuccessModal {
+                    Color.black.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                        .transition(.opacity)
+                    
+                    SuccessModalView(showSuccessModal: $showSuccessModal, path: $path)
+                        .scaleEffect(showSuccessModal ? 1 : 0.8)
+                        .opacity(showSuccessModal ? 1 : 0)
+                        .animation(.easeInOut(duration: 0.3), value: showSuccessModal)
+                }
+            }
+        )
+    }
+    
+    struct SuccessModalView: View {
+        @Binding var showSuccessModal: Bool
+        @Binding var path: [Destination]
+        
+        var body: some View {
+            VStack(spacing: 20) {
+                Text("Successfully Joined!")
+                    .font(TextStyles.subheading)
+                    .foregroundColor(.white)
+                    .padding(.top, 20)
+                
+                Divider()
+                    .background(Color.white.opacity(0.5))
+                    .padding(.horizontal, 40)
+                
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        showSuccessModal = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            path = [] // Navigate back to HomeView
+                        }
+                    }
+                }) {
+                    Text("Back to Home")
+                        .font(TextStyles.selectionlabel)
+                        .padding(.vertical, 15)
+                        .frame(minWidth: 67, maxWidth: .infinity)
+                        .frame(height: 43)
+                        .lineLimit(1)
+                        .foregroundColor(AppColors.white)
+                        .background(RoundedRectangle(cornerRadius: 10).fill(AppColors.highlightBlue))
+                }
+                .buttonStyle(PlainButtonStyle()) // Removes default button styling
+                .padding(.horizontal, 30)
+                .padding(.bottom, 20)
+            }
+            .frame(width: 300, height: 180) // ✅ Small modal size
+            .background(AppColors.backgroundGray)
+            .cornerRadius(20)
+            .shadow(radius: 10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.white.opacity(0.3), lineWidth: 1)
+            )
+            .transition(.scale) // ✅ Smooth modal appearance transition
+        }
     }
 }
 
 
 struct MeetingView: View {
     let details: MeetingInfo
+    @Binding var showSuccessModal: Bool
     @ObservedObject var viewModel: PendingMeetingsViewModel
 //    var fetcher: CalendarFetcher
     
@@ -117,6 +182,9 @@ struct MeetingView: View {
                         await viewModel.joinMeeting(join_code: details.join_code)
                         let fetcher = CalendarFetcher()
                         await fetcher.sendEventsToBackend(datesList: details.dates_list, timeZoneStr: details.timezone_str)
+                        DispatchQueue.main.async {
+                            showSuccessModal = true
+                        }
                     }
                 }) {
                     Text("Accept")
@@ -162,25 +230,25 @@ func firstAndLastIndices(from dates_list: [String]) -> (firstIndex: Int, lastInd
 }
 
 // Preview for SwiftUI Canvas
-struct MeetingView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleMeeting = MeetingInfo(
-            title: "Weekly Standup",
-            dates_list: ["1/27", "2/03"],
-            minimum_duration_in_minutes: 60,
-            militime_ranges: [["03:00","06:00"],["20:00","23:59"]],
-            timezone_str: "-05:00",
-            max_n_victors: 10,
-            join_code: "6D2-GOF",
-            participants: ["Alice", "Bob", "Charlie"],
-            in_meeting: true
-        )
-        let mockViewModel = PendingMeetingsViewModel()
-        MeetingView(details: sampleMeeting, viewModel: mockViewModel)
-            .background(AppColors.backgroundGray)
-            .previewLayout(.sizeThatFits)
-    }
-}
-#Preview {
-    AcceptMeetingView(join_code: "6D2-GOF")
-}
+//struct MeetingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let sampleMeeting = MeetingInfo(
+//            title: "Weekly Standup",
+//            dates_list: ["1/27", "2/03"],
+//            minimum_duration_in_minutes: 60,
+//            militime_ranges: [["03:00","06:00"],["20:00","23:59"]],
+//            timezone_str: "-05:00",
+//            max_n_victors: 10,
+//            join_code: "6D2-GOF",
+//            participants: ["Alice", "Bob", "Charlie"],
+//            in_meeting: true
+//        )
+//        let mockViewModel = PendingMeetingsViewModel()
+//        MeetingView(details: sampleMeeting, viewModel: mockViewModel)
+//            .background(AppColors.backgroundGray)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}
+//#Preview {
+//    AcceptMeetingView(join_code: "6D2-GOF")
+//}

@@ -28,7 +28,7 @@ struct HomeView: View {
                 .navigationDestination(for: Destination.self) { destination in
                     switch destination {
                     case .acceptMeeting(let joinCode):
-                        AcceptMeetingView(join_code: joinCode)
+                        AcceptMeetingView(path: $path, join_code: joinCode)
                     case .voting(let pollId):
                         VotingView(path: $path, pollId: pollId)
                     }
