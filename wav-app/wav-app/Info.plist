@@ -14,7 +14,7 @@
 		<key>UIImageName</key>
 		<string>launchimage</string>
 		<key>UIImageRespectsSafeAreaInsets</key>
-		<true/>
+		<false/>
 	</dict>
 </dict>
 </plist>
