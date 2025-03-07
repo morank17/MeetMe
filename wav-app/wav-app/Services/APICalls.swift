@@ -18,7 +18,9 @@ class APICall {
         url: URL,
         method: String = "GET", // "GET" is default value. Can also use "POST", "PUT", "DELETE"
         headers: [String: String]? = nil,
-        body: Data? = nil
+        body: Data? = nil,
+        completion: @escaping (Bool, String?) -> Void // Add completion handler
+
     ) {
         var request = URLRequest(url: url)
         request.httpMethod = method
@@ -29,6 +31,7 @@ class APICall {
             // Handle network error
             if let error = error {
                 print("Error: \(error.localizedDescription)")
+                completion(false, "\(error.localizedDescription)") // Pass error back to caller
                 return
             }
             
@@ -40,6 +43,7 @@ class APICall {
             // Ensure we have data
             guard let data = data else {
                 print("Failed to create account. No data received.")
+                completion(false, "Failed to create account. No data received.")
                 return
             }
             
@@ -55,12 +59,15 @@ class APICall {
                     AuthViewModel.saveToken(token: token)
                     self.isLoggedIn = true
                     print("Token saved successfully: \(token)")
+                    completion(true, "Token saved successfully")
                     return
                 } else {
                     print("Token not found in response")
+                    completion(false, "Invalid Login")
                 }
             } catch {
                 print("Failed to parse JSON: \(error.localizedDescription)")
+                completion(false, nil)
             }
         }.resume()
     }

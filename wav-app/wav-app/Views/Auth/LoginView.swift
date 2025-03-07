@@ -59,13 +59,15 @@ struct LoginView: View {
                 Spacer().frame(height: 100)
                 Button(action: logIn) {
                     Text("Log In")
-                    
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+//                        .padding()
                 }
-                .padding()
+//                .padding()
                 .frame(width: 200, height: 75)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+
                 
                 HStack(spacing: 1) {
                     
@@ -115,7 +117,24 @@ struct LoginView: View {
             method: "POST",
             headers: ["Content-Type": "application/x-www-form-urlencoded"],
             body: body // URL-encoded body
-        )
+        ) { (success, response) in
+            DispatchQueue.main.async {
+                if success == false {
+                    if let response = response {
+                        self.errorMessage = response // Use the error message you want to display
+                    } else {
+                        // If no message key found, set a default error
+                        self.errorMessage = "Invalid Login"
+                    }
+                }
+                else {
+                    // Reset the login error message if login is successful
+                    self.errorMessage = nil
+//                    self.isLoggedIn = true
+                }
+            }
+        }
+        
     }
 }
 
