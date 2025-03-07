@@ -178,6 +178,7 @@ class CalendarFetcher: ObservableObject {
                 return jsonObject?["success"] as? Bool ?? false
             } else {
                 print("❌ Server Error: \(response)")
+                return false
             }
         } catch {
             print("❌ API Call Failed: \(error)")
