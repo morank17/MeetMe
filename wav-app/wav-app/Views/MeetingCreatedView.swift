@@ -21,37 +21,37 @@ struct MeetingCreatedView: View {
                 Text("🎉 Your meeting invite was created!")
                     .font(TextStyles.heading)
                     .foregroundStyle(AppColors.white)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 
                 Spacer().frame(height: 100)
                 
-                if let joinCode = viewModel.joinCode {
-                    Text("Join Code: \(joinCode)")
-                        .font(TextStyles.subheading)
-                        .foregroundStyle(AppColors.white)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                } else {
-                    Text("Fetching join code...")
-                        .font(.title)
-                        .foregroundColor(.gray)
-                        .padding(.top, 20)
+                HStack {
+                    if let joinCode = viewModel.joinCode {
+                        Text("Join Code: \(joinCode)")
+                            .font(TextStyles.subheading)
+                            .foregroundStyle(AppColors.white)
+                            .frame(alignment: .center)
+                    } else {
+                        Text("Fetching join code...")
+                            .font(.title)
+                            .foregroundColor(.gray)
+                            .padding(.top, 20)
+                    }
+                    
+                    Button(action: {
+                        UIPasteboard.general.string = viewModel.joinCode
+                        showCopiedMessage = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            showCopiedMessage = false
+                        }
+                    }) {
+                        Image(systemName: "doc.on.doc")
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.blue)
+                            .clipShape(Circle())
+                    }
                 }
-
-                Button(action: {
-                    UIPasteboard.general.string = viewModel.joinCode
-                    showCopiedMessage = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        showCopiedMessage = false
-                    }
-                }) {
-                    Image(systemName: "doc.on.doc")
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(Color.blue)
-                        .clipShape(Circle())
-                    }
-                    .padding(.top, 20)
-                
                 if showCopiedMessage {
                     Text("Copied to clipboard!")
                         .font(.caption)

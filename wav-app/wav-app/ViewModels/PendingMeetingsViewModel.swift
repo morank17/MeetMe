@@ -164,6 +164,7 @@ class PendingMeetingsViewModel: ObservableObject {
                 responseType: ChangeMeetingPeriodResponse.self
             )
             if response.success {
+                self.objectWillChange.send()
                 await fetchJoinPeriodMeetings() // reload completed meetings
                 await fetchPollPeriodMeetings()
             } else {
