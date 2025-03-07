@@ -16,7 +16,8 @@ struct ConnectCalendarView: View {
                 AppColors.backgroundGray.edgesIgnoringSafeArea(.all)
                 VStack(spacing: 30) {
                     Text("Connect a Calendar Account")
-                        .font(.title)
+                        .font(TextStyles.heading)
+                        .foregroundColor(Color.white)
                         .padding()
                     
                     HStack(spacing: 30) {
@@ -30,6 +31,7 @@ struct ConnectCalendarView: View {
                                         .compactMap({ ($0 as? UIWindowScene)?.windows.first?.rootViewController })
                                         .first {
                                         startSignInWithGoogle(from: rootViewController)
+//                                        loginMessage = "GCal Connected! Please continue."
                                     }
                                 } catch {
                                     loginMessage = "Failed to get sign-in URL. Please try again."
@@ -56,9 +58,9 @@ struct ConnectCalendarView: View {
                         Button(action: {
                             Task {
                                 let granted = await fetcher.requestFullCalendarAccess()
-                                DispatchQueue.main.async {
-                                    loginMessage = granted ? "Connected to Apple Calendar ✅" : "Access Denied ❌"
-                                }
+//                                DispatchQueue.main.async {
+//                                    loginMessage = granted ? "Connected to Apple Calendar ✅" : "Access Denied ❌"
+//                                }
                             }
                         }) {
                             ZStack {
@@ -99,7 +101,14 @@ struct ConnectCalendarView: View {
                 }
                 .onAppear {
                     Task {
-                        await checkAppleCalendarAccess()
+                        do {
+                            let success = try await checkGCal()
+                            if (success) {
+                                loginMessage = "Google Cal Connected, Please Continue!"
+                            } else {
+                                await checkAppleCalendarAccess()
+                            }
+                        }
                     }
                     
                     // ✅ Listen for Safari Close Event
@@ -125,11 +134,28 @@ struct ConnectCalendarView: View {
         
         DispatchQueue.main.async {
             if status == .fullAccess {
-                loginMessage = "Connected to Apple Calendar ✅"
+                loginMessage = "Apple Cal Connected, Please Continue!"
             } else {
-                loginMessage = "Press the Continue button"
+                loginMessage = "No Calendars Currently Connected"
             }
         }
+    }
+    
+    func checkGCal() async throws -> Bool {
+        let url = URL(string: "https://musketeers-django.onrender.com/api/users/check_google_creds")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let token = AuthViewModel.retrieveToken() ?? "default_token"
+        let bodyString = "token=\(token)"
+        request.httpBody = bodyString.data(using: .utf8)
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+            return false
+        }
+        
+        return true
     }
     
     func getGoogleSignInURL() async throws -> String {
