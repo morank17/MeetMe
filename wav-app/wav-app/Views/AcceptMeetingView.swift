@@ -111,44 +111,56 @@ struct AcceptMeetingView: View {
 
 struct MeetingView: View {
     let details: MeetingInfo
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     @Binding var showSuccessModal: Bool
     @ObservedObject var viewModel: PendingMeetingsViewModel
 //    var fetcher: CalendarFetcher
     
     var body: some View {
-        VStack(spacing: 10) {
-            Text(details.title)
-                .font(TextStyles.heading)
-                .foregroundColor(.white)
-                .bold()
-                .padding(.vertical)
-            
-            // You can use the dates_list indices if needed.
-            if let indices = firstAndLastIndices(from: details.dates_list) {
-                // Example: Use the first and last date to format your display.
-                Text("Dates: \(details.dates_list[indices.firstIndex]) - \(details.dates_list[indices.lastIndex])")
-                    .font(TextStyles.subheading)
+        VStack{
+            VStack(spacing: 10) {
+                Text(details.title)
+                    .font(TextStyles.heading)
                     .foregroundColor(.white)
+                    .bold()
                     .padding(.vertical)
-            } else {
-                // Fallback if no dates available.
-                Text("No dates available")
-                    .font(TextStyles.subheading)
-                    .foregroundColor(.white)
+                    .lineLimit(nil) // Allow unlimited lines
+            }
+            VStack(spacing : 2) {
+                
+                // You can use the dates_list indices if needed.
+                if let indices = firstAndLastIndices(from: details.dates_list) {
+                    // Example: Use the first and last date to format your display.
+                    Text("From \(details.dates_list[indices.firstIndex])")
+                        .font(TextStyles.subheading)
+                        .foregroundColor(.white)
+                    Text("  to \(details.dates_list[indices.lastIndex])")
+                        .font(TextStyles.subheading)
+                        .foregroundColor(.white)
+                        .padding(.vertical)
+                } else {
+                    // Fallback if no dates available.
+                    Text("No dates available")
+                        .font(TextStyles.subheading)
+                        .foregroundColor(.white)
+                        .padding(.vertical)
+                }
+            }
+            VStack(spacing : 10) {
+                
+                // Use the first participant as the "host" if available.
+                if let host = details.participants.first {
+                    Text("Host: \(host)")
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.vertical)
+                }
+                
+                Text("Meeting ID: \(details.join_code)")
+                    .foregroundColor(AppColors.textGray)
                     .padding(.vertical)
             }
-            
-            // Use the first participant as the "host" if available.
-            if let host = details.participants.first {
-                Text("Host: \(host)")
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.vertical)
-            }
-            
-            Text("Meeting ID: \(details.join_code)")
-                .foregroundColor(AppColors.textGray)
-                .padding(.vertical)
         }
         .frame(maxWidth: .infinity)
         .padding()
@@ -183,7 +195,12 @@ struct MeetingView: View {
                         let fetcher = CalendarFetcher()
                         await fetcher.sendEventsToBackend(datesList: details.dates_list, timeZoneStr: details.timezone_str)
                         DispatchQueue.main.async {
-                            showSuccessModal = true
+                            if (viewModel.joinMeetingInfo != nil) {
+                                showSuccessModal = true
+                            } else {
+                                alertMessage = "Invalid Meeting ID"
+                                showAlert = true
+                            }
                         }
                     }
                 }) {
@@ -192,6 +209,9 @@ struct MeetingView: View {
                         .frame(width: 170, height: 75)
                         .background(Color.blue)
                         .cornerRadius(10)
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
             }
         }

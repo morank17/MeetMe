@@ -44,7 +44,7 @@ struct CreateAccountView: View {
                         .foregroundColor(AppColors.textGray)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    TextField("", text: $username)
+                    TextField("Name", text: $username)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(AppColors.textBlockGray)
@@ -56,7 +56,7 @@ struct CreateAccountView: View {
                         .foregroundColor(AppColors.textGray)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    TextField("", text: $email)
+                    TextField("address@mail.com", text: $email)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(AppColors.textBlockGray)
@@ -68,7 +68,7 @@ struct CreateAccountView: View {
                         .foregroundColor(AppColors.textGray)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    SecureField("", text: $password1)
+                    SecureField("example123", text: $password1)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(AppColors.textBlockGray)
@@ -81,7 +81,7 @@ struct CreateAccountView: View {
                         .foregroundColor(AppColors.textGray)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    SecureField("Password2", text: $password2)
+                    SecureField("example123", text: $password2)
                         .padding()
                         .frame(maxWidth: .infinity) 
                         .background(AppColors.textBlockGray)
@@ -98,16 +98,33 @@ struct CreateAccountView: View {
                     
                     
                     // create account button
+//                    Button(action: {
+//                        createAccount()
+//                    }) {
+//                        Text("Create Account")
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    }
+//                    .padding()
+//                    .frame(width: 200, height: 75)
+//                    .background(Color.blue)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(10)
+                    
                     Button(action: {
                         createAccount()
                     }) {
                         Text("Create Account")
+                            .frame(maxWidth: .infinity, maxHeight: .infinity) // Make it responsive
+//                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                    .padding()
+//                    .padding()
                     .frame(width: 200, height: 75)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+//                    .background(Color.blue)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(10)
                     
                     
                     HStack(spacing: 1) {

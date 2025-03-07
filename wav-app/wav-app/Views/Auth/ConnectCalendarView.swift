@@ -9,21 +9,21 @@ struct ConnectCalendarView: View {
     @State private var googleSignInURL: String = ""
     @State private var navigateToHome = false
     private let fetcher = CalendarFetcher()
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 30) {
                 Text("Connect a Calendar Account")
                     .font(.title)
                     .padding()
-
+                
                 HStack(spacing: 30) {
                     // Google Sign-In Button
                     Button(action: {
                         Task {
                             do {
                                 googleSignInURL = try await getGoogleSignInURL()
-
+                                
                                 if let rootViewController = UIApplication.shared.connectedScenes
                                     .compactMap({ ($0 as? UIWindowScene)?.windows.first?.rootViewController })
                                     .first {
@@ -49,7 +49,7 @@ struct ConnectCalendarView: View {
                                 .frame(width: 50, height: 50)
                         }
                     }
-
+                    
                     // Apple Calendar Button - Requests Full Access
                     Button(action: {
                         Task {
@@ -74,7 +74,7 @@ struct ConnectCalendarView: View {
                         }
                     }
                 }
-
+                
                 // Continue Button (Navigates to HomeView)
                 Button(action: {
                     isLoggedIn = true
@@ -89,7 +89,7 @@ struct ConnectCalendarView: View {
                 .background(AppColors.blueGradient)
                 .cornerRadius(30)
                 .padding(.horizontal, 60)
-
+                
                 // Display Login Message
                 Text(loginMessage)
                     .foregroundColor(.gray)
@@ -105,11 +105,11 @@ struct ConnectCalendarView: View {
             }
         }
     }
-
+    
     /// Checks Apple Calendar access on view load
     func checkAppleCalendarAccess() async {
         let status = EKEventStore.authorizationStatus(for: .event)
-
+        
         DispatchQueue.main.async {
             if status == .fullAccess {
                 loginMessage = "Connected to Apple Calendar ✅"
@@ -118,43 +118,44 @@ struct ConnectCalendarView: View {
             }
         }
     }
-
+    
     func getGoogleSignInURL() async throws -> String {
         let url = URL(string: "https://musketeers-django.onrender.com/api/users/google-register")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-
+        
         let token = AuthViewModel.retrieveToken() ?? "default_token"
         let bodyString = "token=\(token)"
         request.httpBody = bodyString.data(using: .utf8)
-
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
             throw URLError(.badServerResponse)
         }
-
+        
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
               let authUrl = jsonObject["auth_url"] as? String else {
             throw URLError(.cannotParseResponse)
         }
         return authUrl
     }
-
+    
     func startSignInWithGoogle(from viewController: UIViewController) {
         print("Running sign in with Google")
         print(googleSignInURL)
-
+        
         guard let url = URL(string: googleSignInURL) else {
             loginMessage = "Invalid Sign-In URL"
             return
         }
-
+        
         let safariVC = SFSafariViewController(url: url)
         safariVC.delegate = viewController as? SFSafariViewControllerDelegate
         safariVC.modalPresentationStyle = .formSheet // Makes it a pop-up instead of full screen
         viewController.present(safariVC, animated: true, completion: nil)
     }
+
 }
 
 // ✅ This must be outside the struct
