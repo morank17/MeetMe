@@ -10,8 +10,6 @@ struct SettingsView: View {
                 
                 VStack(spacing: 30) {
                     syncedCalendarsButton()
-                    profilePictureButton()
-                    colorSelectionButton()
                     
                     Spacer()
                     
