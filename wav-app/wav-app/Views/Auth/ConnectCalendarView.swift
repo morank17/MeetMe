@@ -12,98 +12,111 @@ struct ConnectCalendarView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 30) {
-                Text("Connect a Calendar Account")
-                    .font(.title)
-                    .padding()
-                
-                HStack(spacing: 30) {
-                    // Google Sign-In Button
-                    Button(action: {
-                        Task {
-                            do {
-                                googleSignInURL = try await getGoogleSignInURL()
-                                
-                                if let rootViewController = UIApplication.shared.connectedScenes
-                                    .compactMap({ ($0 as? UIWindowScene)?.windows.first?.rootViewController })
-                                    .first {
-                                    startSignInWithGoogle(from: rootViewController)
+            ZStack {
+                AppColors.backgroundGray.edgesIgnoringSafeArea(.all)
+                VStack(spacing: 30) {
+                    Text("Connect a Calendar Account")
+                        .font(.title)
+                        .padding()
+                    
+                    HStack(spacing: 30) {
+                        // Google Sign-In Button
+                        Button(action: {
+                            Task {
+                                do {
+                                    googleSignInURL = try await getGoogleSignInURL()
+                                    
+                                    if let rootViewController = UIApplication.shared.connectedScenes
+                                        .compactMap({ ($0 as? UIWindowScene)?.windows.first?.rootViewController })
+                                        .first {
+                                        startSignInWithGoogle(from: rootViewController)
+                                    }
+                                } catch {
+                                    loginMessage = "Failed to get sign-in URL. Please try again."
+                                    print("Error: \(error)")
                                 }
-                            } catch {
-                                loginMessage = "Failed to get sign-in URL. Please try again."
-                                print("Error: \(error)")
+                            }
+                        }) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.white)
+                                    .frame(width: 100, height: 100)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.black, lineWidth: 2)
+                                    )
+                                Image("GoogleIcon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
                             }
                         }
-                    }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.white)
-                                .frame(width: 100, height: 100)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.black, lineWidth: 2)
-                                )
-                            Image("GoogleIcon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
+                        
+                        // Apple Calendar Button - Requests Full Access
+                        Button(action: {
+                            Task {
+                                let granted = await fetcher.requestFullCalendarAccess()
+                                DispatchQueue.main.async {
+                                    loginMessage = granted ? "Connected to Apple Calendar ✅" : "Access Denied ❌"
+                                }
+                            }
+                        }) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.white)
+                                    .frame(width: 100, height: 100)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.black, lineWidth: 2)
+                                    )
+                                Image("AppleIcon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 45, height: 45)
+                            }
                         }
                     }
                     
-                    // Apple Calendar Button - Requests Full Access
+                    // Continue Button (Navigates to HomeView)
                     Button(action: {
-                        Task {
-                            let granted = await fetcher.requestFullCalendarAccess()
-                            DispatchQueue.main.async {
-                                loginMessage = granted ? "Connected to Apple Calendar ✅" : "Access Denied ❌"
-                            }
-                        }
+                        isLoggedIn = true
+                        navigateToHome = true
                     }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.white)
-                                .frame(width: 100, height: 100)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.black, lineWidth: 2)
-                                )
-                            Image("AppleIcon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 45, height: 45)
-                        }
+                        Text("Continue")
+                    }
+                    .padding(.vertical, 1)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(AppColors.blueGradient)
+                    .cornerRadius(30)
+                    .padding(.horizontal, 60)
+                    
+                    // Display Login Message
+                    Text(loginMessage)
+                        .foregroundColor(.gray)
+                        .padding(20)
+                }
+                .onAppear {
+                    Task {
+                        await checkAppleCalendarAccess()
+                    }
+                    
+                    // ✅ Listen for Safari Close Event
+                    NotificationCenter.default.addObserver(forName: Notification.Name("CloseSafariView"), object: nil, queue: .main) { _ in
+                        UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
                     }
                 }
-                
-                // Continue Button (Navigates to HomeView)
-                Button(action: {
-                    isLoggedIn = true
-                    navigateToHome = true
-                }) {
-                    Text("Continue")
+                .onDisappear {
+                    // ✅ Remove Observer to Prevent Memory Leaks
+                    NotificationCenter.default.removeObserver(self, name: Notification.Name("CloseSafariView"), object: nil)
                 }
-                .padding(.vertical, 1)
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(AppColors.blueGradient)
-                .cornerRadius(30)
-                .padding(.horizontal, 60)
-                
-                // Display Login Message
-                Text(loginMessage)
-                    .foregroundColor(.gray)
-                    .padding(20)
-            }
-            .onAppear {
-                Task {
-                    await checkAppleCalendarAccess()
+                .navigationDestination(isPresented: $navigateToHome) {
+                    HomeView()
                 }
-            }
-            .navigationDestination(isPresented: $navigateToHome) {
-                HomeView()
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     /// Checks Apple Calendar access on view load
@@ -165,7 +178,9 @@ extension UIViewController: SFSafariViewControllerDelegate {
 
         if URL.absoluteString.contains("google_auth_callback") && URL.absoluteString.contains("code=") {
             print("✅ Authentication Successful - Closing Pop-up")
-            controller.dismiss(animated: true, completion: nil)
+            
+            // Notify SwiftUI View to Dismiss Safari
+            NotificationCenter.default.post(name: Notification.Name("CloseSafariView"), object: nil)
         }
     }
 
@@ -173,6 +188,7 @@ extension UIViewController: SFSafariViewControllerDelegate {
         print("❌ User manually closed the pop-up")
     }
 }
+
 
 // Preview
 #Preview {
