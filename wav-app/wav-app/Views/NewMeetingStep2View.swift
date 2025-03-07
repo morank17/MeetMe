@@ -59,6 +59,7 @@ struct NewMeetingStep2View: View {
                                     viewModel.selectedEarliestDate = newDate
                                 } else {
                                     viewModel.selectedLatestDate = newDate
+                                    showDatePicker = false
                                 }
                             }
                         ),
