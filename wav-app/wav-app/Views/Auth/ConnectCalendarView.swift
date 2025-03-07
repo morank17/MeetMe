@@ -5,9 +5,10 @@ import SafariServices
 struct ConnectCalendarView: View {
     @Environment(\.presentationMode) var presentationMode
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
-    @State private var loginMessage = "Not Logged In to Calendar"
     @State private var googleSignInURL: String = ""
     @State private var navigateToHome = false
+    @State private var isGoogleLoggedIn = false
+    @State private var isAppleLoggedIn = false
     private let fetcher = CalendarFetcher()
     
     var body: some View {
@@ -24,18 +25,37 @@ struct ConnectCalendarView: View {
                         // Google Sign-In Button
                         Button(action: {
                             Task {
-                                do {
-                                    googleSignInURL = try await getGoogleSignInURL()
-                                    
-                                    if let rootViewController = UIApplication.shared.connectedScenes
-                                        .compactMap({ ($0 as? UIWindowScene)?.windows.first?.rootViewController })
-                                        .first {
-                                        startSignInWithGoogle(from: rootViewController)
-//                                        loginMessage = "GCal Connected! Please continue."
-                                    }
-                                } catch {
-                                    loginMessage = "Failed to get sign-in URL. Please try again."
-                                    print("Error: \(error)")
+                                await handleGoogleSignIn()
+                            }
+                        }) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.white)
+                                    .frame(width: 100, height: 100)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.black, lineWidth: 2)
+                                    )
+                                
+                                Image("GoogleIcon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                
+                                if isGoogleLoggedIn {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.green)
+                                        .offset(x: 30, y: -30) // ✅ Positioning the checkmark
+                                }
+                            }
+                        }
+                        
+                        // Apple Calendar Button - Requests Full Access
+                        Button(action: {
+                            Task {
+                                let granted = await fetcher.requestFullCalendarAccess()
+                                DispatchQueue.main.async {
+                                    isAppleLoggedIn = granted
                                 }
                             }
                         }) {
@@ -47,34 +67,17 @@ struct ConnectCalendarView: View {
                                         RoundedRectangle(cornerRadius: 10)
                                             .stroke(Color.black, lineWidth: 2)
                                     )
-                                Image("GoogleIcon")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                            }
-                        }
-                        
-                        // Apple Calendar Button - Requests Full Access
-                        Button(action: {
-                            Task {
-                                let granted = await fetcher.requestFullCalendarAccess()
-//                                DispatchQueue.main.async {
-//                                    loginMessage = granted ? "Connected to Apple Calendar ✅" : "Access Denied ❌"
-//                                }
-                            }
-                        }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.white)
-                                    .frame(width: 100, height: 100)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.black, lineWidth: 2)
-                                    )
+                                
                                 Image("AppleIcon")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 45, height: 45)
+                                
+                                if isAppleLoggedIn {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.green)
+                                        .offset(x: 30, y: -30) // ✅ Positioning the checkmark
+                                }
                             }
                         }
                     }
@@ -94,38 +97,41 @@ struct ConnectCalendarView: View {
                     .cornerRadius(30)
                     .padding(.horizontal, 60)
                     
-                    // Display Login Message
-                    Text(loginMessage)
-                        .foregroundColor(.gray)
-                        .padding(20)
                 }
                 .onAppear {
                     Task {
-                        do {
-                            let success = try await checkGCal()
-                            if (success) {
-                                loginMessage = "Google Cal Connected, Please Continue!"
-                            } else {
-                                await checkAppleCalendarAccess()
-                            }
-                        }
+                        await checkAppleCalendarAccess()
+                        await checkGoogleLoginStatus()
                     }
-                    
-                    // ✅ Listen for Safari Close Event
-                    NotificationCenter.default.addObserver(forName: Notification.Name("CloseSafariView"), object: nil, queue: .main) { _ in
-                        UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
-                    }
-                }
-                .onDisappear {
-                    // ✅ Remove Observer to Prevent Memory Leaks
-                    NotificationCenter.default.removeObserver(self, name: Notification.Name("CloseSafariView"), object: nil)
                 }
                 .navigationDestination(isPresented: $navigateToHome) {
                     HomeView()
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
+    }
+    
+    /// **Handles Google Sign-In: Checks First, Then Signs In if Needed**
+    func handleGoogleSignIn() async {
+        await checkGoogleLoginStatus() // First, check if user is logged in
+        
+        if isGoogleLoggedIn {
+            print("✅ User already authenticated with Google Calendar. No sign-in needed.")
+            return // Exit function since user is already logged in
+        }
+
+        // If not logged in, proceed with Google authentication
+        do {
+            googleSignInURL = try await getGoogleSignInURL()
+            
+            if let rootViewController = UIApplication.shared.connectedScenes
+                .compactMap({ ($0 as? UIWindowScene)?.windows.first?.rootViewController })
+                .first {
+                startSignInWithGoogle(from: rootViewController)
+            }
+        } catch {
+            print("Error: \(error)")
+        }
     }
     
     /// Checks Apple Calendar access on view load
@@ -134,28 +140,42 @@ struct ConnectCalendarView: View {
         
         DispatchQueue.main.async {
             if status == .fullAccess {
-                loginMessage = "Apple Cal Connected, Please Continue!"
+                isAppleLoggedIn = true
             } else {
-                loginMessage = "No Calendars Currently Connected"
+                isAppleLoggedIn = false
             }
         }
     }
     
-    func checkGCal() async throws -> Bool {
-        let url = URL(string: "https://musketeers-django.onrender.com/api/users/check_google_creds")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        let token = AuthViewModel.retrieveToken() ?? "default_token"
-        let bodyString = "token=\(token)"
-        request.httpBody = bodyString.data(using: .utf8)
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-            return false
+    /// **Check Google Login Status via API**
+    func checkGoogleLoginStatus() async {
+        guard let token = AuthViewModel.retrieveToken() else {
+            print("⚠️ No auth token found")
+            return
         }
         
-        return true
+        let urlString = "https://musketeers-django.onrender.com/api/users/check-google-creds?token=\(token)"
+        
+        guard let url = URL(string: urlString) else {
+            print("❌ Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                if let loggedIn = jsonObject?["success"] as? Bool {
+                    DispatchQueue.main.async {
+                        isGoogleLoggedIn = loggedIn
+                    }
+                }
+            } else {
+                print("❌ Server Error: \(response)")
+            }
+        } catch {
+            print("❌ API Call Failed: \(error)")
+        }
     }
     
     func getGoogleSignInURL() async throws -> String {
@@ -185,28 +205,24 @@ struct ConnectCalendarView: View {
         print(googleSignInURL)
         
         guard let url = URL(string: googleSignInURL) else {
-            loginMessage = "Invalid Sign-In URL"
             return
         }
         
         let safariVC = SFSafariViewController(url: url)
         safariVC.delegate = viewController as? SFSafariViewControllerDelegate
-        safariVC.modalPresentationStyle = .formSheet // Makes it a pop-up instead of full screen
+        safariVC.modalPresentationStyle = .formSheet
         viewController.present(safariVC, animated: true, completion: nil)
     }
-
 }
 
-// ✅ This must be outside the struct
+// ✅ SafariViewController Extension for Google Login Handling
 extension UIViewController: SFSafariViewControllerDelegate {
     public func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL) {
         print("🔄 Redirect detected: \(URL.absoluteString)")
 
         if URL.absoluteString.contains("google_auth_callback") && URL.absoluteString.contains("code=") {
             print("✅ Authentication Successful - Closing Pop-up")
-            
-            // Notify SwiftUI View to Dismiss Safari
-            NotificationCenter.default.post(name: Notification.Name("CloseSafariView"), object: nil)
+            controller.dismiss(animated: true, completion: nil)
         }
     }
 
@@ -215,9 +231,7 @@ extension UIViewController: SFSafariViewControllerDelegate {
     }
 }
 
-
 // Preview
 #Preview {
     ConnectCalendarView()
 }
-
