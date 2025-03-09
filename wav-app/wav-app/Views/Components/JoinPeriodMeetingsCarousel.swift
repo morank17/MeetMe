@@ -9,8 +9,8 @@ import SwiftUI
 import Foundation
 
 struct JoinPeriodMeetingsCarousel: View {
-    @StateObject private var viewModel = PendingMeetingsViewModel()
-    
+    @ObservedObject var viewModel: PendingMeetingsViewModel
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("Waiting for People to Join")
@@ -105,9 +105,9 @@ struct PlaceholderPendingMeetingsTab: View {
     }
 }
 
-struct PendingMeetingsCarousel_Previews: PreviewProvider {
-    static var previews: some View {
-        JoinPeriodMeetingsCarousel()
-            .background(AppColors.backgroundGray)
-    }
-}
+//struct PendingMeetingsCarousel_Previews: PreviewProvider {
+//    static var previews: some View {
+//        JoinPeriodMeetingsCarousel()
+//            .background(AppColors.backgroundGray)
+//    }
+//}

@@ -37,6 +37,9 @@ struct CompletedMeetingsView: View {
             }
             .listStyle(PlainListStyle())
             .background(AppColors.backgroundGray)
+            .refreshable {
+                await viewModel.fetchCompletedMeetings()
+            }
 
         }
         .padding(.top, 90)

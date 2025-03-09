@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct QuickJoinView: View {
-    @StateObject private var viewModel = PendingMeetingsViewModel()
+    @ObservedObject var viewModel: PendingMeetingsViewModel
     @Binding var path: [Destination] // Now this view accepts a binding to the path
     @State private var showAlert: Bool = false
     @State private var join_code: String = ""
@@ -65,8 +65,8 @@ struct QuickJoinView: View {
     }
 }
 
-struct QuickJoinView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuickJoinView(path: .constant([]))
-    }
-}
+//struct QuickJoinView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        QuickJoinView(path: .constant([]))
+//    }
+//}

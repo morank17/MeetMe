@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct VotingProgressCarousel: View {
-    @StateObject private var viewModel = PendingMeetingsViewModel()
+    @ObservedObject var viewModel: PendingMeetingsViewModel
     @Binding var path: [Destination]
     
     var body: some View {
@@ -31,6 +31,7 @@ struct VotingProgressCarousel: View {
                                 progress: 1.0,
                                 details: meeting,
                                 onTimerExpired: {
+                                    print("hello")
                                     Task {
                                         await viewModel.fetchPollPeriodMeetings()
                                     }
@@ -77,15 +78,17 @@ struct TimerMeetingView: View {
             
         }
         .onReceive(timer) { _ in
-            guard remainingSeconds > 0 else {
-                progress = 0.0 // Ensure progress is 0 when time is up
-                return
-            }
-            remainingSeconds -= 1
-            withAnimation(.linear(duration: 1)) {
-                progress = max(CGFloat(remainingSeconds) / totalTime, 0.0) // Ensure progress never goes negative
-            }
-        }
+            print("Timer ticking, remaining seconds: \(remainingSeconds)")
+            if remainingSeconds > 0 {
+                remainingSeconds -= 1
+                withAnimation(.linear(duration: 1)) {
+                    progress = max(CGFloat(remainingSeconds) / totalTime, 0.0)
+                }
+            } else {
+                print("Timer expired!")
+                onTimerExpired()
+                timer.upstream.connect().cancel()
+            }        }
         .padding()
     }
 }
@@ -110,59 +113,59 @@ struct PlaceholderVotingIconView: View {
     }
 }
 
-// MARK: - Preview
-struct VotingProgressCarousel_Previews: PreviewProvider {
-    static var previews: some View {
-        VotingProgressCarousel(path: .constant([]))
-            .background(AppColors.backgroundGray)
-        
-        // testing votingicons
-        VStack(spacing: 16) {
-            Text("Closed Poll")
-               .font(.headline)
-               .foregroundColor(.white)
-            TimerMeetingView(remainingSeconds: 0, progress: 1.0, details: PollPeriodMeeting(
-                title: "Test",
-                dates_list: ["2025-02-01"],
-                minimum_duration_in_minutes: 60,
-                militime_ranges: [["00:00","03:00"]],
-                timezone_str: "-05:00",
-                max_n_victors: 10,
-                join_code: "6D2-GOF",
-                participants: ["laptttop"],
-                vote_status: false,
-                poll_id: "1",
-                seconds_remaining: 6000
-                ),
-            onTimerExpired: {}
-            )
-
-           Text("Open Poll")
-               .font(.headline)
-               .foregroundColor(.white)
-           TimerMeetingView(remainingSeconds: 0, progress: 1.0, details: PollPeriodMeeting(
-                title: "Test",
-                dates_list: ["2025-02-01"],
-                minimum_duration_in_minutes: 60,
-                militime_ranges: [["00:00","03:00"]],
-                timezone_str: "-05:00",
-                max_n_victors: 10,
-                join_code: "6D2-GOF",
-                participants: ["laptttop"],
-                vote_status: true,
-                poll_id: "1",
-                seconds_remaining: 6000
-               ),
-           onTimerExpired: {}
-           )
-
-           Text("Placeholder View")
-               .font(.headline)
-               .foregroundColor(.white)
-           PlaceholderVotingIconView()
-       }
-       .padding()
-       .background(Color.black) // To improve contrast
-       .previewLayout(.sizeThatFits)
-    }
-}
+//// MARK: - Preview
+//struct VotingProgressCarousel_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VotingProgressCarousel(path: .constant([]))
+//            .background(AppColors.backgroundGray)
+//        
+//        // testing votingicons
+//        VStack(spacing: 16) {
+//            Text("Closed Poll")
+//               .font(.headline)
+//               .foregroundColor(.white)
+//            TimerMeetingView(remainingSeconds: 0, progress: 1.0, details: PollPeriodMeeting(
+//                title: "Test",
+//                dates_list: ["2025-02-01"],
+//                minimum_duration_in_minutes: 60,
+//                militime_ranges: [["00:00","03:00"]],
+//                timezone_str: "-05:00",
+//                max_n_victors: 10,
+//                join_code: "6D2-GOF",
+//                participants: ["laptttop"],
+//                vote_status: false,
+//                poll_id: "1",
+//                seconds_remaining: 6000
+//                ),
+//            onTimerExpired: {}
+//            )
+//
+//           Text("Open Poll")
+//               .font(.headline)
+//               .foregroundColor(.white)
+//           TimerMeetingView(remainingSeconds: 0, progress: 1.0, details: PollPeriodMeeting(
+//                title: "Test",
+//                dates_list: ["2025-02-01"],
+//                minimum_duration_in_minutes: 60,
+//                militime_ranges: [["00:00","03:00"]],
+//                timezone_str: "-05:00",
+//                max_n_victors: 10,
+//                join_code: "6D2-GOF",
+//                participants: ["laptttop"],
+//                vote_status: true,
+//                poll_id: "1",
+//                seconds_remaining: 6000
+//               ),
+//           onTimerExpired: {}
+//           )
+//
+//           Text("Placeholder View")
+//               .font(.headline)
+//               .foregroundColor(.white)
+//           PlaceholderVotingIconView()
+//       }
+//       .padding()
+//       .background(Color.black) // To improve contrast
+//       .previewLayout(.sizeThatFits)
+//    }
+//}
