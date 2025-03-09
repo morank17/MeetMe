@@ -164,7 +164,6 @@ class PendingMeetingsViewModel: ObservableObject {
                 responseType: ChangeMeetingPeriodResponse.self
             )
             if response.success {
-                self.objectWillChange.send()
                 await fetchJoinPeriodMeetings() // reload completed meetings
                 await fetchPollPeriodMeetings()
             } else {
@@ -173,5 +172,12 @@ class PendingMeetingsViewModel: ObservableObject {
         } catch {
             print("Error decoding JSON: \(error.localizedDescription)")
         }
+    }
+    
+    @MainActor
+    func reloadHomeView() async {
+        print("Reloading Home Page...") // Debugging
+        await fetchJoinPeriodMeetings()
+        await fetchPollPeriodMeetings()
     }
  }

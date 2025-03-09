@@ -9,22 +9,45 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var path: [Destination] = [] //holds navigation data
+    @StateObject private var viewModel = PendingMeetingsViewModel()
+    @State private var isRefreshing = false
 
+    
     var body: some View {
         ZStack {
             AppColors.backgroundGray.ignoresSafeArea(.all)
-            
+
             NavigationStack(path: $path) {
-                VStack {
-                    QuickJoinView(path: $path)
+                VStack(spacing: 10) {
+                    if isRefreshing {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .padding(.top, 10)
+                    }
+                    QuickJoinView(viewModel: viewModel, path: $path)
                         .padding(.top, 20)
-                    VotingProgressCarousel(path: $path)
+
+                    VotingProgressCarousel(viewModel: viewModel, path: $path)
                         .padding(.top, 10)
-                    JoinPeriodMeetingsCarousel()
+
+                    JoinPeriodMeetingsCarousel(viewModel: viewModel)
                         .padding(.top, 10)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(AppColors.backgroundGray)
+                .gesture(
+                    DragGesture()
+                        .onEnded { value in
+                            if value.translation.height > 50 { // ✅ Detect downward swipe
+                                Task {
+                                    isRefreshing = true
+                                    await viewModel.reloadHomeView()
+                                    isRefreshing = false
+                                }
+                            }
+                        }
+                )
                 .navigationDestination(for: Destination.self) { destination in
                     switch destination {
                     case .acceptMeeting(let joinCode):
@@ -33,8 +56,12 @@ struct HomeView: View {
                         VotingView(path: $path, pollId: pollId)
                     }
                 }
+                .task {
+                    print("HomeView Loaded - Fetching Initial Data")
+                    await viewModel.fetchJoinPeriodMeetings()
+                    await viewModel.fetchPollPeriodMeetings()
+                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 }
