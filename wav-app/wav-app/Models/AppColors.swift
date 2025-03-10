@@ -23,6 +23,13 @@ struct AppColors {
         green: 40 / 255.0,
         blue: 50 / 255.0
     )
+    
+    static let backgroundLighterGray = Color(
+        red: 66 / 255.0,
+        green: 80 / 255.0,
+        blue: 100 / 255.0
+    )
+    
     static let white = Color(
         red: 243 / 255.0,
         green: 243 / 255.0,
