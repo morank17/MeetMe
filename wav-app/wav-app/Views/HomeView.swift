@@ -36,10 +36,10 @@ struct HomeView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(AppColors.backgroundGray)
-                .gesture(
+                .simultaneousGesture(
                     DragGesture()
                         .onEnded { value in
-                            if value.translation.height > 50 { // ✅ Detect downward swipe
+                            if value.translation.height > 50 { // Detect downward swipe
                                 Task {
                                     isRefreshing = true
                                     await viewModel.reloadHomeView()
