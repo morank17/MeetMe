@@ -8,11 +8,11 @@ Frontend in SwiftUI
 
 ## Setup
 
-Repo runs in XCode or on iPhone using simulator.
+To test, clone the repository and open it in Xcode. The project is named wav-app. In the top navigation bar, select iPhone 16 as the build target, and then press play on the left, which will launch the app in the simulator.
 
 ## Deployment
 
-Project is also deployed to TestFlight
+Project can be deployed to TestFlight from Xcode with a valid Apple Developer Account. In AppStoreConnect, define a bundle identifier for the app, and set it in Signing and Capabilities in Xcode. Under Product in the top toolbar, archive the app to prepare it for distribution. In the pop-up, click Distribute App, which will deploy to TestFlight. Test and admin users can be managed in AppStoreConnect.
 
 ## Authors
 
