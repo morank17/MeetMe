@@ -59,6 +59,7 @@ struct JoinPeriodMeetingsCarousel: View {
 struct PendingMeetingsTab: View {
     let details: JoinPeriodMeeting
     @ObservedObject var viewModel: PendingMeetingsViewModel
+    @State private var showCopiedMessage = false
 
     var body: some View {
         HStack {
@@ -73,7 +74,38 @@ struct PendingMeetingsTab: View {
                     .foregroundColor(.white)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+            
+            
+            Button(action: {
+                UIPasteboard.general.string = details.join_code
+                showCopiedMessage = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    showCopiedMessage = false
+                }
+            }) {
+                
+                HStack{
+                    if !showCopiedMessage {
+                        Text(details.join_code)
+                            .foregroundColor(AppColors.textGray)
+                    } else {
+                        Text("Copied to clipboard!")
+                            .font(.caption)
+                            .foregroundColor(.green)
+                            .transition(.opacity)
+                            .padding(.top, 5)
+                    }
+                    
+                    Image(systemName: "doc.on.doc")
+                        .foregroundColor(AppColors.textGray)
+                        .padding(10)
+                        .background(Color.clear)
+                    
+                }
+                }
+            
         }
+
         .padding(.bottom, 5)
         .padding(.top, 5)
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -85,6 +117,7 @@ struct PendingMeetingsTab: View {
                 Label("End Join Period Early", systemImage: "stop.circle.fill")
             }
             .tint(AppColors.highlightBlue)
+            
         }
     }
 }
