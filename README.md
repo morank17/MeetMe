@@ -14,6 +14,11 @@ To test, clone the repository and open it in Xcode. The project is named wav-app
 
 Project can be deployed to TestFlight from Xcode with a valid Apple Developer Account. In AppStoreConnect, define a bundle identifier for the app, and set it in Signing and Capabilities in Xcode. Under Product in the top toolbar, archive the app to prepare it for distribution. In the pop-up, click Distribute App, which will deploy to TestFlight. Test and admin users can be managed in AppStoreConnect.
 
+![IMG_2845](https://github.com/user-attachments/assets/d5c4abc8-a8c0-41f0-9a4f-b22b45521e70)
+![Screenshot 2025-03-10 at 6 45 03 PM](https://github.com/user-attachments/assets/b69211bb-b911-4712-bcda-1c1e0ff205d7)
+![Screenshot 2025-03-10 at 6 45 10 PM](https://github.com/user-attachments/assets/995d4d74-0aae-4af5-9701-cbe95ce2ab70)
+
+
 ## Authors
 
 T.T. Chen, Nikola Dimitrijevic, Matthew Kim, Nicholas Middelberg, Kevin Moran, Romeo Myrthil
